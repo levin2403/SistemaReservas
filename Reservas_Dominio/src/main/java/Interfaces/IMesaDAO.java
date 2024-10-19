@@ -4,10 +4,14 @@
  */
 package Interfaces;
 
+import Entidades.Mesa;
+
 /**
  *
  * @author skevi
  */
 public interface IMesaDAO {
+    
+    public void agregarMesa(Mesa mesa);
     
 }

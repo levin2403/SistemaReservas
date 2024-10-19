@@ -8,7 +8,7 @@ package Inserciones;
  *
  * @author skevi
  */
-public class InsercionesMesas {
+public class IncercionRestaurante {
 
     /**
      * @param args the command line arguments

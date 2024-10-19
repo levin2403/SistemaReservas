@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -22,22 +24,27 @@ import javax.persistence.OneToMany;
 public class Mesa implements Serializable{
     
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false, unique = true)
     private String codigoMesa;
-    
+
     @Column(nullable = false)
     private String tipoMesa; // Ejemplo: pequeña, mediana, grande
-    
+
     @Column(nullable = false)
     private int capacidad;
-    
+
     @Column(nullable = false)
     private String ubicacion; // Ejemplo: terraza, ventana, general
-    
+
+    @ManyToOne
+    @JoinColumn(name = "restaurante_id", nullable = false)
+    private Restaurante restaurante;
+
     @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)
     private List<Reserva> reservas;
 
@@ -47,41 +54,30 @@ public class Mesa implements Serializable{
     public Mesa() {
     }
 
-    /**
-     * 
-     * @param codigoMesa
-     * @param tipoMesa
-     * @param capacidad
-     * @param ubicacion
-     * @param reservas 
-     */
     public Mesa(String codigoMesa, String tipoMesa, int capacidad, 
-            String ubicacion, List<Reserva> reservas) {
+            String ubicacion, Restaurante restaurante, 
+            List<Reserva> reservas) {
         this.codigoMesa = codigoMesa;
         this.tipoMesa = tipoMesa;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
+        this.restaurante = restaurante;
         this.reservas = reservas;
     }
 
-    /**
-     * 
-     * @param id
-     * @param codigoMesa
-     * @param tipoMesa
-     * @param capacidad
-     * @param ubicacion
-     * @param reservas 
-     */
     public Mesa(Long id, String codigoMesa, String tipoMesa, 
-            int capacidad, String ubicacion, List<Reserva> reservas) {
+            int capacidad, String ubicacion, Restaurante restaurante, 
+            List<Reserva> reservas) {
         this.id = id;
         this.codigoMesa = codigoMesa;
         this.tipoMesa = tipoMesa;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
+        this.restaurante = restaurante;
         this.reservas = reservas;
     }
+
+    //Getters y Setters
 
     public Long getId() {
         return id;
@@ -123,6 +119,14 @@ public class Mesa implements Serializable{
         this.ubicacion = ubicacion;
     }
 
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
+    }
+
     public List<Reserva> getReservas() {
         return reservas;
     }
@@ -135,8 +139,8 @@ public class Mesa implements Serializable{
     public String toString() {
         return "Mesa{" + "id=" + id + ", codigoMesa=" + codigoMesa + 
                 ", tipoMesa=" + tipoMesa + ", capacidad=" + capacidad + 
-                ", ubicacion=" + ubicacion + ", reservas=" + reservas + '}';
+                ", ubicacion=" + ubicacion + ", restaurante=" + restaurante + 
+                ", reservas=" + reservas + '}';
     }
- 
-    
+        
 }

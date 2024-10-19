@@ -4,14 +4,14 @@
  */
 package Interfaces;
 
-import Entidades.HistorialReserva;
+import Entidades.Restaurante;
 
 /**
  *
  * @author skevi
  */
-public interface IHistorialReservasDAO {
+public interface IRestauranteDAO {
     
-    public void agregar(HistorialReserva historialReserva);
+    public void agregarRestaurante(Restaurante restaurante);
     
 }

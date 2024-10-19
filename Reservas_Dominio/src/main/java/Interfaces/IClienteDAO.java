@@ -4,10 +4,14 @@
  */
 package Interfaces;
 
+import Entidades.Cliente;
+
 /**
  *
  * @author skevi
  */
 public interface IClienteDAO {
+    
+    public void agregarCliente(Cliente cliente);
     
 }

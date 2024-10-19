@@ -5,31 +5,31 @@
 package DAO;
 
 import Conexion.Conexion;
-import Entidades.Reserva;
-import Interfaces.IReservaDAO;
+import Entidades.Restaurante;
+import Interfaces.IRestauranteDAO;
 
 /**
  *
  * @author skevi
  */
-public class ReservaDAO implements IReservaDAO{
-    
+public class RestauranteDAO implements IRestauranteDAO{
+
     // instancia para establecer conexion
     Conexion conexion;
 
     /**
      * Constructor por defecto
      */
-    public ReservaDAO() {
+    public RestauranteDAO() {
         this.conexion = new Conexion();
     }
-
+    
     /**
      * 
-     * @param reserva 
+     * @param restaurante 
      */
     @Override
-    public void agregarReserva(Reserva reserva) {
+    public void agregarRestaurante(Restaurante restaurante) {
         
     }
     

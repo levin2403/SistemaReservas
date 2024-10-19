@@ -5,12 +5,14 @@
 package DAO;
 
 import Conexion.Conexion;
+import Entidades.HistorialReserva;
+import Interfaces.IHistorialReservasDAO;
 
 /**
  *
  * @author skevi
  */
-public class HistorialReservaDAO {
+public class HistorialReservaDAO implements IHistorialReservasDAO{
     
     // instancia para establecer conexion
     Conexion conexion;
@@ -20,6 +22,15 @@ public class HistorialReservaDAO {
      */
     public HistorialReservaDAO() {
         this.conexion = new Conexion();
+    }
+
+    /**
+     * 
+     * @param historialReserva 
+     */
+    @Override
+    public void agregar(HistorialReserva historialReserva) {
+        
     }
     
 }

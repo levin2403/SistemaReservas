@@ -5,12 +5,14 @@
 package DAO;
 
 import Conexion.Conexion;
+import Entidades.Mesa;
+import Interfaces.IMesaDAO;
 
 /**
  *
  * @author skevi
  */
-public class MesaDAO {
+public class MesaDAO implements IMesaDAO{
     
     // instancia para establecer conexion
     Conexion conexion;
@@ -20,6 +22,15 @@ public class MesaDAO {
      */
     public MesaDAO() {
         this.conexion = new Conexion();
+    }
+
+    /**
+     * 
+     * @param mesa 
+     */
+    @Override
+    public void agregarMesa(Mesa mesa) {
+        
     }
     
     

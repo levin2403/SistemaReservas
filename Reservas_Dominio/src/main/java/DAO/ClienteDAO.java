@@ -5,17 +5,28 @@
 package DAO;
 
 import Conexion.Conexion;
+import Entidades.Cliente;
+import Interfaces.IClienteDAO;
 
 /**
  *
  * @author skevi
  */
-public class ClienteDAO {
+public class ClienteDAO implements IClienteDAO{
     
     Conexion conexion;
 
     public ClienteDAO() {
         this.conexion = new Conexion();
+    }
+
+    /**
+     * 
+     * @param cliente 
+     */
+    @Override
+    public void agregarCliente(Cliente cliente) {
+        
     }
     
 }

@@ -4,10 +4,14 @@
  */
 package Interfaces;
 
+import Entidades.Reserva;
+
 /**
  *
  * @author skevi
  */
 public interface IReservaDAO {
+    
+    public void agregarReserva(Reserva reserva);
     
 }
