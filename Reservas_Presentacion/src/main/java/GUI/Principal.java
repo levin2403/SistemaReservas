@@ -26,20 +26,54 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new GUI.PanelRound();
+        fechaReservaCB = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        mesasPanel = new GUI.PanelRound();
         panelRound3 = new GUI.PanelRound();
-        panelRound2 = new GUI.PanelRound();
+        panelRound9 = new GUI.PanelRound();
+        panelRound10 = new GUI.PanelRound();
+        panelRound11 = new GUI.PanelRound();
+        panelRound12 = new GUI.PanelRound();
+        panelRound13 = new GUI.PanelRound();
+        panelRound14 = new GUI.PanelRound();
+        panelRound15 = new GUI.PanelRound();
+        panelRound16 = new GUI.PanelRound();
+        mesa2 = new javax.swing.JLabel();
+        mesa1 = new javax.swing.JLabel();
+        mesa3 = new javax.swing.JLabel();
+        mesa4 = new javax.swing.JLabel();
+        mesa5 = new javax.swing.JLabel();
+        mesa6 = new javax.swing.JLabel();
+        mesa7 = new javax.swing.JLabel();
+        mesa8 = new javax.swing.JLabel();
+        mesa9 = new javax.swing.JLabel();
+        tituloPanel = new GUI.PanelRound();
+        Titulo = new javax.swing.JLabel();
+        Fondo = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelRound1.setBackground(new java.awt.Color(51, 51, 51));
-        panelRound1.setForeground(new java.awt.Color(102, 102, 102));
-        panelRound1.setRoundBottomLeft(50);
-        panelRound1.setRoundBottomRight(50);
-        panelRound1.setRoundTopLeft(50);
-        panelRound1.setRoundTopRight(50);
+        fechaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(fechaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 190, 120, 40));
+
+        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel2.setText("Fecha de reservación");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 204, -1, -1));
+
+        mesasPanel.setBackground(new java.awt.Color(51, 51, 51));
+        mesasPanel.setForeground(new java.awt.Color(102, 102, 102));
+        mesasPanel.setRoundBottomLeft(50);
+        mesasPanel.setRoundBottomRight(50);
+        mesasPanel.setRoundTopLeft(50);
+        mesasPanel.setRoundTopRight(50);
+
+        panelRound3.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound3.setRoundBottomLeft(100);
+        panelRound3.setRoundBottomRight(100);
+        panelRound3.setRoundTopLeft(100);
+        panelRound3.setRoundTopRight(100);
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
@@ -52,43 +86,296 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
-        panelRound1.setLayout(panelRound1Layout);
-        panelRound1Layout.setHorizontalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(416, Short.MAX_VALUE))
-        );
-        panelRound1Layout.setVerticalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(459, Short.MAX_VALUE))
-        );
+        panelRound9.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound9.setRoundBottomLeft(100);
+        panelRound9.setRoundBottomRight(100);
+        panelRound9.setRoundTopLeft(100);
+        panelRound9.setRoundTopRight(100);
 
-        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(677, 46, 570, -1));
-
-        panelRound2.setBackground(new java.awt.Color(102, 102, 102));
-        panelRound2.setRoundBottomLeft(50);
-        panelRound2.setRoundBottomRight(50);
-        panelRound2.setRoundTopLeft(50);
-        panelRound2.setRoundTopRight(50);
-
-        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
-        panelRound2.setLayout(panelRound2Layout);
-        panelRound2Layout.setHorizontalGroup(
-            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelRound9Layout = new javax.swing.GroupLayout(panelRound9);
+        panelRound9.setLayout(panelRound9Layout);
+        panelRound9Layout.setHorizontalGroup(
+            panelRound9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        panelRound2Layout.setVerticalGroup(
-            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelRound9Layout.setVerticalGroup(
+            panelRound9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 46, -1, -1));
+        panelRound10.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound10.setRoundBottomLeft(100);
+        panelRound10.setRoundBottomRight(100);
+        panelRound10.setRoundTopLeft(100);
+        panelRound10.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound10Layout = new javax.swing.GroupLayout(panelRound10);
+        panelRound10.setLayout(panelRound10Layout);
+        panelRound10Layout.setHorizontalGroup(
+            panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound10Layout.setVerticalGroup(
+            panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound11.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound11.setRoundBottomLeft(100);
+        panelRound11.setRoundBottomRight(100);
+        panelRound11.setRoundTopLeft(100);
+        panelRound11.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound11Layout = new javax.swing.GroupLayout(panelRound11);
+        panelRound11.setLayout(panelRound11Layout);
+        panelRound11Layout.setHorizontalGroup(
+            panelRound11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound11Layout.setVerticalGroup(
+            panelRound11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound12.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound12.setRoundBottomLeft(100);
+        panelRound12.setRoundBottomRight(100);
+        panelRound12.setRoundTopLeft(100);
+        panelRound12.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound12Layout = new javax.swing.GroupLayout(panelRound12);
+        panelRound12.setLayout(panelRound12Layout);
+        panelRound12Layout.setHorizontalGroup(
+            panelRound12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound12Layout.setVerticalGroup(
+            panelRound12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound13.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound13.setRoundBottomLeft(100);
+        panelRound13.setRoundBottomRight(100);
+        panelRound13.setRoundTopLeft(100);
+        panelRound13.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound13Layout = new javax.swing.GroupLayout(panelRound13);
+        panelRound13.setLayout(panelRound13Layout);
+        panelRound13Layout.setHorizontalGroup(
+            panelRound13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound13Layout.setVerticalGroup(
+            panelRound13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound14.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound14.setRoundBottomLeft(100);
+        panelRound14.setRoundBottomRight(100);
+        panelRound14.setRoundTopLeft(100);
+        panelRound14.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound14Layout = new javax.swing.GroupLayout(panelRound14);
+        panelRound14.setLayout(panelRound14Layout);
+        panelRound14Layout.setHorizontalGroup(
+            panelRound14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound14Layout.setVerticalGroup(
+            panelRound14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound15.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound15.setRoundBottomLeft(100);
+        panelRound15.setRoundBottomRight(100);
+        panelRound15.setRoundTopLeft(100);
+        panelRound15.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound15Layout = new javax.swing.GroupLayout(panelRound15);
+        panelRound15.setLayout(panelRound15Layout);
+        panelRound15Layout.setHorizontalGroup(
+            panelRound15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound15Layout.setVerticalGroup(
+            panelRound15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound16.setBackground(new java.awt.Color(153, 255, 153));
+        panelRound16.setRoundBottomLeft(100);
+        panelRound16.setRoundBottomRight(100);
+        panelRound16.setRoundTopLeft(100);
+        panelRound16.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound16Layout = new javax.swing.GroupLayout(panelRound16);
+        panelRound16.setLayout(panelRound16Layout);
+        panelRound16Layout.setHorizontalGroup(
+            panelRound16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound16Layout.setVerticalGroup(
+            panelRound16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        mesa2.setBackground(new java.awt.Color(255, 255, 255));
+        mesa2.setForeground(new java.awt.Color(255, 255, 255));
+        mesa2.setText("MESA 2");
+
+        mesa1.setBackground(new java.awt.Color(255, 255, 255));
+        mesa1.setForeground(new java.awt.Color(255, 255, 255));
+        mesa1.setText("MESA 1");
+
+        mesa3.setBackground(new java.awt.Color(255, 255, 255));
+        mesa3.setForeground(new java.awt.Color(255, 255, 255));
+        mesa3.setText("MESA 3");
+
+        mesa4.setBackground(new java.awt.Color(255, 255, 255));
+        mesa4.setForeground(new java.awt.Color(255, 255, 255));
+        mesa4.setText("MESA 4");
+
+        mesa5.setBackground(new java.awt.Color(255, 255, 255));
+        mesa5.setForeground(new java.awt.Color(255, 255, 255));
+        mesa5.setText("MESA 5");
+
+        mesa6.setBackground(new java.awt.Color(255, 255, 255));
+        mesa6.setForeground(new java.awt.Color(255, 255, 255));
+        mesa6.setText("MESA 6");
+
+        mesa7.setBackground(new java.awt.Color(255, 255, 255));
+        mesa7.setForeground(new java.awt.Color(255, 255, 255));
+        mesa7.setText("MESA 7");
+
+        mesa8.setBackground(new java.awt.Color(255, 255, 255));
+        mesa8.setForeground(new java.awt.Color(255, 255, 255));
+        mesa8.setText("MESA 8");
+
+        mesa9.setBackground(new java.awt.Color(255, 255, 255));
+        mesa9.setForeground(new java.awt.Color(255, 255, 255));
+        mesa9.setText("MESA 9");
+
+        javax.swing.GroupLayout mesasPanelLayout = new javax.swing.GroupLayout(mesasPanel);
+        mesasPanel.setLayout(mesasPanelLayout);
+        mesasPanelLayout.setHorizontalGroup(
+            mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mesasPanelLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelRound14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59))
+            .addGroup(mesasPanelLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(mesa1)
+                .addGap(142, 142, 142)
+                .addComponent(mesa2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mesa3)
+                .addGap(87, 87, 87))
+            .addGroup(mesasPanelLayout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(mesa4)
+                .addGap(142, 142, 142)
+                .addComponent(mesa5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mesa6)
+                .addGap(87, 87, 87))
+            .addGroup(mesasPanelLayout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addComponent(mesa7)
+                .addGap(142, 142, 142)
+                .addComponent(mesa8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mesa9)
+                .addGap(87, 87, 87))
+        );
+        mesasPanelLayout.setVerticalGroup(
+            mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mesasPanelLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mesa2)
+                    .addComponent(mesa1)
+                    .addComponent(mesa3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelRound11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(mesa5)
+                        .addComponent(mesa6))
+                    .addComponent(mesa4))
+                .addGap(62, 62, 62)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelRound14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mesasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(mesa8)
+                        .addComponent(mesa9))
+                    .addComponent(mesa7))
+                .addGap(29, 29, 29))
+        );
+
+        getContentPane().add(mesasPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(677, 46, 570, -1));
+
+        tituloPanel.setBackground(new java.awt.Color(102, 102, 102));
+        tituloPanel.setRoundBottomLeft(50);
+        tituloPanel.setRoundBottomRight(50);
+        tituloPanel.setRoundTopLeft(50);
+        tituloPanel.setRoundTopRight(50);
+
+        Titulo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 36)); // NOI18N
+        Titulo.setText("Reservaciones");
+
+        javax.swing.GroupLayout tituloPanelLayout = new javax.swing.GroupLayout(tituloPanel);
+        tituloPanel.setLayout(tituloPanelLayout);
+        tituloPanelLayout.setHorizontalGroup(
+            tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tituloPanelLayout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(Titulo)
+                .addContainerGap(133, Short.MAX_VALUE))
+        );
+        tituloPanelLayout.setVerticalGroup(
+            tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tituloPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(Titulo)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(tituloPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 46, 480, 110));
+
+        Fondo.setBackground(new java.awt.Color(22, 22, 22));
+        Fondo.setForeground(new java.awt.Color(51, 51, 51));
+        Fondo.setLayout(null);
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
         setLocationRelativeTo(null);
@@ -130,8 +417,34 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GUI.PanelRound panelRound1;
-    private GUI.PanelRound panelRound2;
+    private javax.swing.JPanel Fondo;
+    private javax.swing.JLabel Titulo;
+    private javax.swing.JComboBox<String> fechaReservaCB;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel mesa1;
+    private javax.swing.JLabel mesa2;
+    private javax.swing.JLabel mesa3;
+    private javax.swing.JLabel mesa4;
+    private javax.swing.JLabel mesa5;
+    private javax.swing.JLabel mesa6;
+    private javax.swing.JLabel mesa7;
+    private javax.swing.JLabel mesa8;
+    private javax.swing.JLabel mesa9;
+    private GUI.PanelRound mesasPanel;
+    private GUI.PanelRound panelRound10;
+    private GUI.PanelRound panelRound11;
+    private GUI.PanelRound panelRound12;
+    private GUI.PanelRound panelRound13;
+    private GUI.PanelRound panelRound14;
+    private GUI.PanelRound panelRound15;
+    private GUI.PanelRound panelRound16;
     private GUI.PanelRound panelRound3;
+    private GUI.PanelRound panelRound4;
+    private GUI.PanelRound panelRound5;
+    private GUI.PanelRound panelRound6;
+    private GUI.PanelRound panelRound7;
+    private GUI.PanelRound panelRound8;
+    private GUI.PanelRound panelRound9;
+    private GUI.PanelRound tituloPanel;
     // End of variables declaration//GEN-END:variables
 }
