@@ -1,0 +1,48 @@
+Scrip de base de datos 
+
+
+-- Inicio del Scrip de la base
+-- Creación de la base de datos
+CREATE DATABASE IF NOT EXISTS reservasys;
+USE reservasys;
+
+-- Creación de la tabla Cliente
+CREATE TABLE Cliente (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombreCompleto VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20) NOT NULL UNIQUE
+);
+
+-- Creación de la tabla Mesa
+CREATE TABLE Mesa (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    codigoMesa VARCHAR(50) NOT NULL UNIQUE,
+    tipoMesa VARCHAR(50) NOT NULL,
+    capacidad INT NOT NULL,
+    ubicacion VARCHAR(100) NOT NULL
+);
+
+-- Creación de la tabla Reserva
+CREATE TABLE Reserva (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fechaHoraReserva DATETIME NOT NULL,
+    numeroPersonas INT NOT NULL,
+    costo DOUBLE NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    cliente_id BIGINT NOT NULL,
+    mesa_id BIGINT NOT NULL,
+    CONSTRAINT FK_Reserva_Cliente FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE,
+    CONSTRAINT FK_Reserva_Mesa FOREIGN KEY (mesa_id) REFERENCES Mesa(id) ON DELETE CASCADE
+);
+
+-- Creación de la tabla HistorialReserva
+CREATE TABLE HistorialReserva (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fechaRegistro DATETIME NOT NULL,
+    estadoReserva VARCHAR(50) NOT NULL,
+    multa DOUBLE NOT NULL,
+    reserva_id BIGINT NOT NULL UNIQUE,
+    CONSTRAINT FK_HistorialReserva_Reserva FOREIGN KEY (reserva_id) REFERENCES Reserva(id) ON DELETE CASCADE
+);
+
+-- Fin del script
