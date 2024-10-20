@@ -4,10 +4,11 @@
  */
 package Convertidores;
 
+
 /**
  *
  * @author skevi
  */
-public class MesaBO {
-    
+public class ReservaCVR {
+
 }

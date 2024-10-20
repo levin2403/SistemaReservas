@@ -8,6 +8,6 @@ package Convertidores;
  *
  * @author skevi
  */
-public class ReservaBO {
-    
+public class MesaCVR {
+
 }

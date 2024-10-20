@@ -2,9 +2,10 @@ package DTO;
 
 /**
  * Objeto de transferencia de datos para el cliente.
- * 
- * Se usa para transferir datos entre la capa de presentación y la capa de negocio.
- * 
+ *
+ * Se usa para transferir datos entre la capa de presentación y la capa de
+ * negocio.
+ *
  * @author skevi
  * @author sebastian
  */
@@ -16,6 +17,12 @@ public class ClienteDTO {
 
     // Constructor por defecto
     public ClienteDTO() {
+    }
+
+    // Constructor con parámetros sin id
+    public ClienteDTO(String nombreCompleto, String telefono) {
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
     }
 
     // Constructor con parámetros

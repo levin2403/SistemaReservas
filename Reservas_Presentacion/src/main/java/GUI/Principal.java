@@ -26,16 +26,16 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mesasPanel = new GUI.PanelRound();
-        mesa1P = new GUI.PanelRound();
-        mesa2P = new GUI.PanelRound();
-        mesa3P = new GUI.PanelRound();
-        mesa4P = new GUI.PanelRound();
-        mesa5P = new GUI.PanelRound();
-        mesa6P = new GUI.PanelRound();
-        mesa7P = new GUI.PanelRound();
-        mesa8P = new GUI.PanelRound();
-        mesa9P = new GUI.PanelRound();
+        mesasPanel = new Control.PanelRound();
+        mesa1P = new Control.PanelRound();
+        mesa2P = new Control.PanelRound();
+        mesa3P = new Control.PanelRound();
+        mesa4P = new Control.PanelRound();
+        mesa5P = new Control.PanelRound();
+        mesa6P = new Control.PanelRound();
+        mesa7P = new Control.PanelRound();
+        mesa8P = new Control.PanelRound();
+        mesa9P = new Control.PanelRound();
         mesa2 = new javax.swing.JLabel();
         mesa1 = new javax.swing.JLabel();
         mesa3 = new javax.swing.JLabel();
@@ -45,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         mesa7 = new javax.swing.JLabel();
         mesa8 = new javax.swing.JLabel();
         mesa9 = new javax.swing.JLabel();
-        tituloPanel = new GUI.PanelRound();
+        tituloPanel = new Control.PanelRound();
         Titulo = new javax.swing.JLabel();
         Fondo = new javax.swing.JPanel();
         confirmarBtn = new javax.swing.JButton();
@@ -355,7 +355,9 @@ public class Principal extends javax.swing.JFrame {
         tituloPanel.setRoundTopLeft(50);
         tituloPanel.setRoundTopRight(50);
 
+        Titulo.setBackground(new java.awt.Color(255, 255, 255));
         Titulo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 36)); // NOI18N
+        Titulo.setForeground(new java.awt.Color(255, 255, 255));
         Titulo.setText("Reservaciones");
 
         javax.swing.GroupLayout tituloPanelLayout = new javax.swing.GroupLayout(tituloPanel);
@@ -381,7 +383,9 @@ public class Principal extends javax.swing.JFrame {
         Fondo.setForeground(new java.awt.Color(51, 51, 51));
         Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        confirmarBtn.setBackground(new java.awt.Color(102, 102, 102));
         confirmarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        confirmarBtn.setForeground(new java.awt.Color(255, 255, 255));
         confirmarBtn.setText("Confirmar");
         confirmarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -390,7 +394,9 @@ public class Principal extends javax.swing.JFrame {
         });
         Fondo.add(confirmarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 650, 140, 50));
 
+        cancelarBtn.setBackground(new java.awt.Color(102, 102, 102));
         cancelarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cancelarBtn.setForeground(new java.awt.Color(255, 255, 255));
         cancelarBtn.setText("Cancelar");
         cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,13 +408,17 @@ public class Principal extends javax.swing.JFrame {
         fechaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Fondo.add(fechaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 190, 40));
 
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Fecha de reservación");
         Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Costo");
-        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, -1, -1));
+        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, -1, -1));
 
         numeroPersonasTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,27 +427,35 @@ public class Principal extends javax.swing.JFrame {
         });
         Fondo.add(numeroPersonasTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 320, 190, 40));
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Hora de reservación");
         Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         horaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Fondo.add(horaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 190, 40));
 
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Disponibilidad");
         Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, -1));
 
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Nombre del cliente");
         Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Numero de personas");
         Fondo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
         Fondo.add(nombreClienteTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 190, 40));
         Fondo.add(estadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, 190, 40));
-        Fondo.add(costoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 490, 190, 40));
+        Fondo.add(costoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 190, 40));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -508,26 +526,26 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel mesa1;
-    private GUI.PanelRound mesa1P;
+    private Control.PanelRound mesa1P;
     private javax.swing.JLabel mesa2;
-    private GUI.PanelRound mesa2P;
+    private Control.PanelRound mesa2P;
     private javax.swing.JLabel mesa3;
-    private GUI.PanelRound mesa3P;
+    private Control.PanelRound mesa3P;
     private javax.swing.JLabel mesa4;
-    private GUI.PanelRound mesa4P;
+    private Control.PanelRound mesa4P;
     private javax.swing.JLabel mesa5;
-    private GUI.PanelRound mesa5P;
+    private Control.PanelRound mesa5P;
     private javax.swing.JLabel mesa6;
-    private GUI.PanelRound mesa6P;
+    private Control.PanelRound mesa6P;
     private javax.swing.JLabel mesa7;
-    private GUI.PanelRound mesa7P;
+    private Control.PanelRound mesa7P;
     private javax.swing.JLabel mesa8;
-    private GUI.PanelRound mesa8P;
+    private Control.PanelRound mesa8P;
     private javax.swing.JLabel mesa9;
-    private GUI.PanelRound mesa9P;
-    private GUI.PanelRound mesasPanel;
+    private Control.PanelRound mesa9P;
+    private Control.PanelRound mesasPanel;
     private javax.swing.JTextField nombreClienteTxt;
     private javax.swing.JTextField numeroPersonasTxt;
-    private GUI.PanelRound tituloPanel;
+    private Control.PanelRound tituloPanel;
     // End of variables declaration//GEN-END:variables
 }

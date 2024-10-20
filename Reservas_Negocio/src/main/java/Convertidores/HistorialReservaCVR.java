@@ -8,6 +8,7 @@ package Convertidores;
  *
  * @author skevi
  */
-public class HistorialReservaBO {
-    
+public class HistorialReservaCVR {
+
 }
+

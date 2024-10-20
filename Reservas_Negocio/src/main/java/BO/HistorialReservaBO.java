@@ -11,8 +11,7 @@ public class HistorialReservaBO {
 
     public HistorialReservaBO() {}
 
-    public HistorialReservaBO(Long id, Long reservaId, String cambioEstado, 
-                              LocalDateTime fechaCambio) {
+    public HistorialReservaBO(Long id, Long reservaId, String cambioEstado, LocalDateTime fechaCambio) {
         this.id = id;
         this.reservaId = reservaId;
         this.cambioEstado = cambioEstado;
