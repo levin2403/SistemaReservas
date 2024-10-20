@@ -5,6 +5,8 @@
 package Interfaces;
 
 import Entidades.Reserva;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -14,4 +16,5 @@ public interface IReservaDAO {
     
     public void agregarReserva(Reserva reserva);
     
+    public List<Reserva> consultarPorFecha(LocalDate inicio, LocalDate fin);
 }

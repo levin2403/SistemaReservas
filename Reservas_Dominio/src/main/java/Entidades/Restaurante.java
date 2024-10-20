@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,7 +38,10 @@ public class Restaurante implements Serializable{
     private String telefono;
 
     @Column(nullable = false)
-    private String horario; // Ejemplo: "10:00 - 22:00"
+    private LocalTime horaApertura; // Ejemplo: "10:00"
+    
+    @Column(nullable = false)
+    private LocalTime horaCierre; // Ejemplo: "22:00"
 
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
     private List<Mesa> mesas;
@@ -53,45 +57,71 @@ public class Restaurante implements Serializable{
     }
 
     /**
+     * Constructor completo sin id.
      * 
      * @param nombre
      * @param direccion
      * @param telefono
-     * @param horario
+     * @param horaApertura
+     * @param horaCierre
      * @param mesas
      * @param reservas 
      */
     public Restaurante(String nombre, String direccion, String telefono, 
-            String horario, List<Mesa> mesas, List<Reserva> reservas) {
+            LocalTime horaApertura, LocalTime horaCierre, 
+            List<Mesa> mesas, List<Reserva> reservas) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.horario = horario;
+        this.horaApertura = horaApertura;
+        this.horaCierre = horaCierre;
         this.mesas = mesas;
         this.reservas = reservas;
     }
 
     /**
+     * Constructor completo.
      * 
      * @param id
      * @param nombre
      * @param direccion
      * @param telefono
-     * @param horario
+     * @param horaApertura
+     * @param horaCierre
      * @param mesas
      * @param reservas 
      */
     public Restaurante(Long id, String nombre, String direccion, 
-            String telefono, String horario, List<Mesa> mesas, 
-            List<Reserva> reservas) {
+            String telefono, LocalTime horaApertura, LocalTime horaCierre, 
+            List<Mesa> mesas, List<Reserva> reservas) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.horario = horario;
+        this.horaApertura = horaApertura;
+        this.horaCierre = horaCierre;
         this.mesas = mesas;
         this.reservas = reservas;
     }
+
+    /**
+     * Constructor para inserciones.
+     * 
+     * @param nombre
+     * @param direccion
+     * @param telefono
+     * @param horaApertura
+     * @param horaCierre 
+     */
+    public Restaurante(String nombre, String direccion, String telefono, 
+            LocalTime horaApertura, LocalTime horaCierre) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.horaApertura = horaApertura;
+        this.horaCierre = horaCierre;
+    }
+
 
     //Getters y Setters
     
@@ -127,12 +157,20 @@ public class Restaurante implements Serializable{
         this.telefono = telefono;
     }
 
-    public String getHorario() {
-        return horario;
+    public LocalTime getHoraApertura() {
+        return horaApertura;
     }
 
-    public void setHorario(String horario) {
-        this.horario = horario;
+    public void setHoraApertura(LocalTime horaApertura) {
+        this.horaApertura = horaApertura;
+    }
+
+    public LocalTime getHoraCierre() {
+        return horaCierre;
+    }
+
+    public void setHoraCierre(LocalTime horaCierre) {
+        this.horaCierre = horaCierre;
     }
 
     public List<Mesa> getMesas() {

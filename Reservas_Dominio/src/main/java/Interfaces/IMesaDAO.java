@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Entidades.Mesa;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,11 @@ public interface IMesaDAO {
     
     public void agregarMesa(Mesa mesa);
     
+    public void agregarMesas(List<Mesa> mesas);
+    
+    public void eliminarMesa(Mesa mesa);
+    
+    public void actualizarMesa(Mesa mesa);
+    
+    public List<Mesa> consultarMesas();
 }
