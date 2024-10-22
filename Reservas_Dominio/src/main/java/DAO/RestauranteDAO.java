@@ -55,4 +55,9 @@ public class RestauranteDAO implements IRestauranteDAO{
             }
         }
     }
+
+    @Override
+    public Restaurante consultar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Entidades.Cliente;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,9 @@ import Entidades.Cliente;
 public interface IClienteDAO {
     
     public void agregarCliente(Cliente cliente);
+    
+    public void obtenerCliente(Cliente cliente);
+    
+    public List<Cliente> obtenerClientes();
     
 }

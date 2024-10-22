@@ -14,4 +14,6 @@ public interface IRestauranteDAO {
     
     public void agregarRestaurante(Restaurante restaurante);
     
+    public Restaurante consultar();
+    
 }

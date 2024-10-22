@@ -4,7 +4,6 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Entidades.Reserva</class>
     <class>Entidades.Mesa</class>
-    <class>Entidades.HistorialReserva</class>
     <class>Entidades.Restaurante</class>
     <class>Entidades.Cliente</class>
     <properties>

@@ -15,12 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author skevi
  */
 @Entity
+@Table(name = "mesas")
 public class Mesa implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -29,10 +31,10 @@ public class Mesa implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "codigo_mesa",nullable = false, unique = true)
     private String codigoMesa;
 
-    @Column(nullable = false)
+    @Column(name = "tipo_mesa", nullable = false)
     private String tipoMesa; // Ejemplo: pequeña, mediana, grande
 
     @Column(nullable = false)
@@ -45,7 +47,7 @@ public class Mesa implements Serializable{
     @JoinColumn(name = "restaurante_id", nullable = false)
     private Restaurante restaurante;
 
-    @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mesas", cascade = CascadeType.PERSIST)
     private List<Reserva> reservas;
 
     /**

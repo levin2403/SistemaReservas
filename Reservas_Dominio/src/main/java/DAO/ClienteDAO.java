@@ -7,6 +7,7 @@ package DAO;
 import Conexion.Conexion;
 import Entidades.Cliente;
 import Interfaces.IClienteDAO;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
@@ -51,6 +52,16 @@ public class ClienteDAO implements IClienteDAO{
                 em.close(); // Cerrar el EntityManager
             }
         }
+    }
+
+    @Override
+    public void obtenerCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Cliente> obtenerClientes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

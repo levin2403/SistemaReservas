@@ -14,12 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author skevi
  */
 @Entity
+@Table(name = "restaurantes")
 public class Restaurante implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -37,17 +39,14 @@ public class Restaurante implements Serializable{
     @Column(nullable = false)
     private String telefono;
 
-    @Column(nullable = false)
+    @Column(name = "hora_apertura", nullable = false)
     private LocalTime horaApertura; // Ejemplo: "10:00"
     
-    @Column(nullable = false)
+    @Column(name = "hora_cierre", nullable = false)
     private LocalTime horaCierre; // Ejemplo: "22:00"
 
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurantes", cascade = CascadeType.PERSIST)
     private List<Mesa> mesas;
-
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
-    private List<Reserva> reservas;
 
 
     /**
@@ -65,18 +64,16 @@ public class Restaurante implements Serializable{
      * @param horaApertura
      * @param horaCierre
      * @param mesas
-     * @param reservas 
      */
     public Restaurante(String nombre, String direccion, String telefono, 
             LocalTime horaApertura, LocalTime horaCierre, 
-            List<Mesa> mesas, List<Reserva> reservas) {
+            List<Mesa> mesas) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
         this.mesas = mesas;
-        this.reservas = reservas;
     }
 
     /**
@@ -89,11 +86,10 @@ public class Restaurante implements Serializable{
      * @param horaApertura
      * @param horaCierre
      * @param mesas
-     * @param reservas 
      */
     public Restaurante(Long id, String nombre, String direccion, 
             String telefono, LocalTime horaApertura, LocalTime horaCierre, 
-            List<Mesa> mesas, List<Reserva> reservas) {
+            List<Mesa> mesas) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -101,7 +97,6 @@ public class Restaurante implements Serializable{
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
         this.mesas = mesas;
-        this.reservas = reservas;
     }
 
     /**
@@ -179,14 +174,6 @@ public class Restaurante implements Serializable{
 
     public void setMesas(List<Mesa> mesas) {
         this.mesas = mesas;
-    }
-
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
     }
     
 }

@@ -26,7 +26,8 @@ public class Conexion {
      */
     public EntityManagerFactory getEntityManagerFactory() {
         if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory("miUnidadDePersistencia");
+            entityManagerFactory = Persistence.
+                    createEntityManagerFactory("miUnidadDePersistencia");
         }
         return entityManagerFactory;
     }

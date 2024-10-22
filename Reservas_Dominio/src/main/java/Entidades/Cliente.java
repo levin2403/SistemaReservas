@@ -13,8 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "clientes")
 public class Cliente implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -23,13 +25,13 @@ public class Cliente implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
-    private String nombreCompleto;
+    @Column(name = "nombre",nullable = false)
+    private String nombre;
     
-    @Column(nullable = false, unique = true)
+    @Column(name = "telefono", nullable = false, unique = true)
     private String telefono;
     
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clientes", cascade = CascadeType.PERSIST)
     private List<Reserva> reservas;
 
     /**
@@ -46,7 +48,7 @@ public class Cliente implements Serializable{
      */
     public Cliente(String nombreCompleto, String telefono, 
             List<Reserva> reservas) {
-        this.nombreCompleto = nombreCompleto;
+        this.nombre = nombreCompleto;
         this.telefono = telefono;
         this.reservas = reservas;
     }
@@ -61,7 +63,7 @@ public class Cliente implements Serializable{
     public Cliente(Long id, String nombreCompleto, String telefono, 
             List<Reserva> reservas) {
         this.id = id;
-        this.nombreCompleto = nombreCompleto;
+        this.nombre = nombreCompleto;
         this.telefono = telefono;
         this.reservas = reservas;
     }
@@ -75,11 +77,11 @@ public class Cliente implements Serializable{
     }
 
     public String getNombreCompleto() {
-        return nombreCompleto;
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombreCompleto(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getTelefono() {
@@ -100,7 +102,7 @@ public class Cliente implements Serializable{
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + 
+        return "Cliente{" + "id=" + id + ", nombreCompleto=" + nombre + 
                 ", telefono=" + telefono + ", reservas=" + reservas + '}';
     }
     

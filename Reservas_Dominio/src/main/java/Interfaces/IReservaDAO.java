@@ -17,4 +17,8 @@ public interface IReservaDAO {
     public void agregarReserva(Reserva reserva);
     
     public List<Reserva> consultarPorFecha(LocalDate inicio, LocalDate fin);
+    
+    public List<Reserva> consultarPorDia(LocalDate dia);
+    
 }
+

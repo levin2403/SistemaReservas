@@ -15,12 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author skevi
  */
 @Entity
+@Table(name = "reservas")
 public class Reserva implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -29,10 +31,10 @@ public class Reserva implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_hora_reserva", nullable = false)
     private LocalDateTime fechaHoraReserva;
 
-    @Column(nullable = false)
+    @Column(name = "numero_personas", nullable = false)
     private int numeroPersonas;
 
     @Column(nullable = false)
@@ -40,6 +42,9 @@ public class Reserva implements Serializable{
 
     @Column(nullable = false)
     private String estado; // Ejemplo: activa, cancelada
+    
+    @Column(nullable = false)
+    private double multa; // Multa por cancelación, si aplica
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -53,8 +58,6 @@ public class Reserva implements Serializable{
     @JoinColumn(name = "restaurante_id", nullable = false)
     private Restaurante restaurante;
 
-    @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL)
-    private HistorialReserva historialReserva;
     
     /**
      * 
@@ -62,56 +65,7 @@ public class Reserva implements Serializable{
     public Reserva() {
     }
 
-    /**
-     * 
-     * @param fechaHoraReserva
-     * @param numeroPersonas
-     * @param costo
-     * @param estado
-     * @param cliente
-     * @param mesa
-     * @param restaurante
-     * @param historialReserva 
-     */
-    public Reserva(LocalDateTime fechaHoraReserva, int numeroPersonas, 
-            double costo, String estado, Cliente cliente, Mesa mesa, 
-            Restaurante restaurante, HistorialReserva historialReserva) {
-        this.fechaHoraReserva = fechaHoraReserva;
-        this.numeroPersonas = numeroPersonas;
-        this.costo = costo;
-        this.estado = estado;
-        this.cliente = cliente;
-        this.mesa = mesa;
-        this.restaurante = restaurante;
-        this.historialReserva = historialReserva;
-    }
-
-    /**
-     * 
-     * @param id
-     * @param fechaHoraReserva
-     * @param numeroPersonas
-     * @param costo
-     * @param estado
-     * @param cliente
-     * @param mesa
-     * @param restaurante
-     * @param historialReserva 
-     */
-    public Reserva(Long id, LocalDateTime fechaHoraReserva, 
-            int numeroPersonas, double costo, String estado, 
-            Cliente cliente, Mesa mesa, Restaurante restaurante, 
-            HistorialReserva historialReserva) {
-        this.id = id;
-        this.fechaHoraReserva = fechaHoraReserva;
-        this.numeroPersonas = numeroPersonas;
-        this.costo = costo;
-        this.estado = estado;
-        this.cliente = cliente;
-        this.mesa = mesa;
-        this.restaurante = restaurante;
-        this.historialReserva = historialReserva;
-    }
+    
 
     //Getters y Setters
     
@@ -155,6 +109,14 @@ public class Reserva implements Serializable{
         this.estado = estado;
     }
 
+    public double getMulta() {
+        return multa;
+    }
+
+    public void setMulta(double multa) {
+        this.multa = multa;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -179,21 +141,14 @@ public class Reserva implements Serializable{
         this.restaurante = restaurante;
     }
 
-    public HistorialReserva getHistorialReserva() {
-        return historialReserva;
-    }
-
-    public void setHistorialReserva(HistorialReserva historialReserva) {
-        this.historialReserva = historialReserva;
-    }
-
     @Override
     public String toString() {
         return "Reserva{" + "id=" + id + ", fechaHoraReserva=" + 
                 fechaHoraReserva + ", numeroPersonas=" + numeroPersonas + 
-                ", costo=" + costo + ", estado=" + estado + ", cliente=" + 
-                cliente + ", mesa=" + mesa + ", restaurante=" + restaurante + 
-                ", historialReserva=" + historialReserva + '}';
+                ", costo=" + costo + ", estado=" + estado + ", multa=" + 
+                multa + ", cliente=" + cliente + ", mesa=" + 
+                mesa + ", restaurante=" + 
+                restaurante + '}';
     }
 
 }

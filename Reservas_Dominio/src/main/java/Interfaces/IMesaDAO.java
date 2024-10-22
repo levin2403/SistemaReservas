@@ -22,4 +22,11 @@ public interface IMesaDAO {
     public void actualizarMesa(Mesa mesa);
     
     public List<Mesa> consultarMesas();
+    
+    public int cantidadMesasPequeñas();
+    
+    public int cantidadMesasMedianas();
+    
+    public int cantidadMesasGrandes();
+    
 }
