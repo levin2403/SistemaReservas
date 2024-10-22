@@ -4,6 +4,9 @@
  */
 package Convertidores;
 
+import DTO.ReservaDTO;
+import Entidades.Reserva;
+
 
 /**
  *
@@ -11,4 +14,24 @@ package Convertidores;
  */
 public class ReservaCVR {
 
+    /**
+     * Convierte una ReservaDTO a una Reserva de tipo entidad.
+     * 
+     * @param reservaDTO ReservaDTO a convertir.
+     * @return Mesa de tipo entidad.
+     */
+    public Reserva toEntity(ReservaDTO reservaDTO){
+        return null;
+    }
+
+    /**
+     * Convierte una Reserva de tipo entidad a una ReservaDTO.
+     * 
+     * @param reserva Reservacion a convertir.
+     * @return Reservacion convertida en DTO.
+     */
+    public ReservaDTO toDTO(Reserva reserva){
+        return null;
+    }
+    
 }
