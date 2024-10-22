@@ -8,15 +8,33 @@ import Entidades.Cliente;
 import java.util.List;
 
 /**
- *
+ * Interfaz que define las operaciones básicas para la gestión de clientes en la capa de acceso a datos (DAO).
+ * Esta interfaz proporciona un contrato para las implementaciones que manejarán la persistencia
+ * y recuperación de información de clientes.
+ * 
  * @author skevi
  */
 public interface IClienteDAO {
     
+    /**
+     * Agrega un nuevo cliente a la base de datos.
+     * 
+     * @param cliente El objeto {@link Cliente} que se desea agregar.
+     */
     public void agregarCliente(Cliente cliente);
     
+    /**
+     * Obtiene los detalles de un cliente específico a partir de su objeto.
+     * 
+     * @param cliente El objeto {@link Cliente} que se desea obtener.
+     *               Este objeto debe contener la información necesaria para identificar al cliente.
+     */
     public void obtenerCliente(Cliente cliente);
     
+    /**
+     * Recupera una lista de todos los clientes almacenados en la base de datos.
+     * 
+     * @return Una lista de objetos {@link Cliente} que representa todos los clientes.
+     */
     public List<Cliente> obtenerClientes();
-    
 }

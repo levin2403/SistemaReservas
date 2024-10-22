@@ -6,7 +6,6 @@ package Entidades;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,11 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * Clase encargada de modelar la entidad Reserva.
+ * 
  * @author skevi
  */
 @Entity
@@ -29,42 +28,92 @@ public class Reserva implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // id de la reserva.
 
     @Column(name = "fecha_hora_reserva", nullable = false)
-    private LocalDateTime fechaHoraReserva;
+    private LocalDateTime fechaHoraReserva; // Fecha y hora de la reserva.
 
     @Column(name = "numero_personas", nullable = false)
-    private int numeroPersonas;
+    private int numeroPersonas; // Numero de personas.
 
     @Column(nullable = false)
-    private double costo;
+    private double costo; // Costo de la reserva.
 
     @Column(nullable = false)
-    private String estado; // Ejemplo: activa, cancelada
+    private String estado; // Estado de la reserva Ejemplo: activa, cancelada.
     
-    @Column(nullable = false)
-    private double multa; // Multa por cancelación, si aplica
+    @Column(nullable = true)
+    private double multa; // Multa por cancelación, si aplica.
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
+    private Cliente cliente; // Cliente al que le pertenece la reserva.
 
     @ManyToOne
     @JoinColumn(name = "mesa_id", nullable = false)
-    private Mesa mesa;
+    private Mesa mesa; // Mesa a la que le pertenece la reserva.
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
-    private Restaurante restaurante;
+    private Restaurante restaurante; // Restaurante al que pertenece la reserva.
 
     
     /**
+     * Constructor por defecto de la clase.
      * 
      */
     public Reserva() {
     }
 
+    /**
+     * 
+     * @param fechaHoraReserva Fecha y hora de la reserva.
+     * @param numeroPersonas Numero de personas.
+     * @param costo Costo de la reserva.
+     * @param estado Estado de la reserva.
+     * @param multa Multa por cancelación, si aplica.
+     * @param cliente Cliente al que le pertenece la reserva.
+     * @param mesa Mesa a la que le pertenece la reserva.
+     * @param restaurante Restaurante al que pertenece la reserva.
+     */
+    public Reserva(LocalDateTime fechaHoraReserva, int numeroPersonas, 
+            double costo, String estado, double multa, Cliente cliente, 
+            Mesa mesa, Restaurante restaurante) {
+        this.fechaHoraReserva = fechaHoraReserva;
+        this.numeroPersonas = numeroPersonas;
+        this.costo = costo;
+        this.estado = estado;
+        this.multa = multa;
+        this.cliente = cliente;
+        this.mesa = mesa;
+        this.restaurante = restaurante;
+    }
+    
+    /**
+     * 
+     * @param id id de la reserva.
+     * @param fechaHoraReserva Fecha y hora de la reserva.
+     * @param numeroPersonas Numero de personas.
+     * @param costo Costo de la reserva.
+     * @param estado Estado de la reserva.
+     * @param multa Multa por cancelación, si aplica.
+     * @param cliente Cliente al que le pertenece la reserva.
+     * @param mesa Mesa a la que le pertenece la reserva.
+     * @param restaurante Restaurante al que pertenece la reserva.
+     */
+    public Reserva(Long id, LocalDateTime fechaHoraReserva, 
+            int numeroPersonas, double costo, String estado, 
+            double multa, Cliente cliente, Mesa mesa, Restaurante restaurante) {
+        this.id = id;
+        this.fechaHoraReserva = fechaHoraReserva;
+        this.numeroPersonas = numeroPersonas;
+        this.costo = costo;
+        this.estado = estado;
+        this.multa = multa;
+        this.cliente = cliente;
+        this.mesa = mesa;
+        this.restaurante = restaurante;
+    }
     
 
     //Getters y Setters

@@ -28,64 +28,63 @@ public class Restaurante implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // id del restaurante.
 
     @Column(nullable = false)
-    private String nombre;
+    private String nombre; // Nombre del restaurante.
 
     @Column(nullable = false)
-    private String direccion;
+    private String direccion; // Direccion del restaurante.
 
     @Column(nullable = false)
-    private String telefono;
+    private String telefono; // telefono del restaurante.
 
     @Column(name = "hora_apertura", nullable = false)
-    private LocalTime horaApertura; // Ejemplo: "10:00"
+    private LocalTime horaApertura; // Hora de apertura del restaurante. 
+                                    // Ejemplo: "10:00"
     
     @Column(name = "hora_cierre", nullable = false)
-    private LocalTime horaCierre; // Ejemplo: "22:00"
+    private LocalTime horaCierre; // Hora de cierre del restaurante. 
+                                  // Ejemplo: "22:00"
 
     @OneToMany(mappedBy = "restaurantes", cascade = CascadeType.PERSIST)
-    private List<Mesa> mesas;
+    private List<Mesa> mesas; // Lista de mesas del restaurante.
 
 
     /**
+     * Constructor por defecto de la clase.
      * 
      */
     public Restaurante() {
     }
 
     /**
-     * Constructor completo sin id.
+     * Constructor que se utilizara para inserciones.
      * 
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param horaApertura
-     * @param horaCierre
-     * @param mesas
+     * @param nombre Nombre del restaurante.
+     * @param direccion Direccion del restaurante.
+     * @param telefono telefono del restaurante.
+     * @param horaApertura Hora de apertura del restaurante.
+     * @param horaCierre Hora de cierre del restaurante. 
      */
     public Restaurante(String nombre, String direccion, String telefono, 
-            LocalTime horaApertura, LocalTime horaCierre, 
-            List<Mesa> mesas) {
+            LocalTime horaApertura, LocalTime horaCierre) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
-        this.mesas = mesas;
     }
 
     /**
-     * Constructor completo.
      * 
-     * @param id
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param horaApertura
-     * @param horaCierre
-     * @param mesas
+     * @param id id del restaurante.
+     * @param nombre Nombre del restaurante.
+     * @param direccion Direccion del restaurante.
+     * @param telefono telefono del restaurante.
+     * @param horaApertura Hora de apertura del restaurante.
+     * @param horaCierre Hora de cierre del restaurante. 
+     * @param mesas Lista de mesas del restaurante.
      */
     public Restaurante(Long id, String nombre, String direccion, 
             String telefono, LocalTime horaApertura, LocalTime horaCierre, 
@@ -98,25 +97,6 @@ public class Restaurante implements Serializable{
         this.horaCierre = horaCierre;
         this.mesas = mesas;
     }
-
-    /**
-     * Constructor para inserciones.
-     * 
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param horaApertura
-     * @param horaCierre 
-     */
-    public Restaurante(String nombre, String direccion, String telefono, 
-            LocalTime horaApertura, LocalTime horaCierre) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.horaApertura = horaApertura;
-        this.horaCierre = horaCierre;
-    }
-
 
     //Getters y Setters
     
@@ -174,6 +154,14 @@ public class Restaurante implements Serializable{
 
     public void setMesas(List<Mesa> mesas) {
         this.mesas = mesas;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurante{" + "id=" + id + ", nombre=" + nombre + 
+                ", direccion=" + direccion + ", telefono=" + telefono + 
+                ", horaApertura=" + horaApertura + ", horaCierre=" + 
+                horaCierre + ", mesas=" + mesas + '}';
     }
     
 }

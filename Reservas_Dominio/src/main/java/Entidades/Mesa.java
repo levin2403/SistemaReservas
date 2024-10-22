@@ -18,7 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Clase encargada de modelar la entidad Mesa
+ * 
  * @author skevi
  */
 @Entity

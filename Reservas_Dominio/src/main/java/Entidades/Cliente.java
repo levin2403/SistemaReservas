@@ -15,6 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Clase encargada de modelar la entidad Cliente.
+ * 
+ * @author skevi
+ */
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable{
@@ -23,42 +28,40 @@ public class Cliente implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // id del cliente
     
     @Column(name = "nombre",nullable = false)
-    private String nombre;
+    private String nombre; // nombre del cliente.
     
     @Column(name = "telefono", nullable = false, unique = true)
-    private String telefono;
+    private String telefono; // telefono del cliente 
     
     @OneToMany(mappedBy = "clientes", cascade = CascadeType.PERSIST)
-    private List<Reserva> reservas;
+    private List<Reserva> reservas; // lista de reservas del cliente.
 
     /**
-     * 
+     * Constructor por defecto de la clase 
      */
     public Cliente() {
     }
-
+    
     /**
+     * Constructor que se utilizara para inserciones
      * 
-     * @param nombreCompleto
-     * @param telefono
-     * @param reservas 
+     * @param nombre nombre del cliente.
+     * @param telefono telefono del cliente.
      */
-    public Cliente(String nombreCompleto, String telefono, 
-            List<Reserva> reservas) {
-        this.nombre = nombreCompleto;
+    public Cliente(String nombre, String telefono) {
+        this.nombre = nombre;
         this.telefono = telefono;
-        this.reservas = reservas;
     }
-
+    
     /**
      * 
-     * @param id
-     * @param nombreCompleto
-     * @param telefono
-     * @param reservas 
+     * @param id id del cliente
+     * @param nombreCompleto nombre del cliente.
+     * @param telefono telefono del cliente. 
+     * @param reservas lista de reservas del cliente.
      */
     public Cliente(Long id, String nombreCompleto, String telefono, 
             List<Reserva> reservas) {
@@ -67,6 +70,8 @@ public class Cliente implements Serializable{
         this.telefono = telefono;
         this.reservas = reservas;
     }
+    
+    // Getters y Setters
 
     public Long getId() {
         return id;
