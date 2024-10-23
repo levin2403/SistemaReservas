@@ -27,7 +27,7 @@ public class Conexion {
     public EntityManagerFactory getEntityManagerFactory() {
         if (entityManagerFactory == null) {
             entityManagerFactory = Persistence.
-                    createEntityManagerFactory("miUnidadDePersistencia");
+                    createEntityManagerFactory("com.mycompany_Reservas_Dominio_jar_1.0-SNAPSHOTPU");
         }
         return entityManagerFactory;
     }

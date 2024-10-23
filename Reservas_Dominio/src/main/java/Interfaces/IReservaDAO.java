@@ -6,6 +6,7 @@ package Interfaces;
 
 import Entidades.Reserva;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public interface IReservaDAO {
      * @param fin La fecha de fin del rango de búsqueda.
      * @return Una lista de objetos {@link Reserva} que representan las reservas dentro del rango de fechas especificado.
      */
-    public List<Reserva> consultarPorFecha(LocalDate inicio, LocalDate fin);
+    public List<Reserva> consultarPorFecha(LocalDateTime inicio, LocalDateTime fin);
     
     /**
      * Consulta y recupera una lista de reservas para un día específico.
@@ -39,7 +40,7 @@ public interface IReservaDAO {
      * @param dia La fecha del día para el cual se desean consultar las reservas.
      * @return Una lista de objetos {@link Reserva} que representan las reservas del día especificado.
      */
-    public List<Reserva> consultarPorDia(LocalDate dia);
+    public List<Reserva> consultarPorDia(LocalDateTime dia);
 }
 
 

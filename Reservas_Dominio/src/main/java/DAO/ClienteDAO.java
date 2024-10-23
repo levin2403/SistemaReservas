@@ -54,14 +54,56 @@ public class ClienteDAO implements IClienteDAO{
         }
     }
 
+    /**
+     * Obtiene un cliente en especifico de la base de datos.
+     *
+     * @param id Id del cliente a obtener.
+     * @return Cliente obtenido o null si no se encuentra.
+     */
     @Override
-    public void obtenerCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Cliente obtenerCliente(Long id) {
+        EntityManager em = null;
+        Cliente cliente = null;
+        try {
+            em = conexion.getEntityManager(); // Obtener el EntityManager
+            cliente = em.find(Cliente.class, id); // Buscar el cliente por su id
+            if (cliente != null) {
+                LOG.info("Cliente obtenido exitosamente.");
+            } else {
+                LOG.warning("Cliente no encontrado.");
+            }
+        } catch (Exception e) {
+            LOG.severe("Error al obtener el cliente: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close(); // Cerrar el EntityManager
+            }
+        }
+        return cliente;
     }
-
+    /**
+     * Obtiene una lista de todos los clientes en la base de datos.
+     *
+     * @return Lista de todos los clientes.
+     */
     @Override
     public List<Cliente> obtenerClientes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManager em = null;
+        List<Cliente> clientes = null;
+        try {
+            em = conexion.getEntityManager(); // Obtener el EntityManager
+            clientes = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList(); // Consultar todos los clientes
+            LOG.info("Clientes obtenidos exitosamente.");
+        } catch (Exception e) {
+            LOG.severe("Error al obtener los clientes: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close(); // Cerrar el EntityManager
+            }
+        }
+        return clientes;
     }
     
 }

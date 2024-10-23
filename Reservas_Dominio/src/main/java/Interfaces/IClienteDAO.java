@@ -26,10 +26,10 @@ public interface IClienteDAO {
     /**
      * Obtiene los detalles de un cliente específico a partir de su objeto.
      * 
-     * @param cliente El objeto {@link Cliente} que se desea obtener.
-     *               Este objeto debe contener la información necesaria para identificar al cliente.
+     * @param id id del cliente.
+     * @return Cliente.
      */
-    public void obtenerCliente(Cliente cliente);
+    public Cliente obtenerCliente(Long id);
     
     /**
      * Recupera una lista de todos los clientes almacenados en la base de datos.

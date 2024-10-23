@@ -31,20 +31,6 @@ public interface IMesaDAO {
     public void agregarMesas(List<Mesa> mesas);
     
     /**
-     * Elimina una mesa específica de la base de datos.
-     * 
-     * @param mesa El objeto {@link Mesa} que se desea eliminar.
-     */
-    public void eliminarMesa(Mesa mesa);
-    
-    /**
-     * Actualiza la información de una mesa existente en la base de datos.
-     * 
-     * @param mesa El objeto {@link Mesa} que contiene la información actualizada de la mesa.
-     */
-    public void actualizarMesa(Mesa mesa);
-    
-    /**
      * Consulta y recupera una lista de todas las mesas almacenadas en la base de datos.
      * 
      * @return Una lista de objetos {@link Mesa} que representa todas las mesas.
@@ -52,24 +38,20 @@ public interface IMesaDAO {
     public List<Mesa> consultarMesas();
     
     /**
-     * Devuelve la cantidad de mesas pequeñas en la base de datos.
+     * Devuelve la cantidad de mesas dependiendo de su tipo;
      * 
      * @return El número de mesas clasificadas como pequeñas.
      */
-    public int cantidadMesasPequeñas();
+    public int cantidadMesasPorTipo(String tipo);
     
     /**
-     * Devuelve la cantidad de mesas medianas en la base de datos.
+     * Obtiene una lista de mesas dependiendo su tipo especidicado en el 
+     * parametro.
      * 
-     * @return El número de mesas clasificadas como medianas.
+     * @param tipo Tipo de mesa.
+     * @return Lista de mesas filtradas por tipo.
      */
-    public int cantidadMesasMedianas();
-    
-    /**
-     * Devuelve la cantidad de mesas grandes en la base de datos.
-     * 
-     * @return El número de mesas clasificadas como grandes.
-     */
-    public int cantidadMesasGrandes();
+    public List<Mesa> obtenerMesasPorTipo(String tipo);
+
 }
 

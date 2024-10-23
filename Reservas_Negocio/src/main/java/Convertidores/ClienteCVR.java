@@ -4,11 +4,14 @@
  */
 package Convertidores;
 
-import BO.ClienteBO;
 import DTO.ClienteDTO;
+import DTO.ReservaDTO;
 import Entidades.Cliente;
-import java.util.ArrayList;
+import Entidades.Reserva;
 import java.util.List;
+import java.util.stream.Collectors;
+
+
 
 /**
  *
@@ -16,75 +19,77 @@ import java.util.List;
  * @author sebastian
  */
 public class ClienteCVR {
+    
+    private ReservaCVR reservaCVR; // Convertidor de reserva
 
-    // Convertir de ClienteDTO a ClienteBO
-    public static ClienteBO convertirDTOABO(ClienteDTO clienteDTO) {
-        if (clienteDTO == null) {
-            return null;
-        }
-        ClienteBO clienteBO = new ClienteBO();
-        clienteBO.setNombreCompleto(clienteDTO.getNombreCompleto());
-        clienteBO.setTelefono(clienteDTO.getTelefono());
-        return clienteBO;
+    /**
+     * Constructor por defecto.
+     */
+    public ClienteCVR() {
+        this.reservaCVR = new ReservaCVR();
     }
-
-    // Convertir de ClienteBO a Cliente (Entidad)
-    public static Cliente convertirBOAEntidad(ClienteBO clienteBO) {
-        if (clienteBO == null) {
-            return null;
+            
+    /**
+     * Convierte todos los atributos de ClienteDTO a Cliente, 
+     * los elementos que pueden ser nulos como la lista de reservas se pasan 
+     * directamente como nulos en caso de serlo.
+     * 
+     * @param clienteDTO ClienteDTO a convertir.
+     * @return Cliente de tipo entidad.
+     */
+    public Cliente toEntity(ClienteDTO clienteDTO){
+        if (clienteDTO == null) {
+            return null; // Retorna null si el DTO es nulo
         }
+
         Cliente cliente = new Cliente();
-        cliente.setNombreCompleto(clienteBO.getNombreCompleto());
-        cliente.setTelefono(clienteBO.getTelefono());
-        // Las reservas no se convierten en este paso
+        cliente.setId(Long.valueOf(clienteDTO.getId())); // Asigna el ID
+        cliente.setNombre(clienteDTO.getNombre()); // Asigna el nombre
+        cliente.setTelefono(clienteDTO.getTelefono()); // Asigna el teléfono
+        
+        // Convierte la lista de reservas usando el convertidor
+        if (clienteDTO.getReservas() != null) {
+            List<Reserva> reservas = clienteDTO.getReservas()
+                                                 .stream()
+                                                 .map(reservaCVR::toEntity)
+                                                 .collect(Collectors.toList());
+            cliente.setReservas(reservas);
+        } else {
+            cliente.setReservas(null); // Asigna null si no hay reservas
+        }
+
         return cliente;
     }
 
-    // Convertir de Cliente a ClienteDTO
-    public static ClienteDTO convertirEntidadADTO(Cliente cliente) {
+    /**
+     * Convierte todos los atributos de Cliente a ClienteDTO, 
+     * los elementos que pueden ser nulos como la lista de reservas se pasan 
+     * directamente como nulos en caso de serlo.
+     * 
+     * @param cliente Cliente a convertir.
+     * @return ClienteDTO convertido.
+     */
+    public ClienteDTO toDTO(Cliente cliente){
         if (cliente == null) {
-            return null;
+            return null; // Retorna null si la entidad es nula
         }
+
         ClienteDTO clienteDTO = new ClienteDTO();
-        clienteDTO.setId(cliente.getId());
-        clienteDTO.setNombreCompleto(cliente.getNombreCompleto());
-        clienteDTO.setTelefono(cliente.getTelefono());
+        clienteDTO.setId(String.valueOf(cliente.getId())); // Asigna el ID
+        clienteDTO.setNombre(cliente.getNombre()); // Asigna el nombre
+        clienteDTO.setTelefono(cliente.getTelefono()); // Asigna el teléfono
+
+        // Convierte la lista de reservas usando el convertidor
+        if (cliente.getReservas() != null) {
+            List<ReservaDTO> reservasDTO = cliente.getReservas()
+                                                   .stream()
+                                                   .map(reservaCVR::toDTO)
+                                                   .collect(Collectors.toList());
+            clienteDTO.setReservas(reservasDTO);
+        } else {
+            clienteDTO.setReservas(null); // Asigna null si no hay reservas
+        }
+
         return clienteDTO;
-    }
-
-    // Convertir de ClienteDTO a Cliente (Entidad)
-    public static Cliente convertirDTOAEntidad(ClienteDTO clienteDTO) {
-        if (clienteDTO == null) {
-            return null;
-        }
-        Cliente cliente = new Cliente();
-        cliente.setId(clienteDTO.getId());
-        cliente.setNombreCompleto(clienteDTO.getNombreCompleto());
-        cliente.setTelefono(clienteDTO.getTelefono());
-        return cliente;
-    }
-
-    // Convertir una lista de ClienteDTO a ClienteBO
-    public static List<ClienteBO> convertirListaDTOABO(List<ClienteDTO> clienteDTOs) {
-        if (clienteDTOs == null || clienteDTOs.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<ClienteBO> clienteBOs = new ArrayList<>();
-        for (ClienteDTO clienteDTO : clienteDTOs) {
-            clienteBOs.add(convertirDTOABO(clienteDTO));
-        }
-        return clienteBOs;
-    }
-
-    // Convertir una lista de Cliente a ClienteDTO
-    public static List<ClienteDTO> convertirListaEntidadADTO(List<Cliente> clientes) {
-        if (clientes == null || clientes.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<ClienteDTO> clienteDTOs = new ArrayList<>();
-        for (Cliente cliente : clientes) {
-            clienteDTOs.add(convertirEntidadADTO(cliente));
-        }
-        return clienteDTOs;
     }
 }

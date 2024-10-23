@@ -4,99 +4,90 @@
  */
 package Convertidores;
 
-import BO.RestauranteBO;
+
+import DTO.MesaDTO;
 import DTOs.RestauranteDTO;
+import Entidades.Mesa;
 import Entidades.Restaurante;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author skevi
- * @author sebastian
- */
 public class RestauranteCVR {
+    
+    private final MesaCVR mesaCVR; // convertidor de mesa
 
     /**
-     * Convierte de RestauranteBO a Restaurante.
-     *
-     * @param restauranteBO Objeto de negocio que contiene los datos del
-     * restaurante.
-     * @return Objeto Restaurante con los datos del RestauranteBO.
+     * Constructor por defecto.
      */
-    public static Restaurante convertirBOAEntidad(RestauranteBO restauranteBO) {
-        if (restauranteBO == null) {
-            throw new IllegalArgumentException("El objeto RestauranteBO no puede ser nulo.");
-        }
-
-        Restaurante restaurante = new Restaurante();
-        restaurante.setId(restauranteBO.getId());
-        restaurante.setNombre(restauranteBO.getNombre());
-        restaurante.setDireccion(restauranteBO.getDireccion());
-        restaurante.setTelefono(restauranteBO.getTelefono());
-        // No se incluyen email y datos de contacto encriptados
-        return restaurante;
+    public RestauranteCVR() {
+        this.mesaCVR = new MesaCVR();
     }
-
+    
     /**
-     * Convierte de Restaurante a RestauranteBO.
-     *
-     * @param restaurante Objeto entidad que contiene los datos del restaurante.
-     * @return Objeto RestauranteBO con los datos de la entidad Restaurante.
+     * Convierte todos los atributos de RestauranteDTO a Restaurante, los elementos que 
+     * pueden ser nulos como la lista de mesas se pasan directamente como 
+     * nulos en caso de serlo.
+     * 
+     * @param restauranteDTO RestauranteDTO a convertir.
+     * @return Restaurante de tipo entidad.
      */
-    public static RestauranteBO convertirEntidadABO(Restaurante restaurante) {
-        if (restaurante == null) {
-            throw new IllegalArgumentException("El objeto Restaurante no puede ser nulo.");
-        }
-
-        RestauranteBO restauranteBO = new RestauranteBO();
-        restauranteBO.setId(restaurante.getId());
-        restauranteBO.setNombre(restaurante.getNombre());
-        restauranteBO.setDireccion(restaurante.getDireccion());
-        restauranteBO.setTelefono(restaurante.getTelefono());
-        // No se incluyen email y datos de contacto encriptados
-        return restauranteBO;
-    }
-
-    /**
-     * Convierte de RestauranteDTO a Restaurante.
-     *
-     * @param restauranteDTO Objeto DTO que contiene los datos del restaurante.
-     * @return Objeto Restaurante con los datos del RestauranteDTO.
-     */
-    public static Restaurante convertirDTOAEntidad(RestauranteDTO restauranteDTO) {
+    public Restaurante toEntity(RestauranteDTO restauranteDTO) {
         if (restauranteDTO == null) {
-            throw new IllegalArgumentException("El objeto RestauranteDTO no puede ser nulo.");
+            return null;
         }
 
         Restaurante restaurante = new Restaurante();
-        restaurante.setId(restauranteDTO.getId());
+        restaurante.setId(Long.valueOf(restauranteDTO.getId()));
         restaurante.setNombre(restauranteDTO.getNombre());
         restaurante.setDireccion(restauranteDTO.getDireccion());
         restaurante.setTelefono(restauranteDTO.getTelefono());
         restaurante.setHoraApertura(restauranteDTO.getHoraApertura());
         restaurante.setHoraCierre(restauranteDTO.getHoraCierre());
 
+        // Convertir la lista de mesas
+        if (restauranteDTO.getMesas() != null) {
+            List<Mesa> mesas = new ArrayList<>();
+            for (MesaDTO mesaDTO : restauranteDTO.getMesas()) {
+                mesas.add(mesaCVR.toEntity(mesaDTO));
+            }
+            restaurante.setMesas(mesas);
+        }
+        
         return restaurante;
     }
 
     /**
-     * Convierte de Restaurante a RestauranteDTO.
-     *
-     * @param restaurante Objeto entidad que contiene los datos del restaurante.
-     * @return Objeto RestauranteDTO con los datos de la entidad Restaurante.
+     * Convierte todos los atributos de Restaurante a RestauranteDTO, los elementos que 
+     * pueden ser nulos como la lista de mesas se pasan directamente como 
+     * nulos en caso de serlo.
+     * 
+     * @param restaurante Restaurante a convertir.
+     * @return RestauranteDTO convertida en DTO.
      */
-    public static RestauranteDTO convertirEntidadADTO(Restaurante restaurante) {
+    public RestauranteDTO toDTO(Restaurante restaurante) {
         if (restaurante == null) {
-            throw new IllegalArgumentException("El objeto Restaurante no puede ser nulo.");
+            return null;
         }
 
         RestauranteDTO restauranteDTO = new RestauranteDTO();
-        restauranteDTO.setId(restaurante.getId());
+        restauranteDTO.setId(String.valueOf(restaurante.getId()));
         restauranteDTO.setNombre(restaurante.getNombre());
         restauranteDTO.setDireccion(restaurante.getDireccion());
         restauranteDTO.setTelefono(restaurante.getTelefono());
         restauranteDTO.setHoraApertura(restaurante.getHoraApertura());
         restauranteDTO.setHoraCierre(restaurante.getHoraCierre());
 
+        // Convertir la lista de mesas
+        if (restaurante.getMesas() != null) {
+            List<MesaDTO> mesasDTO = new ArrayList<>();
+            for (Mesa mesa : restaurante.getMesas()) {
+                mesasDTO.add(mesaCVR.toDTO(mesa));
+            }
+            restauranteDTO.setMesas(mesasDTO);
+        }
+        
         return restauranteDTO;
     }
+    
 }
+

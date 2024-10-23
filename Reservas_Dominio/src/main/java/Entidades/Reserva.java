@@ -114,7 +114,6 @@ public class Reserva implements Serializable{
         this.mesa = mesa;
         this.restaurante = restaurante;
     }
-    
 
     //Getters y Setters
     

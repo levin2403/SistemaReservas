@@ -24,31 +24,34 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "mesas")
-public class Mesa implements Serializable{
-    
+public class Mesa implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "codigo_mesa",nullable = false, unique = true)
+    @Column(name = "codigo_mesa", nullable = false, unique = true)
     private String codigoMesa;
 
     @Column(name = "tipo_mesa", nullable = false)
-    private String tipoMesa; // Ejemplo: pequeña, mediana, grande
+    private String tipoMesa;
+
+    @Column(name = "capacidad_minima", nullable = false)
+    private int capacidadMinima;
+    
+    @Column(name = "capacidad_maxima", nullable = false)
+    private int capacidadMaxima;
 
     @Column(nullable = false)
-    private int capacidad;
-
-    @Column(nullable = false)
-    private String ubicacion; // Ejemplo: terraza, ventana, general
+    private String ubicacion;
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
-    private Restaurante restaurante;
+    private Restaurante restaurante;  
 
-    @OneToMany(mappedBy = "mesas", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "mesa", cascade = CascadeType.PERSIST)
     private List<Reserva> reservas;
 
     /**
@@ -57,24 +60,44 @@ public class Mesa implements Serializable{
     public Mesa() {
     }
 
-    public Mesa(String codigoMesa, String tipoMesa, int capacidad, 
-            String ubicacion, Restaurante restaurante, 
-            List<Reserva> reservas) {
+    /**
+     * 
+     * @param codigoMesa
+     * @param tipoMesa
+     * @param capacidadMinima
+     * @param capacidadMaxima
+     * @param ubicacion
+     * @param restaurante
+     */
+    public Mesa(String codigoMesa, String tipoMesa, int capacidadMinima,
+            int capacidadMaxima, String ubicacion, Restaurante restaurante) {
         this.codigoMesa = codigoMesa;
         this.tipoMesa = tipoMesa;
-        this.capacidad = capacidad;
+        this.capacidadMinima = capacidadMinima;
+        this.capacidadMaxima = capacidadMaxima;
         this.ubicacion = ubicacion;
         this.restaurante = restaurante;
-        this.reservas = reservas;
     }
 
+    /**
+     * 
+     * @param id
+     * @param codigoMesa
+     * @param tipoMesa
+     * @param capacidadMinima
+     * @param capacidadMaxima
+     * @param ubicacion
+     * @param restaurante
+     * @param reservas 
+     */
     public Mesa(Long id, String codigoMesa, String tipoMesa, 
-            int capacidad, String ubicacion, Restaurante restaurante, 
+            int capacidadMinima, int capacidadMaxima, String ubicacion, Restaurante restaurante, 
             List<Reserva> reservas) {
         this.id = id;
         this.codigoMesa = codigoMesa;
         this.tipoMesa = tipoMesa;
-        this.capacidad = capacidad;
+        this.capacidadMinima = capacidadMinima;
+        this.capacidadMaxima = capacidadMaxima;
         this.ubicacion = ubicacion;
         this.restaurante = restaurante;
         this.reservas = reservas;
@@ -106,12 +129,20 @@ public class Mesa implements Serializable{
         this.tipoMesa = tipoMesa;
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    public int getCapacidadMinima() {
+        return capacidadMinima;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void setCapacidadMinima(int capacidadMinima) {
+        this.capacidadMinima = capacidadMinima;
+    }
+
+    public int getCapacidadMaxima() {
+        return capacidadMaxima;
+    }
+
+    public void setCapacidadMaxima(int capacidadMaxima) {
+        this.capacidadMaxima = capacidadMaxima;
     }
 
     public String getUbicacion() {
@@ -141,9 +172,11 @@ public class Mesa implements Serializable{
     @Override
     public String toString() {
         return "Mesa{" + "id=" + id + ", codigoMesa=" + codigoMesa + 
-                ", tipoMesa=" + tipoMesa + ", capacidad=" + capacidad + 
+                ", tipoMesa=" + tipoMesa + ", capacidadMinima=" + 
+                capacidadMinima + ", capacidadMaxima=" + capacidadMaxima + 
                 ", ubicacion=" + ubicacion + ", restaurante=" + restaurante + 
                 ", reservas=" + reservas + '}';
     }
+
         
 }

@@ -9,6 +9,7 @@ import Entidades.Restaurante;
 import Interfaces.IRestauranteDAO;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -56,8 +57,32 @@ public class RestauranteDAO implements IRestauranteDAO{
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public Restaurante consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManager em = null;
+        Restaurante restaurante = null;
+        try {
+            em = conexion.getEntityManager(); // Obtener el EntityManager
+            // Consultar el único restaurante existente en la base de datos
+            restaurante = em.createQuery("SELECT r FROM Restaurante r", Restaurante.class)
+                            .setMaxResults(1) // Asegurar que solo se obtiene un resultado
+                            .getSingleResult(); // Obtener el único restaurante
+
+            LOG.info("Restaurante obtenido con éxito: " + restaurante);
+        } catch (NoResultException e) {
+            LOG.warning("No se encontró ningún restaurante en la base de datos.");
+        } catch (Exception e) {
+            LOG.severe("Error al obtener el restaurante: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close(); // Cerrar el EntityManager
+            }
+        }
+        return restaurante;
     }
 }
