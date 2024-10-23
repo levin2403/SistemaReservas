@@ -49,7 +49,7 @@ public class Mesa implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
-    private Restaurante restaurante;  // Este campo coincide con el 'mappedBy' en Restaurante
+    private Restaurante restaurante;  
 
     @OneToMany(mappedBy = "mesa", cascade = CascadeType.PERSIST)
     private List<Reserva> reservas;

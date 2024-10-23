@@ -8,10 +8,12 @@ import Conexion.Conexion;
 import Entidades.Reserva;
 import Interfaces.IReservaDAO;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -67,13 +69,13 @@ public class ReservaDAO implements IReservaDAO{
      * @return 
      */
     @Override
-    public List<Reserva> consultarPorFecha(LocalDate inicio, LocalDate fin) {
+    public List<Reserva> consultarPorFecha(LocalDateTime inicio, LocalDateTime fin) {
         EntityManager em = null;
             List<Reserva> reservas = null;
             try {
                 em = conexion.getEntityManager(); // Obtener el EntityManager
                 reservas = em.createQuery("SELECT r FROM Reserva r WHERE "
-                        + "r.fecha BETWEEN :inicio AND :fin", Reserva.class)
+                        + "r.fechaHoraReserva BETWEEN :inicio AND :fin", Reserva.class)
                              .setParameter("inicio", inicio)
                              .setParameter("fin", fin)
                              .getResultList(); // Ejecutar la consulta
@@ -90,10 +92,48 @@ public class ReservaDAO implements IReservaDAO{
             return reservas; // Devolver la lista de reservas    }
     }
 
+    /**
+     * Busca las reservaciones echas en un dia especifico.
+     * 
+     * @param dia
+     * @return 
+     */
     @Override
-    public List<Reserva> consultarPorDia(LocalDate dia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Reserva> consultarPorDia(LocalDateTime dia) {
+        EntityManager em = null;
+        List<Reserva> reservas = null;
+
+        try {
+            em = conexion.getEntityManager();
+
+            // Definir el rango de tiempo para todo el día
+            LocalDateTime inicioDia = dia.toLocalDate().atStartOfDay(); // 00:00:00 de ese día
+            LocalDateTime finDia = dia.toLocalDate().atTime(23, 59, 59); // 23:59:59 de ese día
+
+            // Crear la consulta JPQL para obtener todas las reservas en ese rango de tiempo
+            TypedQuery<Reserva> query = em.createQuery(
+                "SELECT r FROM Reserva r WHERE r.fechaHoraReserva BETWEEN :inicioDia AND :finDia", 
+                Reserva.class
+            );
+
+            // Establecer los parámetros de fecha/hora
+            query.setParameter("inicioDia", inicioDia);
+            query.setParameter("finDia", finDia);
+
+            // Obtener la lista de resultados
+            reservas = query.getResultList();
+
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error al consultar reservas por d\u00eda: {0}", e.getMessage());
+        } finally {
+            if (em != null) {
+                em.close(); // Cerrar el EntityManager
+            }
+        }
+
+        return reservas;
     }
+
 
 
 

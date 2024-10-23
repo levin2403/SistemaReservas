@@ -4,7 +4,7 @@
  */
 package Convertidores;
 
-import BO.RestauranteBO;
+
 import DTOs.RestauranteDTO;
 import Entidades.Restaurante;
 
@@ -14,89 +14,25 @@ import Entidades.Restaurante;
  * @author sebastian
  */
 public class RestauranteCVR {
-
+    
     /**
-     * Convierte de RestauranteBO a Restaurante.
-     *
-     * @param restauranteBO Objeto de negocio que contiene los datos del
-     * restaurante.
-     * @return Objeto Restaurante con los datos del RestauranteBO.
+     * Convierte una MesaDTO a una Mesa de tipo entidad.
+     * 
+     * @param restauranteDTO MesaDTO a convertir.
+     * @return Restaurante de tipo entidad.
      */
-    public static Restaurante convertirBOAEntidad(RestauranteBO restauranteBO) {
-        if (restauranteBO == null) {
-            throw new IllegalArgumentException("El objeto RestauranteBO no puede ser nulo.");
-        }
-
-        Restaurante restaurante = new Restaurante();
-        restaurante.setId(restauranteBO.getId());
-        restaurante.setNombre(restauranteBO.getNombre());
-        restaurante.setDireccion(restauranteBO.getDireccion());
-        restaurante.setTelefono(restauranteBO.getTelefono());
-        // No se incluyen email y datos de contacto encriptados
-        return restaurante;
+    public Restaurante toEntity(RestauranteDTO restauranteDTO){
+        return null;
     }
 
     /**
-     * Convierte de Restaurante a RestauranteBO.
-     *
-     * @param restaurante Objeto entidad que contiene los datos del restaurante.
-     * @return Objeto RestauranteBO con los datos de la entidad Restaurante.
+     * Convierte una mesa de tipo entidad a una MesaDTO.
+     * 
+     * @param restaurante Mesa a convertir.
+     * @return RestauranteDTO convertida en DTO.
      */
-    public static RestauranteBO convertirEntidadABO(Restaurante restaurante) {
-        if (restaurante == null) {
-            throw new IllegalArgumentException("El objeto Restaurante no puede ser nulo.");
-        }
-
-        RestauranteBO restauranteBO = new RestauranteBO();
-        restauranteBO.setId(restaurante.getId());
-        restauranteBO.setNombre(restaurante.getNombre());
-        restauranteBO.setDireccion(restaurante.getDireccion());
-        restauranteBO.setTelefono(restaurante.getTelefono());
-        // No se incluyen email y datos de contacto encriptados
-        return restauranteBO;
+    public RestauranteDTO toDTO(Restaurante restaurante){
+        return null;
     }
 
-    /**
-     * Convierte de RestauranteDTO a Restaurante.
-     *
-     * @param restauranteDTO Objeto DTO que contiene los datos del restaurante.
-     * @return Objeto Restaurante con los datos del RestauranteDTO.
-     */
-    public static Restaurante convertirDTOAEntidad(RestauranteDTO restauranteDTO) {
-        if (restauranteDTO == null) {
-            throw new IllegalArgumentException("El objeto RestauranteDTO no puede ser nulo.");
-        }
-
-        Restaurante restaurante = new Restaurante();
-        restaurante.setId(restauranteDTO.getId());
-        restaurante.setNombre(restauranteDTO.getNombre());
-        restaurante.setDireccion(restauranteDTO.getDireccion());
-        restaurante.setTelefono(restauranteDTO.getTelefono());
-        restaurante.setHoraApertura(restauranteDTO.getHoraApertura());
-        restaurante.setHoraCierre(restauranteDTO.getHoraCierre());
-
-        return restaurante;
-    }
-
-    /**
-     * Convierte de Restaurante a RestauranteDTO.
-     *
-     * @param restaurante Objeto entidad que contiene los datos del restaurante.
-     * @return Objeto RestauranteDTO con los datos de la entidad Restaurante.
-     */
-    public static RestauranteDTO convertirEntidadADTO(Restaurante restaurante) {
-        if (restaurante == null) {
-            throw new IllegalArgumentException("El objeto Restaurante no puede ser nulo.");
-        }
-
-        RestauranteDTO restauranteDTO = new RestauranteDTO();
-        restauranteDTO.setId(restaurante.getId());
-        restauranteDTO.setNombre(restaurante.getNombre());
-        restauranteDTO.setDireccion(restaurante.getDireccion());
-        restauranteDTO.setTelefono(restaurante.getTelefono());
-        restauranteDTO.setHoraApertura(restaurante.getHoraApertura());
-        restauranteDTO.setHoraCierre(restaurante.getHoraCierre());
-
-        return restauranteDTO;
-    }
 }
