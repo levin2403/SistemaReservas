@@ -1,63 +1,45 @@
 package BO;
 
-public class MesaBO {
+import DAO.MesaDAO;
+import DTO.MesaDTO;
+import Interfaces.IMesaBO;
+import Interfaces.IMesaDAO;
+import java.util.List;
 
-    private Long id;
-    private int capacidad;
-    private String codigoMesa;
-    private String estado;
-    private Long restauranteId;
+public class MesaBO implements IMesaBO {
+    
+    IMesaDAO mesaDAO;
 
+    /**
+     * 
+     */
     public MesaBO() {
+        this.mesaDAO = new MesaDAO();    
     }
 
-    public MesaBO(Long id, int capacidad, String codigoMesa, String estado,
-            Long restauranteId) {
-        this.id = id;
-        this.capacidad = capacidad;
-        this.codigoMesa = codigoMesa;
-        this.estado = estado;
-        this.restauranteId = restauranteId;
+    @Override
+    public void agregarMesa(MesaDTO mesa) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public void agregarMesas(List<MesaDTO> mesas) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public List<MesaDTO> consultarMesas() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    @Override
+    public int cantidadMesasPorTipo(String tipo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public String getCodigoMesa() {
-        return codigoMesa;
-    }
-
-    public void setCodigoMesa(String codigoMesa) {
-        this.codigoMesa = codigoMesa;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Long getRestauranteId() {
-        return restauranteId;
-    }
-
-    public void setRestauranteId(Long restauranteId) {
-        this.restauranteId = restauranteId;
+    @Override
+    public List<MesaDTO> obtenerMesasPorTipo(String tipo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

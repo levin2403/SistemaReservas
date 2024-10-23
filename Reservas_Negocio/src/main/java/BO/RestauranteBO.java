@@ -1,73 +1,24 @@
 package BO;
 
-public class RestauranteBO {
+import DAO.RestauranteDAO;
+import DTOs.RestauranteDTO;
+import Interfaces.IRestauranteBO;
+import Interfaces.IRestauranteDAO;
 
-    private Long id;
-    private String nombre;
-    private String direccion;
-    private String telefono;
-    private String email;
-    private String datosContactoEncriptados;
+public class RestauranteBO implements IRestauranteBO {
+    
+    private final IRestauranteDAO restauranteDAO;
 
-    public RestauranteBO() {}
-
-    public RestauranteBO(Long id, String nombre, String direccion, String telefono, 
-                         String email, String datosContactoEncriptados) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-        this.datosContactoEncriptados = datosContactoEncriptados;
+    /**
+     * 
+     */
+    public RestauranteBO() {
+        this.restauranteDAO = new RestauranteDAO();
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public RestauranteDTO consultar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDatosContactoEncriptados() {
-        return datosContactoEncriptados;
-    }
-
-    public void setDatosContactoEncriptados(String datosContactoEncriptados) {
-        this.datosContactoEncriptados = datosContactoEncriptados;
-    }
-
-  
 }
