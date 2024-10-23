@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RestauranteDTO {
 
-    private Long id; // identificador del restaurante
+    private String id; // identificador del restaurante
     private String nombre; // nombre del restaurante
     private String direccion; // direccion del restaurante
     private String telefono; // telefono del restaurante
@@ -37,7 +37,7 @@ public class RestauranteDTO {
         this.horaCierre = horaCierre;
     }
 
-    public RestauranteDTO(Long id, String nombre, String direccion, 
+    public RestauranteDTO(String id, String nombre, String direccion, 
             String telefono, LocalTime horaApertura, LocalTime horaCierre, 
             List<MesaDTO> mesas) {
         this.id = id;
@@ -51,11 +51,11 @@ public class RestauranteDTO {
 
     // Getters y Setters
     
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

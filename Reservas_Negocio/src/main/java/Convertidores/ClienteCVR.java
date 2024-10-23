@@ -43,7 +43,7 @@ public class ClienteCVR {
         }
 
         Cliente cliente = new Cliente();
-        cliente.setId(clienteDTO.getId()); // Asigna el ID
+        cliente.setId(Long.valueOf(clienteDTO.getId())); // Asigna el ID
         cliente.setNombre(clienteDTO.getNombre()); // Asigna el nombre
         cliente.setTelefono(clienteDTO.getTelefono()); // Asigna el teléfono
         
@@ -75,7 +75,7 @@ public class ClienteCVR {
         }
 
         ClienteDTO clienteDTO = new ClienteDTO();
-        clienteDTO.setId(cliente.getId()); // Asigna el ID
+        clienteDTO.setId(String.valueOf(cliente.getId())); // Asigna el ID
         clienteDTO.setNombre(cliente.getNombre()); // Asigna el nombre
         clienteDTO.setTelefono(cliente.getTelefono()); // Asigna el teléfono
 
