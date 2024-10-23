@@ -26,21 +26,290 @@ public class Admistrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        panelRound1 = new Control.PanelRound();
+        jLabel7 = new javax.swing.JLabel();
+        panelRound3 = new Control.PanelRound();
+        jLabel1 = new javax.swing.JLabel();
+        reservacionPn = new Control.PanelRound();
+        jLabel2 = new javax.swing.JLabel();
+        reportePn = new Control.PanelRound();
+        jLabel3 = new javax.swing.JLabel();
+        consultasPn = new Control.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
+        cancelarReservaPn = new Control.PanelRound();
+        jLabel5 = new javax.swing.JLabel();
+        Salir = new Control.PanelRound();
+        jLabel6 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound1.setBackground(new java.awt.Color(51, 51, 51));
+        panelRound1.setRoundBottomLeft(50);
+        panelRound1.setRoundBottomRight(50);
+        panelRound1.setRoundTopLeft(50);
+        panelRound1.setRoundTopRight(50);
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Administrador del Restaurante");
+
+        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
+        panelRound1.setLayout(panelRound1Layout);
+        panelRound1Layout.setHorizontalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
+                .addContainerGap(148, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(129, 129, 129))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        panelRound1Layout.setVerticalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
+
+        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(248, 82, 760, -1));
+
+        panelRound3.setBackground(new java.awt.Color(51, 51, 51));
+        panelRound3.setToolTipText("");
+        panelRound3.setRoundBottomLeft(50);
+        panelRound3.setRoundBottomRight(50);
+        panelRound3.setRoundTopLeft(50);
+        panelRound3.setRoundTopRight(50);
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Agregar Mesas");
+
+        javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
+        panelRound3.setLayout(panelRound3Layout);
+        panelRound3Layout.setHorizontalGroup(
+            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound3Layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(48, 48, 48))
+        );
+        panelRound3Layout.setVerticalGroup(
+            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, -1, -1));
+
+        reservacionPn.setBackground(new java.awt.Color(51, 51, 51));
+        reservacionPn.setToolTipText("");
+        reservacionPn.setRoundBottomLeft(50);
+        reservacionPn.setRoundBottomRight(50);
+        reservacionPn.setRoundTopLeft(50);
+        reservacionPn.setRoundTopRight(50);
+        reservacionPn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reservacionPnMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Reservacion");
+
+        javax.swing.GroupLayout reservacionPnLayout = new javax.swing.GroupLayout(reservacionPn);
+        reservacionPn.setLayout(reservacionPnLayout);
+        reservacionPnLayout.setHorizontalGroup(
+            reservacionPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reservacionPnLayout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(69, 69, 69))
+        );
+        reservacionPnLayout.setVerticalGroup(
+            reservacionPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reservacionPnLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(reservacionPn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, 330, -1));
+
+        reportePn.setBackground(new java.awt.Color(51, 51, 51));
+        reportePn.setToolTipText("");
+        reportePn.setRoundBottomLeft(50);
+        reportePn.setRoundBottomRight(50);
+        reportePn.setRoundTopLeft(50);
+        reportePn.setRoundTopRight(50);
+        reportePn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportePnMouseClicked(evt);
+            }
+        });
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Reporte");
+
+        javax.swing.GroupLayout reportePnLayout = new javax.swing.GroupLayout(reportePn);
+        reportePn.setLayout(reportePnLayout);
+        reportePnLayout.setHorizontalGroup(
+            reportePnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reportePnLayout.createSequentialGroup()
+                .addContainerGap(102, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
+        );
+        reportePnLayout.setVerticalGroup(
+            reportePnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reportePnLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(reportePn, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 370, 330, -1));
+
+        consultasPn.setBackground(new java.awt.Color(51, 51, 51));
+        consultasPn.setToolTipText("");
+        consultasPn.setRoundBottomLeft(50);
+        consultasPn.setRoundBottomRight(50);
+        consultasPn.setRoundTopLeft(50);
+        consultasPn.setRoundTopRight(50);
+        consultasPn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consultasPnMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Consultas");
+
+        javax.swing.GroupLayout consultasPnLayout = new javax.swing.GroupLayout(consultasPn);
+        consultasPn.setLayout(consultasPnLayout);
+        consultasPnLayout.setHorizontalGroup(
+            consultasPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(consultasPnLayout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(jLabel4)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+        consultasPnLayout.setVerticalGroup(
+            consultasPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(consultasPnLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(consultasPn, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 480, 330, -1));
+
+        cancelarReservaPn.setBackground(new java.awt.Color(51, 51, 51));
+        cancelarReservaPn.setToolTipText("");
+        cancelarReservaPn.setRoundBottomLeft(50);
+        cancelarReservaPn.setRoundBottomRight(50);
+        cancelarReservaPn.setRoundTopLeft(50);
+        cancelarReservaPn.setRoundTopRight(50);
+        cancelarReservaPn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelarReservaPnMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Cancelar Reserva");
+
+        javax.swing.GroupLayout cancelarReservaPnLayout = new javax.swing.GroupLayout(cancelarReservaPn);
+        cancelarReservaPn.setLayout(cancelarReservaPnLayout);
+        cancelarReservaPnLayout.setHorizontalGroup(
+            cancelarReservaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cancelarReservaPnLayout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(28, 28, 28))
+        );
+        cancelarReservaPnLayout.setVerticalGroup(
+            cancelarReservaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cancelarReservaPnLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(cancelarReservaPn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 330, -1));
+
+        Salir.setBackground(new java.awt.Color(51, 51, 51));
+        Salir.setToolTipText("");
+        Salir.setRoundBottomLeft(50);
+        Salir.setRoundBottomRight(50);
+        Salir.setRoundTopLeft(50);
+        Salir.setRoundTopRight(50);
+        Salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SalirMouseClicked(evt);
+            }
+        });
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Salir");
+
+        javax.swing.GroupLayout SalirLayout = new javax.swing.GroupLayout(Salir);
+        Salir.setLayout(SalirLayout);
+        SalirLayout.setHorizontalGroup(
+            SalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SalirLayout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(jLabel6)
+                .addContainerGap(131, Short.MAX_VALUE))
+        );
+        SalirLayout.setVerticalGroup(
+            SalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SalirLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 590, 330, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void reservacionPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservacionPnMouseClicked
+        new Principal().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_reservacionPnMouseClicked
+
+    private void cancelarReservaPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarReservaPnMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelarReservaPnMouseClicked
+
+    private void reportePnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportePnMouseClicked
+        new Reportes().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_reportePnMouseClicked
+
+    private void consultasPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultasPnMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_consultasPnMouseClicked
+
+    private void SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -78,5 +347,20 @@ public class Admistrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Control.PanelRound Salir;
+    private Control.PanelRound cancelarReservaPn;
+    private Control.PanelRound consultasPn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private Control.PanelRound panelRound1;
+    private Control.PanelRound panelRound2;
+    private Control.PanelRound panelRound3;
+    private Control.PanelRound reportePn;
+    private Control.PanelRound reservacionPn;
     // End of variables declaration//GEN-END:variables
 }

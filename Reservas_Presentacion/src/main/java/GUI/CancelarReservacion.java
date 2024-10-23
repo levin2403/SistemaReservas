@@ -8,12 +8,12 @@ package GUI;
  *
  * @author osval
  */
-public class Principal extends javax.swing.JFrame {
+public class CancelarReservacion extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public CancelarReservacion() {
         initComponents();
     }
 
@@ -36,15 +36,9 @@ public class Principal extends javax.swing.JFrame {
         cancelarBtn = new javax.swing.JButton();
         fechaReservaCB = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        numeroPersonasTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         horaReservaCB = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        estadoTxt = new javax.swing.JTextField();
-        costoTxt = new javax.swing.JTextField();
         nombreClienteCB = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -99,23 +93,23 @@ public class Principal extends javax.swing.JFrame {
         Titulo.setBackground(new java.awt.Color(255, 255, 255));
         Titulo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 36)); // NOI18N
         Titulo.setForeground(new java.awt.Color(255, 255, 255));
-        Titulo.setText("Reservaciones");
+        Titulo.setText("Cancelar Reservaciones");
 
         javax.swing.GroupLayout tituloPanelLayout = new javax.swing.GroupLayout(tituloPanel);
         tituloPanel.setLayout(tituloPanelLayout);
         tituloPanelLayout.setHorizontalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tituloPanelLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(56, 56, 56)
                 .addComponent(Titulo)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         tituloPanelLayout.setVerticalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tituloPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(28, 28, 28)
                 .addComponent(Titulo)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         getContentPane().add(tituloPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 46, 480, 110));
@@ -127,24 +121,24 @@ public class Principal extends javax.swing.JFrame {
         confirmarBtn.setBackground(new java.awt.Color(102, 102, 102));
         confirmarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         confirmarBtn.setForeground(new java.awt.Color(255, 255, 255));
-        confirmarBtn.setText("Confirmar");
+        confirmarBtn.setText("Eliminar");
         confirmarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(confirmarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 650, 140, 50));
+        Fondo.add(confirmarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 140, 50));
 
         cancelarBtn.setBackground(new java.awt.Color(102, 102, 102));
         cancelarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         cancelarBtn.setForeground(new java.awt.Color(255, 255, 255));
-        cancelarBtn.setText("Cancelar");
+        cancelarBtn.setText("Regresar");
         cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(cancelarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 650, 140, 50));
+        Fondo.add(cancelarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 140, 50));
 
         fechaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Fondo.add(fechaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 300, 40));
@@ -155,19 +149,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setText("Fecha de reservación");
         Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Costo");
-        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, -1, -1));
-
-        numeroPersonasTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numeroPersonasTxtActionPerformed(evt);
-            }
-        });
-        Fondo.add(numeroPersonasTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 320, 300, 40));
-
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,28 +158,14 @@ public class Principal extends javax.swing.JFrame {
         horaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Fondo.add(horaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 300, 40));
 
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Disponibilidad");
-        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, -1));
-
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Nombre del cliente");
-        Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
-
-        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Numero de personas");
-        Fondo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
-        Fondo.add(estadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, 300, 40));
-        Fondo.add(costoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 300, 40));
+        Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, -1));
 
         nombreClienteCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Fondo.add(nombreClienteCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 300, 40));
+        Fondo.add(nombreClienteCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 300, 40));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -206,38 +173,28 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_confirmarBtnActionPerformed
-
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
-    private void numeroPersonasTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroPersonasTxtActionPerformed
+    private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_numeroPersonasTxtActionPerformed
+    }//GEN-LAST:event_confirmarBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton cancelarBtn;
     private javax.swing.JButton confirmarBtn;
-    private javax.swing.JTextField costoTxt;
-    private javax.swing.JTextField estadoTxt;
     private javax.swing.JComboBox<String> fechaReservaCB;
     private javax.swing.JComboBox<String> horaReservaCB;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private Control.PanelRound mesasPanel;
     private javax.swing.JTable mesasTabla;
     private javax.swing.JComboBox<String> nombreClienteCB;
-    private javax.swing.JTextField numeroPersonasTxt;
     private Control.PanelRound tituloPanel;
     // End of variables declaration//GEN-END:variables
 }
