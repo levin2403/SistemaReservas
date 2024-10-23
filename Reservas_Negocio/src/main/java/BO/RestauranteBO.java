@@ -5,6 +5,10 @@ import DTOs.RestauranteDTO;
 import Interfaces.IRestauranteBO;
 import Interfaces.IRestauranteDAO;
 
+/**
+ * 
+ * @author skevi
+ */
 public class RestauranteBO implements IRestauranteBO {
     
     private final IRestauranteDAO restauranteDAO;

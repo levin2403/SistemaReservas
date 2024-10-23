@@ -6,6 +6,10 @@ import Interfaces.IMesaBO;
 import Interfaces.IMesaDAO;
 import java.util.List;
 
+/**
+ * 
+ * @author skevi
+ */
 public class MesaBO implements IMesaBO {
     
     IMesaDAO mesaDAO;

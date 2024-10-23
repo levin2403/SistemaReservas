@@ -7,7 +7,10 @@ import Interfaces.IReservaDAO;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
+/**
+ * 
+ * @author skevi
+ */
 public class ReservaBO implements IReservaBO {
     
     IReservaDAO reservaDAO;
