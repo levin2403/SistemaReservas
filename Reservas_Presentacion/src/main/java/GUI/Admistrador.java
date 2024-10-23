@@ -40,6 +40,7 @@ public class Admistrador extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         Salir = new Control.PanelRound();
         jLabel6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -285,12 +286,27 @@ public class Admistrador extends javax.swing.JFrame {
 
         getContentPane().add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 590, 330, -1));
 
+        jPanel1.setBackground(new java.awt.Color(29, 29, 29));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1280, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void reservacionPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservacionPnMouseClicked
-        new Principal().setVisible(true);
+        new Reservaciones().setVisible(true);
         dispose();
     }//GEN-LAST:event_reservacionPnMouseClicked
 
@@ -357,8 +373,8 @@ public class Admistrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private Control.PanelRound panelRound1;
-    private Control.PanelRound panelRound2;
     private Control.PanelRound panelRound3;
     private Control.PanelRound reportePn;
     private Control.PanelRound reservacionPn;
