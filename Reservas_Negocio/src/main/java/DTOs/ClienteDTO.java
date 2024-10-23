@@ -1,5 +1,7 @@
 package DTO;
 
+import java.util.List;
+
 /**
  * Objeto de transferencia de datos para el cliente.
  *
@@ -11,42 +13,55 @@ package DTO;
  */
 public class ClienteDTO {
 
-    private Long id;
-    private String nombreCompleto;
+    private String id;
+    private String nombre;
     private String telefono;
+    List<ReservaDTO> reservas;
 
     // Constructor por defecto
     public ClienteDTO() {
     }
 
-    // Constructor con parámetros sin id
-    public ClienteDTO(String nombreCompleto, String telefono) {
-        this.nombreCompleto = nombreCompleto;
+    /**
+     * 
+     * @param nombre
+     * @param telefono 
+     */
+    public ClienteDTO(String nombre, String telefono) {
+        this.nombre = nombre;
         this.telefono = telefono;
     }
 
-    // Constructor con parámetros
-    public ClienteDTO(Long id, String nombreCompleto, String telefono) {
+    /**
+     * 
+     * @param id
+     * @param nombre
+     * @param telefono
+     * @param reservas 
+     */
+    public ClienteDTO(String id, String nombre, String telefono, 
+            List<ReservaDTO> reservas) {
         this.id = id;
-        this.nombreCompleto = nombreCompleto;
+        this.nombre = nombre;
         this.telefono = telefono;
+        this.reservas = reservas;
     }
 
     // Getters y Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getTelefono() {
@@ -57,8 +72,19 @@ public class ClienteDTO {
         this.telefono = telefono;
     }
 
+    public List<ReservaDTO> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<ReservaDTO> reservas) {
+        this.reservas = reservas;
+    }
+
     @Override
     public String toString() {
-        return "ClienteDTO{" + "id=" + id + ", nombreCompleto=" + nombreCompleto + ", telefono=" + telefono + '}';
+        return "ClienteDTO{" + "id=" + id + ", nombreCompleto=" + 
+                nombre+ ", telefono=" + telefono + 
+                ", reservas=" + reservas + '}';
     }
+
 }

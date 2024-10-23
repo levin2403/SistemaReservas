@@ -14,8 +14,20 @@ import Entidades.Reserva;
  */
 public class ReservaCVR {
 
+    private final ClienteCVR clienteCVR; //convertidor de cliente
+    private final MesaCVR mesaCVR; // convertidor de mesa
+    private final RestauranteCVR restauranteCVR; //convertidor de restaurante
+
+    public ReservaCVR() {
+        this.clienteCVR = new ClienteCVR();
+        this.mesaCVR = new MesaCVR();
+        this.restauranteCVR = new RestauranteCVR();
+    }
+    
     /**
-     * Convierte una ReservaDTO a una Reserva de tipo entidad.
+     * Convierte todos los atributos de ReservaDTO a Reserva, los elementos que 
+     * puedan ser nulos se pasan directamente como nulos
+     * nulos en caso de serlo
      * 
      * @param reservaDTO ReservaDTO a convertir.
      * @return Mesa de tipo entidad.
@@ -25,7 +37,8 @@ public class ReservaCVR {
     }
 
     /**
-     * Convierte una Reserva de tipo entidad a una ReservaDTO.
+     * Convierte todos los atributos de Reserva a ReservaDTO, los elementos que 
+     * puedan ser nulos se pasan directamente como nulos
      * 
      * @param reserva Reservacion a convertir.
      * @return Reservacion convertida en DTO.

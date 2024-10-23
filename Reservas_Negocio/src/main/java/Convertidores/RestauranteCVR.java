@@ -15,8 +15,19 @@ import Entidades.Restaurante;
  */
 public class RestauranteCVR {
     
+    private final MesaCVR mesaCVR; // convertidor de mesa
+
     /**
-     * Convierte una MesaDTO a una Mesa de tipo entidad.
+     * 
+     */
+    public RestauranteCVR() {
+        this.mesaCVR = new MesaCVR();
+    }
+    
+    /**
+     * Convierte todos los atributos de RestauranteDTO a Restaurante, los elementos que 
+     * pueden ser nulos como la lista de mesas se pasan directamente como 
+     * nulos en caso de serlo
      * 
      * @param restauranteDTO MesaDTO a convertir.
      * @return Restaurante de tipo entidad.
@@ -26,7 +37,9 @@ public class RestauranteCVR {
     }
 
     /**
-     * Convierte una mesa de tipo entidad a una MesaDTO.
+     * Convierte todos los atributos de Restaurante a RestauranteDTO, los elementos que 
+     * pueden ser nulos como la lista de mesas se pasan directamente como 
+     * nulos en caso de serlo
      * 
      * @param restaurante Mesa a convertir.
      * @return RestauranteDTO convertida en DTO.

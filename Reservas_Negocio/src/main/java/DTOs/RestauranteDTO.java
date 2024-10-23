@@ -4,7 +4,9 @@
  */
 package DTOs;
 
+import DTO.MesaDTO;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  *
@@ -18,6 +20,7 @@ public class RestauranteDTO {
     private String telefono; // telefono del restaurante
     private LocalTime horaApertura; // Hora de apertura
     private LocalTime horaCierre;   // Hora de cierre
+    private List<MesaDTO> mesas;
 
     /**
      * 
@@ -25,16 +28,8 @@ public class RestauranteDTO {
     public RestauranteDTO() {
     }
 
-    /**
-     * 
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param horaApertura
-     * @param horaCierre 
-     */
-    public RestauranteDTO(String nombre, String direccion, String telefono, 
-            LocalTime horaApertura, LocalTime horaCierre) {
+    public RestauranteDTO(String nombre, String direccion, 
+            String telefono, LocalTime horaApertura, LocalTime horaCierre) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -42,23 +37,16 @@ public class RestauranteDTO {
         this.horaCierre = horaCierre;
     }
 
-    /**
-     * 
-     * @param id
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param horaApertura
-     * @param horaCierre 
-     */
     public RestauranteDTO(Long id, String nombre, String direccion, 
-            String telefono, LocalTime horaApertura, LocalTime horaCierre) {
+            String telefono, LocalTime horaApertura, LocalTime horaCierre, 
+            List<MesaDTO> mesas) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
+        this.mesas = mesas;
     }
 
     // Getters y Setters
@@ -109,6 +97,22 @@ public class RestauranteDTO {
 
     public void setHoraCierre(LocalTime horaCierre) {
         this.horaCierre = horaCierre;
+    }
+
+    public List<MesaDTO> getMesas() {
+        return mesas;
+    }
+
+    public void setMesas(List<MesaDTO> mesas) {
+        this.mesas = mesas;
+    }
+
+    @Override
+    public String toString() {
+        return "RestauranteDTO{" + "id=" + id + ", nombre=" + nombre + 
+                ", direccion=" + direccion + ", telefono=" + telefono + 
+                ", horaApertura=" + horaApertura + ", horaCierre=" + 
+                horaCierre + ", mesas=" + mesas + '}';
     }
 
 }
