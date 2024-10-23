@@ -36,7 +36,7 @@ public class Cliente implements Serializable{
     @Column(name = "telefono", nullable = false, unique = true)
     private String telefono; // telefono del cliente 
     
-    @OneToMany(mappedBy = "clientes", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST)
     private List<Reserva> reservas; // lista de reservas del cliente.
 
     /**
@@ -81,11 +81,11 @@ public class Cliente implements Serializable{
         this.id = id;
     }
 
-    public String getNombreCompleto() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombreCompleto(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 

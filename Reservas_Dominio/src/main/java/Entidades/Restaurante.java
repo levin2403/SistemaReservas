@@ -22,33 +22,31 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "restaurantes")
-public class Restaurante implements Serializable{
+public class Restaurante implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // id del restaurante.
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String nombre;
 
     @Column(nullable = false)
-    private String nombre; // Nombre del restaurante.
+    private String direccion;
 
     @Column(nullable = false)
-    private String direccion; // Direccion del restaurante.
-
-    @Column(nullable = false)
-    private String telefono; // telefono del restaurante.
+    private String telefono;
 
     @Column(name = "hora_apertura", nullable = false)
-    private LocalTime horaApertura; // Hora de apertura del restaurante. 
-                                    // Ejemplo: "10:00"
-    
-    @Column(name = "hora_cierre", nullable = false)
-    private LocalTime horaCierre; // Hora de cierre del restaurante. 
-                                  // Ejemplo: "22:00"
+    private LocalTime horaApertura;
 
-    @OneToMany(mappedBy = "restaurantes", cascade = CascadeType.PERSIST)
-    private List<Mesa> mesas; // Lista de mesas del restaurante.
+    @Column(name = "hora_cierre", nullable = false)
+    private LocalTime horaCierre;
+
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.PERSIST)
+    private List<Mesa> mesas;  // Aquí el mappedBy debe ser 'restaurante', que es la propiedad en la clase Mesa
 
 
     /**
