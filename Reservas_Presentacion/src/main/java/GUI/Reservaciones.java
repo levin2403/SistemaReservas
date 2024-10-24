@@ -16,7 +16,7 @@ public class Reservaciones extends javax.swing.JFrame {
 
     public Reservaciones() {
         initComponents();
-        cargarDatosMesas();
+//        cargarDatosMesas();
     }
 
     @SuppressWarnings("unchecked")

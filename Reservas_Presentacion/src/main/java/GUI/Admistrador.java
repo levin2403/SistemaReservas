@@ -299,7 +299,7 @@ public class Admistrador extends javax.swing.JFrame {
             .addGap(0, 720, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1280, 720));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1280, 720));
 
         pack();
         setLocationRelativeTo(null);
