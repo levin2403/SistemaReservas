@@ -10,4 +10,6 @@ package interfacesFachada;
  */
 public interface IReservaFCD {
     
+    public void agregarReserva();
+    
 }
