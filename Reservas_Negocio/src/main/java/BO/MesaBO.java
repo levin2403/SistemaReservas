@@ -35,6 +35,11 @@ public class MesaBO implements IMesaBO {
         this.mesaCVR = new MesaCVR();
     }
 
+    /**
+     * 
+     * @param mesas
+     * @throws BOException 
+     */
     @Override
     public void agregarMesas(List<MesaDTO> mesas) throws BOException {
         try{
@@ -44,18 +49,26 @@ public class MesaBO implements IMesaBO {
                 entidades.add(mesaCVR.toEntity(mesaDTO));
             }
            
+            LOG.log(Level.INFO, "Exito al agregar las mesas en BO");
+            
             mesaDAO.agregarMesas(entidades);
         }
         catch(DAOException de){
-            LOG.log(Level.SEVERE, "Error al agregar las mesas en BO");
+            LOG.log(Level.SEVERE, "Error al agregar las mesas en BO", de);
             throw new BOException(de.getMessage());
         } catch (ConversionException ex) {
-            Logger.getLogger(MesaBO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MesaBO.class.getName()).
+                    log(Level.SEVERE, null, ex);
             throw new BOException("Error al agregar las mesas en BO");
         }
       
     }
 
+    /**
+     * 
+     * @return
+     * @throws BOException 
+     */
     @Override
     public List<MesaDTO> consultarMesas() throws BOException {
         try{
@@ -65,6 +78,8 @@ public class MesaBO implements IMesaBO {
             for (Mesa mesa : entidades) {
                 dto.add(mesaCVR.toDTO(mesa));
             }
+            
+            LOG.log(Level.INFO, "Exito al consultar las mesas en BO");
            
             return dto;
         }
@@ -78,6 +93,12 @@ public class MesaBO implements IMesaBO {
         }
     }
 
+    /**
+     * 
+     * @param tipo
+     * @return
+     * @throws BOException 
+     */
     @Override
     public int cantidadMesasPorTipo(String tipo) throws BOException {
         try{
@@ -85,11 +106,17 @@ public class MesaBO implements IMesaBO {
         }
         catch(DAOException de){
             LOG.log(Level.SEVERE, "Error al consultar la cantidad de mesas "
-                    + "por tipo en BO");
+                    + "por tipo en BO", de);
             throw new BOException(de.getMessage());
         }
     }
 
+    /**
+     * 
+     * @param tipo
+     * @return
+     * @throws BOException 
+     */
     @Override
     public List<MesaDTO> obtenerMesasPorTipo(String tipo) throws BOException {
         try{
@@ -100,11 +127,13 @@ public class MesaBO implements IMesaBO {
                 dto.add(mesaCVR.toDTO(mesa));
             }
            
+            LOG.log(Level.INFO, "Exito al consultar las mesas por tipo en BO");
+            
             return dto;
         }
         catch(DAOException de){
             LOG.log(Level.SEVERE, "Error al consultar las mesas por "
-                    + "tipo en BO");
+                    + "tipo en BO", de);
             throw new BOException(de.getMessage());
         } catch (ConversionException ex) {
             Logger.getLogger(MesaBO.class.getName()).

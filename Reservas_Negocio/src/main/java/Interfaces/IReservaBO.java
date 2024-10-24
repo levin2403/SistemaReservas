@@ -71,7 +71,7 @@ public interface IReservaBO {
      *         los parametros.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
-    public List<Reserva> buscarReservasPorFiltros(String nombreCliente, 
+    public List<ReservaDTO> buscarReservasPorFiltros(String nombreCliente, 
         String telefonoCliente, LocalDate fechaReserva,
         String areaRestaurante, LocalDate fechaInicio, 
         LocalDate fechaFin, Integer tamanoMesa) throws BOException;
