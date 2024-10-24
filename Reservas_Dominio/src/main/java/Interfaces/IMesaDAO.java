@@ -5,12 +5,14 @@
 package Interfaces;
 
 import Entidades.Mesa;
+import Excepciones.DAOException;
 import java.util.List;
 
 /**
- * Interfaz que define las operaciones básicas para la gestión de mesas en la capa de acceso a datos (DAO).
- * Esta interfaz proporciona un contrato para las implementaciones que manejarán la persistencia
- * y recuperación de información sobre mesas.
+ * Interfaz que define las operaciones básicas para la gestión de mesas en la 
+ * capa de acceso a datos (DAO). Esta interfaz proporciona un contrato para 
+ * las implementaciones que manejarán la persistencia y recuperación de 
+ * información sobre mesas.
  * 
  * @author skevi
  */
@@ -20,29 +22,35 @@ public interface IMesaDAO {
      * Agrega una nueva mesa a la base de datos.
      * 
      * @param mesa El objeto {@link Mesa} que se desea agregar.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public void agregarMesa(Mesa mesa);
+    public void agregarMesa(Mesa mesa) throws DAOException;
     
     /**
      * Agrega una lista de mesas a la base de datos.
      * 
      * @param mesas La lista de objetos {@link Mesa} que se desea agregar.
+     * @throws Excepciones.DAOException
      */
-    public void agregarMesas(List<Mesa> mesas);
+    public void agregarMesas(List<Mesa> mesas) throws DAOException;
     
     /**
-     * Consulta y recupera una lista de todas las mesas almacenadas en la base de datos.
+     * Consulta y recupera una lista de todas las mesas almacenadas en la base 
+     * de datos.
      * 
      * @return Una lista de objetos {@link Mesa} que representa todas las mesas.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public List<Mesa> consultarMesas();
+    public List<Mesa> consultarMesas() throws DAOException;
     
     /**
      * Devuelve la cantidad de mesas dependiendo de su tipo;
      * 
+     * @param tipo
      * @return El número de mesas clasificadas como pequeñas.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public int cantidadMesasPorTipo(String tipo);
+    public int cantidadMesasPorTipo(String tipo) throws DAOException;
     
     /**
      * Obtiene una lista de mesas dependiendo su tipo especidicado en el 
@@ -50,8 +58,9 @@ public interface IMesaDAO {
      * 
      * @param tipo Tipo de mesa.
      * @return Lista de mesas filtradas por tipo.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public List<Mesa> obtenerMesasPorTipo(String tipo);
+    public List<Mesa> obtenerMesasPorTipo(String tipo) throws DAOException;
 
 }
 

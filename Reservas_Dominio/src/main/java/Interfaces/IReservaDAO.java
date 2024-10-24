@@ -5,14 +5,16 @@
 package Interfaces;
 
 import Entidades.Reserva;
+import Excepciones.DAOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Interfaz que define las operaciones básicas para la gestión de reservas en la capa de acceso a datos (DAO).
- * Esta interfaz proporciona un contrato para las implementaciones que manejarán la persistencia
- * y recuperación de información sobre reservas.
+ * Interfaz que define las operaciones básicas para la gestión de reservas en 
+ * la capa de acceso a datos (DAO). Esta interfaz proporciona un contrato para 
+ * las implementaciones que manejarán la persistencia y recuperación de 
+ * información sobre reservas.
  * 
  * @author skevi
  */
@@ -22,25 +24,56 @@ public interface IReservaDAO {
      * Agrega una nueva reserva a la base de datos.
      * 
      * @param reserva El objeto {@link Reserva} que se desea agregar.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public void agregarReserva(Reserva reserva);
+    public void agregarReserva(Reserva reserva) throws DAOException;
     
     /**
-     * Consulta y recupera una lista de reservas en un rango de fechas específico.
+     * Consulta y recupera una lista de reservas en un rango de fechas 
+     * específico.
      * 
      * @param inicio La fecha de inicio del rango de búsqueda.
      * @param fin La fecha de fin del rango de búsqueda.
-     * @return Una lista de objetos {@link Reserva} que representan las reservas dentro del rango de fechas especificado.
+     * @return Una lista de objetos {@link Reserva} que representan las reservas 
+     * dentro del rango de fechas especificado.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public List<Reserva> consultarPorFecha(LocalDateTime inicio, LocalDateTime fin);
+    public List<Reserva> consultarPorFecha(LocalDateTime inicio, 
+            LocalDateTime fin)throws DAOException;
     
     /**
      * Consulta y recupera una lista de reservas para un día específico.
      * 
-     * @param dia La fecha del día para el cual se desean consultar las reservas.
-     * @return Una lista de objetos {@link Reserva} que representan las reservas del día especificado.
+     * @param dia La fecha del día para el cual se desean consultar las 
+     *            reservas.
+     * @return Una lista de objetos {@link Reserva} que representan las 
+     * reservas del día especificado.
+     * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public List<Reserva> consultarPorDia(LocalDateTime dia);
+    public List<Reserva> consultarPorDia(LocalDateTime dia)throws DAOException;
+    
+    /**
+     * Metodo que mediante filtros obtiene las reservas que mas se adapten
+     * algunos datos del parametro pueden ser nulos pero aun asi se adapta
+     * a lo requerido.
+     * 
+     * @param nombreCliente Nombre del cliente.
+     * @param telefonoCliente Telefono del cliente.
+     * @param fechaReserva Fecha en que fue realizada la reserva.
+     * @param areaRestaurante Area del restaurante.
+     * @param fechaInicio Fecha de inicio para la busqueda.
+     * @param fechaFin Fecha de fin para la busqueda.
+     * @param tamanoMesa Tamaño de la mesa.
+     * 
+     * @return Retorna lista de reservaciones que mas se adapten a 
+     *         los parametros.
+     * @throws Excepciones.DAOException En caso de error uno no sabe.
+     */
+    public List<Reserva> buscarReservasPorFiltros(String nombreCliente, 
+        String telefonoCliente, LocalDate fechaReserva,
+        String areaRestaurante, LocalDate fechaInicio, 
+        LocalDate fechaFin, Integer tamanoMesa) throws DAOException;
+    
 }
 
 

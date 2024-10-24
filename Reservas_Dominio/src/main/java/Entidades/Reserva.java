@@ -66,6 +66,8 @@ public class Reserva implements Serializable{
     }
 
     /**
+     * Constructor para inicializar los atributos necesarios para realizar una 
+     * insercion.
      * 
      * @param fechaHoraReserva Fecha y hora de la reserva.
      * @param numeroPersonas Numero de personas.
@@ -90,6 +92,7 @@ public class Reserva implements Serializable{
     }
     
     /**
+     * Constructor para inializar todos los atributos de la clase.
      * 
      * @param id id de la reserva.
      * @param fechaHoraReserva Fecha y hora de la reserva.
@@ -189,6 +192,12 @@ public class Reserva implements Serializable{
         this.restaurante = restaurante;
     }
 
+    /**
+     * Metodo toString para representar en linea de texto los atributos 
+     * de la clase.
+     * 
+     * @return String con todos los atributos de la clase.
+     */
     @Override
     public String toString() {
         return "Reserva{" + "id=" + id + ", fechaHoraReserva=" + 

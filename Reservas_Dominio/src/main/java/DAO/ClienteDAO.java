@@ -6,20 +6,25 @@ package DAO;
 
 import Conexion.Conexion;
 import Entidades.Cliente;
+import Excepciones.ConexionException;
+import Excepciones.DAOException;
 import Interfaces.IClienteDAO;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 /**
- *
+ * Clase de acceso a datos para la entidad de Cliente.
+ * 
  * @author skevi
  */
 public class ClienteDAO implements IClienteDAO{
     
     //instancia de logger para hacer informes en consola
     private static final Logger LOG = Logger.
-            getLogger(HistorialReservaDAO.class.getName());
+            getLogger(ClienteDAO.class.getName());
     
     //instancia de la conexion
     Conexion conexion;
@@ -28,31 +33,7 @@ public class ClienteDAO implements IClienteDAO{
         this.conexion = new Conexion();
     }
 
-    
-    /**
-     * Agrega un nuevo cliente a la base de datos.
-     * 
-     * @param cliente Cliente a agregar.
-     */
-    @Override
-    public void agregarCliente(Cliente cliente) {
-        EntityManager em = null;
-        try {
-            em = conexion.getEntityManager(); // Obtener el EntityManager
-            em.getTransaction().begin(); // Iniciar la transacción
-            em.persist(cliente); // Guardar el cliente en la base de datos
-            em.getTransaction().commit(); // Confirmar la transacción
-        } catch (Exception e) {
-            if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // Revertir la transacción en caso de error
-            }
-            e.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close(); // Cerrar el EntityManager
-            }
-        }
-    }
+   
 
     /**
      * Obtiene un cliente en especifico de la base de datos.
@@ -61,7 +42,7 @@ public class ClienteDAO implements IClienteDAO{
      * @return Cliente obtenido o null si no se encuentra.
      */
     @Override
-    public Cliente obtenerCliente(Long id) {
+    public Cliente obtenerCliente(Long id) throws DAOException {
         EntityManager em = null;
         Cliente cliente = null;
         try {
@@ -72,9 +53,17 @@ public class ClienteDAO implements IClienteDAO{
             } else {
                 LOG.warning("Cliente no encontrado.");
             }
-        } catch (Exception e) {
-            LOG.severe("Error al obtener el cliente: " + e.getMessage());
-            e.printStackTrace();
+        } catch (PersistenceException pe) {
+            LOG.log(Level.SEVERE, "Error al obtener el cliente: {0}", 
+                    pe.getMessage());
+            
+            throw new DAOException("Error al obtener el cliente");
+            
+        } catch (ConexionException ex) {
+            
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, 
+                    null, ex);
+            
         } finally {
             if (em != null) {
                 em.close(); // Cerrar el EntityManager
@@ -82,22 +71,30 @@ public class ClienteDAO implements IClienteDAO{
         }
         return cliente;
     }
+    
     /**
      * Obtiene una lista de todos los clientes en la base de datos.
      *
      * @return Lista de todos los clientes.
      */
     @Override
-    public List<Cliente> obtenerClientes() {
+    public List<Cliente> obtenerClientes() throws DAOException {
         EntityManager em = null;
         List<Cliente> clientes = null;
         try {
             em = conexion.getEntityManager(); // Obtener el EntityManager
-            clientes = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList(); // Consultar todos los clientes
+            clientes = em.createQuery("SELECT c FROM Cliente c", 
+                    Cliente.class).getResultList(); 
             LOG.info("Clientes obtenidos exitosamente.");
-        } catch (Exception e) {
-            LOG.severe("Error al obtener los clientes: " + e.getMessage());
-            e.printStackTrace();
+        } catch (PersistenceException pe) {
+            
+            LOG.log(Level.SEVERE, "Error al obtener los clientes: {0}", 
+                    pe.getMessage());
+            
+            throw new DAOException("Error al obtener a los clientes");
+            
+        } catch (ConexionException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (em != null) {
                 em.close(); // Cerrar el EntityManager

@@ -111,11 +111,11 @@ public class IncercionRestaurante {
 //            System.out.println("No se encontraron reservas en el rango de fechas.");
 //        }
           
-          List<Reserva> reservas = reservaDAO.consultarPorDia(LocalDateTime.now().minusDays(1));
-          
-          for (Reserva reserva : reservas) {
-              System.out.println(reserva.toString());
-        }
+//          List<Reserva> reservas = reservaDAO.consultarPorDia(LocalDateTime.now().minusDays(1));
+//          
+//          for (Reserva reserva : reservas) {
+//              System.out.println(reserva.toString());
+//        }
     }
   
 }

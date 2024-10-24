@@ -57,6 +57,8 @@ public class Cliente implements Serializable{
     }
     
     /**
+     * Metodo completo para obtener el cliente de la base de datos con todos
+     * sus atributos.
      * 
      * @param id id del cliente
      * @param nombreCompleto nombre del cliente.
@@ -105,6 +107,11 @@ public class Cliente implements Serializable{
         this.reservas = reservas;
     }
 
+    /**
+     * Metodo toString para obtener los atributos de la clase.
+     * 
+     * @return String con todos los atributos de la clase.
+     */
     @Override
     public String toString() {
         return "Cliente{" + "id=" + id + ", nombreCompleto=" + nombre + 

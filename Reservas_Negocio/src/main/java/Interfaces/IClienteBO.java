@@ -15,14 +15,7 @@ import java.util.List;
  * @author skevi
  */
 public interface IClienteBO {
-    
-    /**
-     * Agrega un nuevo cliente a la base de datos.
-     * 
-     * @param cliente El objeto {@link Cliente} que se desea agregar.
-     */
-    public void agregarCliente(ClienteDTO cliente);
-    
+       
     /**
      * Obtiene los detalles de un cliente específico a partir de su objeto.
      * 
@@ -34,7 +27,8 @@ public interface IClienteBO {
     /**
      * Recupera una lista de todos los clientes almacenados en la base de datos.
      * 
-     * @return Una lista de objetos {@link Cliente} que representa todos los clientes.
+     * @return Una lista de objetos {@link Cliente} que representa todos los 
+     * clientes.
      */
     public List<ClienteDTO> obtenerClientes();
     

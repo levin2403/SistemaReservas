@@ -30,44 +30,44 @@ public class Mesa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // id de la mesa.
 
     @Column(name = "codigo_mesa", nullable = false, unique = true)
-    private String codigoMesa;
+    private String codigoMesa; // codigo de la mesa.
 
     @Column(name = "tipo_mesa", nullable = false)
-    private String tipoMesa;
+    private String tipoMesa; // tipo de mesa
 
     @Column(name = "capacidad_minima", nullable = false)
-    private int capacidadMinima;
+    private int capacidadMinima; // capacidad minima de la mesa.
     
     @Column(name = "capacidad_maxima", nullable = false)
-    private int capacidadMaxima;
+    private int capacidadMaxima; // capacidad maxima de la mesa.
 
     @Column(nullable = false)
-    private String ubicacion;
+    private String ubicacion; // ubicacion de la mesa.
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
-    private Restaurante restaurante;  
+    private Restaurante restaurante; // restaurante asociado a la mesa.
 
     @OneToMany(mappedBy = "mesa", cascade = CascadeType.PERSIST)
-    private List<Reserva> reservas;
+    private List<Reserva> reservas; // lista de reservas asociada a la mesa.
 
     /**
-     * 
+     * Constructor por defecto de la clase.
      */
     public Mesa() {
     }
 
     /**
      * 
-     * @param codigoMesa
-     * @param tipoMesa
-     * @param capacidadMinima
-     * @param capacidadMaxima
-     * @param ubicacion
-     * @param restaurante
+     * @param codigoMesa  codigo de la mesa.
+     * @param tipoMesa tipo de mesa
+     * @param capacidadMinima capacidad minima de la mesa.
+     * @param capacidadMaxima capacidad maxima de la mesa.
+     * @param ubicacion ubicacion de la mesa.
+     * @param restaurante restaurante asociado a la mesa.
      */
     public Mesa(String codigoMesa, String tipoMesa, int capacidadMinima,
             int capacidadMaxima, String ubicacion, Restaurante restaurante) {
@@ -81,18 +81,18 @@ public class Mesa implements Serializable {
 
     /**
      * 
-     * @param id
-     * @param codigoMesa
-     * @param tipoMesa
-     * @param capacidadMinima
-     * @param capacidadMaxima
-     * @param ubicacion
-     * @param restaurante
-     * @param reservas 
+     * @param id id de la mesa.
+     * @param codigoMesa  codigo de la mesa.
+     * @param tipoMesa tipo de mesa
+     * @param capacidadMinima capacidad minima de la mesa.
+     * @param capacidadMaxima capacidad maxima de la mesa.
+     * @param ubicacion ubicacion de la mesa.
+     * @param restaurante restaurante asociado a la mesa. 
+     * @param reservas lista de reservas asociada a la mesa.
      */
     public Mesa(Long id, String codigoMesa, String tipoMesa, 
-            int capacidadMinima, int capacidadMaxima, String ubicacion, Restaurante restaurante, 
-            List<Reserva> reservas) {
+            int capacidadMinima, int capacidadMaxima, String ubicacion, 
+            Restaurante restaurante, List<Reserva> reservas) {
         this.id = id;
         this.codigoMesa = codigoMesa;
         this.tipoMesa = tipoMesa;
@@ -169,6 +169,12 @@ public class Mesa implements Serializable {
         this.reservas = reservas;
     }
 
+    /**
+     * Metodo toString para representar en linea de texto los atributos 
+     * de la clase.
+     * 
+     * @return String con todos los atributos de la clase.
+     */
     @Override
     public String toString() {
         return "Mesa{" + "id=" + id + ", codigoMesa=" + codigoMesa + 

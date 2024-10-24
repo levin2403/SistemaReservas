@@ -17,7 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Clase encargada de modelar la entidad Restaurante.
+ * 
  * @author skevi
  */
 @Entity
@@ -28,25 +29,25 @@ public class Restaurante implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // id del restaurante.
 
     @Column(nullable = false, unique = true)
-    private String nombre;
+    private String nombre; // Nombre del restaurante.
 
     @Column(nullable = false)
-    private String direccion;
+    private String direccion; // Direccion del restaurante.
 
     @Column(nullable = false)
-    private String telefono;
+    private String telefono; // telefono del restaurante.
 
     @Column(name = "hora_apertura", nullable = false)
-    private LocalTime horaApertura;
+    private LocalTime horaApertura; // Hora de apertura del restaurante.
 
     @Column(name = "hora_cierre", nullable = false)
-    private LocalTime horaCierre;
+    private LocalTime horaCierre; // Hora de cierre del restaurante. 
 
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.PERSIST)
-    private List<Mesa> mesas;  // Aquí el mappedBy debe ser 'restaurante', que es la propiedad en la clase Mesa
+    private List<Mesa> mesas;  // Lista de mesas del restaurante.
 
 
     /**
@@ -75,6 +76,7 @@ public class Restaurante implements Serializable {
     }
 
     /**
+     * Constructor que inicializa todos los atributos de la clase.
      * 
      * @param id id del restaurante.
      * @param nombre Nombre del restaurante.
@@ -154,6 +156,12 @@ public class Restaurante implements Serializable {
         this.mesas = mesas;
     }
 
+    /**
+     * Metodo toString para representar en linea de texto los atributos 
+     * de la clase.
+     * 
+     * @return String con todos los atributos de la clase.
+     */
     @Override
     public String toString() {
         return "Restaurante{" + "id=" + id + ", nombre=" + nombre + 
