@@ -3,7 +3,9 @@ package GUI;
 import BO.MesaBO;
 import DTO.MesaDTO;
 import java.awt.List;
+import java.time.LocalDate;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -202,48 +204,53 @@ public class Reservaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
-
+     
+        LocalDate fecha = (LocalDate)fechaReservaCB.getSelectedItem();
+        
+        String nombre = numeroPersonasTxt.getText();
+        
+        
 
     }//GEN-LAST:event_confirmarBtnActionPerformed
 
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelarBtnActionPerformed
-    private void cargarDatosMesas() {
-        // Crear el modelo de tabla personalizado
-        DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Hacer la tabla no editable
-            }
-        };
-
-        // Definir las columnas
-        modelo.addColumn("No. Mesa");
-        modelo.addColumn("Tamaño de mesa");
-        modelo.addColumn("Disponibilidad");
-        modelo.addColumn("Lugar");
-
-        // Obtener los datos de las mesas
-        MesaBO mesaBO = new MesaBO();
-        List<MesaDTO> mesas = mesaBO.consultarMesas();
-
-        // Agregar los datos al modelo
-        for (MesaDTO mesa : mesas) {
-            Object[] fila = new Object[4];
-            fila[0] = mesa.getCodigoMesa();
-            fila[1] = mesa.getCapacidadMinima() + " - " + mesa.getCapacidadMaxima() + " personas";
-            // Aquí puedes implementar la lógica para determinar la disponibilidad
-            fila[2] = determinarDisponibilidad(mesa);
-            fila[3] = mesa.getUbicacion();
-            modelo.addRow(fila);
-        }
-
-        // Aplicar el modelo a la tabla
-        mesasTabla.setModel(modelo);
-
-        // Configurar el aspecto de la tabla
-        configurarTabla();
+    private void cargarDatosMesas(JTable tabla) {
+//        // Crear el modelo de tabla personalizado
+//        DefaultTableModel modelo = new DefaultTableModel() {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false; // Hacer la tabla no editable
+//            }
+//        };
+//
+//        // Definir las columnas
+//        modelo.addColumn("No. Mesa");
+//        modelo.addColumn("Tamaño de mesa");
+//        modelo.addColumn("Disponibilidad");
+//        modelo.addColumn("Lugar");
+//
+//        // Obtener los datos de las mesas
+//        MesaBO mesaBO = new MesaBO();
+//        List<MesaDTO> mesas = mesaBO.consultarMesas();
+//
+//        // Agregar los datos al modelo
+//        for (MesaDTO mesa : mesas) {
+//            Object[] fila = new Object[4];
+//            fila[0] = mesa.getCodigoMesa();
+//            fila[1] = mesa.getCapacidadMinima() + " - " + mesa.getCapacidadMaxima() + " personas";
+//            // Aquí puedes implementar la lógica para determinar la disponibilidad
+//            fila[2] = determinarDisponibilidad(mesa);
+//            fila[3] = mesa.getUbicacion();
+//            modelo.addRow(fila);
+//        }
+//
+//        // Aplicar el modelo a la tabla
+//        mesasTabla.setModel(modelo);
+//
+//        // Configurar el aspecto de la tabla
+//        configurarTabla();
     }
 
     private String determinarDisponibilidad(MesaDTO mesa) {
@@ -275,6 +282,7 @@ public class Reservaciones extends javax.swing.JFrame {
         mesasTabla.getColumnModel().getColumn(2).setPreferredWidth(100); // Disponibilidad
         mesasTabla.getColumnModel().getColumn(3).setPreferredWidth(150); // Lugar
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Titulo;
