@@ -32,7 +32,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         tituloPanel = new Control.PanelRound();
         Titulo = new javax.swing.JLabel();
         Fondo = new javax.swing.JPanel();
-        confirmarBtn = new javax.swing.JButton();
+        buscarBtn = new javax.swing.JButton();
         cancelarBtn = new javax.swing.JButton();
         fechaReservaCB = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -60,7 +60,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "No.Mesa", "Tamaño de mesa", "Disponibilidad", "Lugar"
+                "No.Mesa", "Tamaño de mesa", "Estado", "Lugar"
             }
         ));
         jScrollPane1.setViewportView(mesasTabla);
@@ -118,16 +118,16 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         Fondo.setForeground(new java.awt.Color(51, 51, 51));
         Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        confirmarBtn.setBackground(new java.awt.Color(102, 102, 102));
-        confirmarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        confirmarBtn.setForeground(new java.awt.Color(255, 255, 255));
-        confirmarBtn.setText("Buscar");
-        confirmarBtn.addActionListener(new java.awt.event.ActionListener() {
+        buscarBtn.setBackground(new java.awt.Color(102, 102, 102));
+        buscarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        buscarBtn.setForeground(new java.awt.Color(255, 255, 255));
+        buscarBtn.setText("Buscar");
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmarBtnActionPerformed(evt);
+                buscarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(confirmarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 140, 50));
+        Fondo.add(buscarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 140, 50));
 
         cancelarBtn.setBackground(new java.awt.Color(102, 102, 102));
         cancelarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -179,15 +179,15 @@ public class ConsultaReservacion extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
-    private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_confirmarBtnActionPerformed
+    }//GEN-LAST:event_buscarBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Titulo;
+    private javax.swing.JButton buscarBtn;
     private javax.swing.JButton cancelarBtn;
-    private javax.swing.JButton confirmarBtn;
     private javax.swing.JComboBox<String> fechaReservaCB;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

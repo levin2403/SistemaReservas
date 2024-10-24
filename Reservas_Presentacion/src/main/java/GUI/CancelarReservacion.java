@@ -32,8 +32,8 @@ public class CancelarReservacion extends javax.swing.JFrame {
         tituloPanel = new Control.PanelRound();
         Titulo = new javax.swing.JLabel();
         Fondo = new javax.swing.JPanel();
-        confirmarBtn = new javax.swing.JButton();
-        cancelarBtn = new javax.swing.JButton();
+        eliminarBtn = new javax.swing.JButton();
+        regresarBtn = new javax.swing.JButton();
         fechaReservaCB = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -118,27 +118,27 @@ public class CancelarReservacion extends javax.swing.JFrame {
         Fondo.setForeground(new java.awt.Color(51, 51, 51));
         Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        confirmarBtn.setBackground(new java.awt.Color(102, 102, 102));
-        confirmarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        confirmarBtn.setForeground(new java.awt.Color(255, 255, 255));
-        confirmarBtn.setText("Eliminar");
-        confirmarBtn.addActionListener(new java.awt.event.ActionListener() {
+        eliminarBtn.setBackground(new java.awt.Color(102, 102, 102));
+        eliminarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        eliminarBtn.setForeground(new java.awt.Color(255, 255, 255));
+        eliminarBtn.setText("Eliminar");
+        eliminarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmarBtnActionPerformed(evt);
+                eliminarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(confirmarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 140, 50));
+        Fondo.add(eliminarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 620, 140, 50));
 
-        cancelarBtn.setBackground(new java.awt.Color(102, 102, 102));
-        cancelarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        cancelarBtn.setForeground(new java.awt.Color(255, 255, 255));
-        cancelarBtn.setText("Regresar");
-        cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
+        regresarBtn.setBackground(new java.awt.Color(102, 102, 102));
+        regresarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        regresarBtn.setForeground(new java.awt.Color(255, 255, 255));
+        regresarBtn.setText("Regresar");
+        regresarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarBtnActionPerformed(evt);
+                regresarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(cancelarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 140, 50));
+        Fondo.add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 140, 50));
 
         fechaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Fondo.add(fechaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 300, 40));
@@ -173,20 +173,19 @@ public class CancelarReservacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
+    private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
         new Admistrador().setVisible(true);
         dispose();
-    }//GEN-LAST:event_cancelarBtnActionPerformed
+    }//GEN-LAST:event_regresarBtnActionPerformed
 
-    private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
+    private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_confirmarBtnActionPerformed
+    }//GEN-LAST:event_eliminarBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Titulo;
-    private javax.swing.JButton cancelarBtn;
-    private javax.swing.JButton confirmarBtn;
+    private javax.swing.JButton eliminarBtn;
     private javax.swing.JComboBox<String> fechaReservaCB;
     private javax.swing.JComboBox<String> horaReservaCB;
     private javax.swing.JLabel jLabel3;
@@ -196,6 +195,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
     private Control.PanelRound mesasPanel;
     private javax.swing.JTable mesasTabla;
     private javax.swing.JComboBox<String> nombreClienteCB;
+    private javax.swing.JButton regresarBtn;
     private Control.PanelRound tituloPanel;
     // End of variables declaration//GEN-END:variables
 }
