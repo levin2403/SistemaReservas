@@ -5,12 +5,14 @@
 package Interfaces;
 
 import DTO.ClienteDTO;
+import Excepciones.BOException;
 import java.util.List;
 
 /**
- * Interfaz que define las operaciones básicas para la gestión de clientes en la capa de negocio (BO).
- * Esta interfaz proporciona un contrato para las implementaciones que manejarán la persistencia
- * y recuperación de información de clientes.
+ * Interfaz que define las operaciones básicas para la gestión de clientes en 
+ * la capa de negocio (BO). Esta interfaz proporciona un contrato para las 
+ * implementaciones que manejarán la persistencia y recuperación de 
+ * información de clientes.
  * 
  * @author skevi
  */
@@ -21,16 +23,18 @@ public interface IClienteBO {
      * 
      * @param id id del cliente.
      * @return Cliente.
+     * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
-    public ClienteDTO obtenerCliente(Long id);
+    public ClienteDTO obtenerCliente(Long id) throws BOException;
     
     /**
      * Recupera una lista de todos los clientes almacenados en la base de datos.
      * 
      * @return Una lista de objetos {@link Cliente} que representa todos los 
      * clientes.
+     * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
-    public List<ClienteDTO> obtenerClientes();
+    public List<ClienteDTO> obtenerClientes()throws BOException;
     
 }
  

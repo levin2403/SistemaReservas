@@ -1,7 +1,9 @@
 package BO;
 
+import Convertidores.MesaCVR;
 import DAO.MesaDAO;
 import DTO.MesaDTO;
+import Excepciones.BOException;
 import Interfaces.IMesaBO;
 import Interfaces.IMesaDAO;
 import java.util.List;
@@ -12,37 +14,34 @@ import java.util.List;
  */
 public class MesaBO implements IMesaBO {
     
-    IMesaDAO mesaDAO;
+    private final IMesaDAO mesaDAO;
+    private final MesaCVR mesaCVR;
 
     /**
      * 
      */
     public MesaBO() {
-        this.mesaDAO = new MesaDAO();    
+        this.mesaDAO = new MesaDAO();   
+        this.mesaCVR = new MesaCVR();
     }
 
     @Override
-    public void agregarMesa(MesaDTO mesa) {
+    public void agregarMesas(List<MesaDTO> mesas) throws BOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void agregarMesas(List<MesaDTO> mesas) {
+    public List<MesaDTO> consultarMesas() throws BOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<MesaDTO> consultarMesas() {
+    public int cantidadMesasPorTipo(String tipo) throws BOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public int cantidadMesasPorTipo(String tipo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<MesaDTO> obtenerMesasPorTipo(String tipo) {
+    public List<MesaDTO> obtenerMesasPorTipo(String tipo) throws BOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

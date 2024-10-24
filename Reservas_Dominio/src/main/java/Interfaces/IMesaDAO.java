@@ -18,13 +18,6 @@ import java.util.List;
  */
 public interface IMesaDAO {
     
-    /**
-     * Agrega una nueva mesa a la base de datos.
-     * 
-     * @param mesa El objeto {@link Mesa} que se desea agregar.
-     * @throws Excepciones.DAOException En caso de error en la base de datos.
-     */
-    public void agregarMesa(Mesa mesa) throws DAOException;
     
     /**
      * Agrega una lista de mesas a la base de datos.

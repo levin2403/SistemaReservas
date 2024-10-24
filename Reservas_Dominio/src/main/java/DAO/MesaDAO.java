@@ -38,43 +38,6 @@ public class MesaDAO implements IMesaDAO{
         this.conexion = new Conexion();
     }
 
-    /**
-     * Metodo para agregar una unica mesa.
-     * 
-     * @param mesa 
-     */
-    @Override
-    public void agregarMesa(Mesa mesa) throws DAOException{
-        EntityManager em = null;
-        try {
-            em = conexion.getEntityManager(); // Obtener el EntityManager
-            em.getTransaction().begin(); // Iniciar la transacción
-            em.persist(mesa); // Persistir la mesa
-            em.getTransaction().commit(); // Confirmar la transacción
-            
-            //informamos el estado de la insercion
-            LOG.log(Level.INFO, "Mesa agregada con \u00e9xito: {0}", mesa);
-            
-        } catch (PersistenceException pe) {
-            //hacemos rollback en caso de excepcion.
-            if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); 
-            }
-            //informamos del estado del error
-            LOG.log(Level.SEVERE, "Error al agregar la mesa: {0}", 
-                    pe.getMessage());
-            
-            throw new DAOException("error al agregar mesa");
-            
-        } catch (ConexionException ex) {
-            Logger.getLogger(MesaDAO.class.getName()).log(Level.SEVERE, 
-                    null, ex);
-        } finally {
-            if (em != null) {
-                em.close(); // Cerrar el EntityManager
-            }
-        }
-    }
 
     /**
      * Metodo para agregar una lista de mesas a la base de datos.
