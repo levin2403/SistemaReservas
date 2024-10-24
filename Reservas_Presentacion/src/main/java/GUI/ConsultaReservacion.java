@@ -174,7 +174,9 @@ public class ConsultaReservacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
-        // TODO add your handling code here:
+        new Admistrador().setVisible(true);
+        dispose();
+
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
     private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
