@@ -8,7 +8,10 @@ import DTO.ClienteDTO;
 import DTO.ReservaDTO;
 import Entidades.Cliente;
 import Entidades.Reserva;
+import Excepciones.ConversionException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -19,6 +22,10 @@ import java.util.stream.Collectors;
  * @author sebastian
  */
 public class ClienteCVR {
+
+    private static final Logger LOG = Logger.
+            getLogger(ClienteCVR.class.getName());
+   
     
     private ReservaCVR reservaCVR; // Convertidor de reserva
 
@@ -36,8 +43,11 @@ public class ClienteCVR {
      * 
      * @param clienteDTO ClienteDTO a convertir.
      * @return Cliente de tipo entidad.
+     * @throws Excepciones.ConversionException
      */
-    public Cliente toEntity(ClienteDTO clienteDTO){
+    public Cliente toEntity(ClienteDTO clienteDTO) throws ConversionException {
+        try{
+            
         if (clienteDTO == null) {
             return null; // Retorna null si el DTO es nulo
         }
@@ -57,8 +67,15 @@ public class ClienteCVR {
         } else {
             cliente.setReservas(null); // Asigna null si no hay reservas
         }
-
-        return cliente;
+        
+        LOG.log(Level.INFO, "Exito en la conversion de DTO a Cliente");
+        
+        return cliente; // retorna cliente convertido.
+        
+        } catch(NullPointerException ex){
+            LOG.log(Level.SEVERE, "Error en la conversion a Cliente");
+            throw new ConversionException();
+        }
     }
 
     /**
@@ -68,8 +85,11 @@ public class ClienteCVR {
      * 
      * @param cliente Cliente a convertir.
      * @return ClienteDTO convertido.
+     * @throws Excepciones.ConversionException
      */
-    public ClienteDTO toDTO(Cliente cliente){
+    public ClienteDTO toDTO(Cliente cliente) throws ConversionException{
+        try{
+        
         if (cliente == null) {
             return null; // Retorna null si la entidad es nula
         }
@@ -89,7 +109,14 @@ public class ClienteCVR {
         } else {
             clienteDTO.setReservas(null); // Asigna null si no hay reservas
         }
+        
+        LOG.log(Level.INFO, "Exito en la conversion de Cliente a DTO");
 
         return clienteDTO;
+        
+        }catch(NullPointerException ex){
+             LOG.log(Level.SEVERE, "Error en la conversion a DTO");
+             throw new ConversionException();
+        }
     }
 }

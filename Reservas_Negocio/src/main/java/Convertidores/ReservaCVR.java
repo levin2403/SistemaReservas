@@ -6,9 +6,15 @@ package Convertidores;
 
 import DTO.ReservaDTO;
 import Entidades.Reserva;
+import Excepciones.ConversionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ReservaCVR {
+
+    private static final Logger LOG = Logger.
+            getLogger(ReservaCVR.class.getName());
 
     private final ClienteCVR clienteCVR; // convertidor de cliente
     private final MesaCVR mesaCVR; // convertidor de mesa
@@ -22,12 +28,15 @@ public class ReservaCVR {
     
     /**
      * Convierte todos los atributos de ReservaDTO a Reserva, 
-     * los elementos que pueden ser nulos se pasan directamente como nulos en caso de serlo
+     * los elementos que pueden ser nulos se pasan directamente como nulos 
+     * en caso de serlo
      * 
      * @param reservaDTO ReservaDTO a convertir.
      * @return Reserva de tipo entidad.
      */
     public Reserva toEntity(ReservaDTO reservaDTO) {
+        try{
+        
         if (reservaDTO == null) {
             return null; // Devuelve null si el DTO es nulo
         }
@@ -52,20 +61,32 @@ public class ReservaCVR {
 
         // Conversión de restaurante
         if (reservaDTO.getRestaurante() != null) {
-            reserva.setRestaurante(restauranteCVR.toEntity(reservaDTO.getRestaurante()));
+            reserva.setRestaurante(restauranteCVR.
+                    toEntity(reservaDTO.getRestaurante()));
         }
 
+        LOG.log(Level.INFO, "Exito en la conversion de DTO a Entidad Reserva");
+        
         return reserva;
+        
+        }catch(NullPointerException ex){
+            LOG.log(Level.SEVERE, "Error en la conversion a Entidad Resereva");
+        }
+        catch(ConversionException ce){
+            LOG.log(Level.SEVERE, ce.getMessage());
+        }
+        return null;
     }
 
     /**
      * Convierte todos los atributos de Reserva a ReservaDTO, 
-     * los elementos que pueden ser nulos se pasan directamente como nulos
-     * 
+     * los elementos que pueden ser nulos se pasan directamente como nulos 
      * @param reserva Reserva a convertir.
      * @return Reserva convertida en DTO.
      */
     public ReservaDTO toDTO(Reserva reserva) {
+       try{
+        
         if (reserva == null) {
             return null; // Devuelve null si la reserva es nula
         }
@@ -90,10 +111,21 @@ public class ReservaCVR {
 
         // Conversión de restaurante
         if (reserva.getRestaurante() != null) {
-            reservaDTO.setRestaurante(restauranteCVR.toDTO(reserva.getRestaurante()));
+            reservaDTO.setRestaurante(restauranteCVR.
+                    toDTO(reserva.getRestaurante()));
         }
 
+        LOG.log(Level.INFO, "Exito en la conversion de Entidad Reserva a DTO");
+        
         return reservaDTO;
+        
+       }catch(NullPointerException ex){
+           LOG.log(Level.SEVERE, "Error en la conversion a ReserevaDTO");
+       }
+       catch(ConversionException ce){
+           LOG.log(Level.SEVERE, ce.getMessage());
+       }
+        return null;
     }
     
 }

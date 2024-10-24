@@ -9,10 +9,16 @@ import DTO.MesaDTO;
 import DTOs.RestauranteDTO;
 import Entidades.Mesa;
 import Entidades.Restaurante;
+import Excepciones.ConversionException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RestauranteCVR {
+
+    private static final Logger LOG = Logger.
+            getLogger(RestauranteCVR.class.getName());
     
     private final MesaCVR mesaCVR; // convertidor de mesa
 
@@ -30,8 +36,11 @@ public class RestauranteCVR {
      * 
      * @param restauranteDTO RestauranteDTO a convertir.
      * @return Restaurante de tipo entidad.
+     * @throws Excepciones.ConversionException
      */
-    public Restaurante toEntity(RestauranteDTO restauranteDTO) {
+    public Restaurante toEntity(RestauranteDTO restauranteDTO) throws ConversionException{
+        try{
+        
         if (restauranteDTO == null) {
             return null;
         }
@@ -53,7 +62,16 @@ public class RestauranteCVR {
             restaurante.setMesas(mesas);
         }
         
+        LOG.log(Level.INFO, "Exito en la conversion de DTO a Entidad "
+                + "Restaurante");
+        
         return restaurante;
+        
+        }catch(NullPointerException ne){
+            LOG.log(Level.SEVERE, "Error en la conversion a Entidad "
+                    + "Restaurante");
+            throw new ConversionException();
+        }
     }
 
     /**
@@ -63,8 +81,11 @@ public class RestauranteCVR {
      * 
      * @param restaurante Restaurante a convertir.
      * @return RestauranteDTO convertida en DTO.
+     * @throws Excepciones.ConversionException
      */
-    public RestauranteDTO toDTO(Restaurante restaurante) {
+    public RestauranteDTO toDTO(Restaurante restaurante) throws ConversionException{
+        try{
+        
         if (restaurante == null) {
             return null;
         }
@@ -86,7 +107,15 @@ public class RestauranteCVR {
             restauranteDTO.setMesas(mesasDTO);
         }
         
+        LOG.log(Level.INFO, "Exito en la conversion de Entidad Restaurante "
+                + "a DTO");
+        
         return restauranteDTO;
+        
+        }catch(NullPointerException ne){
+            LOG.log(Level.SEVERE, "Error en la conversion a RestauranteDTO");
+            throw new ConversionException();
+        }
     }
     
 }

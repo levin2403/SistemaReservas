@@ -8,11 +8,18 @@ import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import Entidades.Mesa;
 import Entidades.Reserva;
+import Excepciones.ConversionException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class MesaCVR {
+
+    private static final Logger LOG = Logger.
+            getLogger(MesaCVR.class.getName());
     
+   
     private RestauranteCVR restauranteCVR; // Convertidor de restaurante.
     private ReservaCVR reservaCVR; // Convertidor de reserva.
 
@@ -28,8 +35,10 @@ public class MesaCVR {
      * 
      * @param mesaDTO MesaDTO a convertir.
      * @return Mesa de tipo entidad.
+     * @throws Excepciones.ConversionException
      */
-    public Mesa toEntity(MesaDTO mesaDTO) {
+    public Mesa toEntity(MesaDTO mesaDTO) throws ConversionException {
+        try{
         if (mesaDTO == null) {
             return null; // Retorna null si el DTO es nulo
         }
@@ -38,13 +47,14 @@ public class MesaCVR {
         mesa.setId(Long.valueOf(mesaDTO.getId())); // Asigna el ID
         mesa.setCodigoMesa(mesaDTO.getCodigoMesa()); // Asigna el código de mesa
         mesa.setTipoMesa(mesaDTO.getTipoMesa()); // Asigna el tipo de mesa
-        mesa.setCapacidadMinima(mesaDTO.getCapacidadMinima()); // Asigna capacidad mínima
-        mesa.setCapacidadMaxima(mesaDTO.getCapacidadMaxima()); // Asigna capacidad máxima
+        mesa.setCapacidadMinima(mesaDTO.getCapacidadMinima()); 
+        mesa.setCapacidadMaxima(mesaDTO.getCapacidadMaxima()); 
         mesa.setUbicacion(mesaDTO.getUbicacion()); // Asigna la ubicación
 
         // Convierte el restaurante utilizando el convertidor
         if (mesaDTO.getRestaurante() != null) {
-            mesa.setRestaurante(restauranteCVR.toEntity(mesaDTO.getRestaurante()));
+            mesa.setRestaurante(restauranteCVR.
+                    toEntity(mesaDTO.getRestaurante()));
         }
 
         // Convierte la lista de reservas usando el convertidor
@@ -55,8 +65,15 @@ public class MesaCVR {
                                               .collect(Collectors.toList());
             mesa.setReservas(reservas);
         }
-
+        
+        LOG.log(Level.INFO, "Exito en la conversion de DTO a Entidad");
+        
         return mesa;
+        
+        }catch(NullPointerException ex){
+            LOG.log(Level.SEVERE, "Error en la conversion a Mesa");
+            throw new ConversionException();
+        }
     }
 
     /**
@@ -66,8 +83,11 @@ public class MesaCVR {
      * 
      * @param mesa Mesa a convertir.
      * @return MesaDTO convertida en DTO.
+     * @throws Excepciones.ConversionException
      */
-    public MesaDTO toDTO(Mesa mesa) {
+    public MesaDTO toDTO(Mesa mesa) throws ConversionException {
+        try{
+        
         if (mesa == null) {
             return null; // Retorna null si la entidad es nula
         }
@@ -94,7 +114,14 @@ public class MesaCVR {
             mesaDTO.setReservas(reservasDTO);
         }
 
+        LOG.log(Level.INFO, "Exito en la conversion de Cliente a DTO");
+        
         return mesaDTO;
+        
+        }catch(NullPointerException ex){
+            LOG.log(Level.SEVERE, "Error en la conversion a MesaDTO");
+            throw new ConversionException();
+        }
     }
     
 }
