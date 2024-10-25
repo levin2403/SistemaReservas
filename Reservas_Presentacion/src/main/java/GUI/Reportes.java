@@ -26,45 +26,46 @@ public class Reportes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new Control.PanelRound();
+        mostrarPDF = new Control.PanelRound();
         tituloPanel = new Control.PanelRound();
         Titulo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        nombreCliente = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        generarPDFBtn = new javax.swing.JButton();
+        atrasBtn = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        nombreCliente1 = new javax.swing.JTextField();
+        nombreCliente = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        fechaInicioDC = new com.toedter.calendar.JDateChooser();
+        fechaFinDC = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         nombreCliente2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(25, 25, 25));
-        setPreferredSize(new java.awt.Dimension(1290, 730));
+        setMaximumSize(new java.awt.Dimension(1290, 730));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelRound1.setBackground(new java.awt.Color(255, 102, 102));
-        panelRound1.setRoundBottomLeft(50);
-        panelRound1.setRoundBottomRight(50);
-        panelRound1.setRoundTopLeft(50);
-        panelRound1.setRoundTopRight(50);
+        mostrarPDF.setBackground(new java.awt.Color(255, 102, 102));
+        mostrarPDF.setRoundBottomLeft(50);
+        mostrarPDF.setRoundBottomRight(50);
+        mostrarPDF.setRoundTopLeft(50);
+        mostrarPDF.setRoundTopRight(50);
 
-        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
-        panelRound1.setLayout(panelRound1Layout);
-        panelRound1Layout.setHorizontalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout mostrarPDFLayout = new javax.swing.GroupLayout(mostrarPDF);
+        mostrarPDF.setLayout(mostrarPDFLayout);
+        mostrarPDFLayout.setHorizontalGroup(
+            mostrarPDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 700, Short.MAX_VALUE)
         );
-        panelRound1Layout.setVerticalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        mostrarPDFLayout.setVerticalGroup(
+            mostrarPDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 660, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 6, 700, 660));
+        getContentPane().add(mostrarPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 6, 700, 660));
 
         tituloPanel.setBackground(new java.awt.Color(102, 102, 102));
         tituloPanel.setRoundBottomLeft(50);
@@ -96,70 +97,80 @@ public class Reportes extends javax.swing.JFrame {
 
         getContentPane().add(tituloPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jButton1.setText("Generar PDF");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 560, 130, 40));
+        generarPDFBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        generarPDFBtn.setText("Generar PDF");
+        getContentPane().add(generarPDFBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 591, 180, 60));
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        atrasBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        atrasBtn.setText("Cancelar");
+        atrasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                atrasBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 520, 90, -1));
-        getContentPane().add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 230, 40));
+        getContentPane().add(atrasBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 523, 134, 50));
+
+        jPanel1.setBackground(new java.awt.Color(31, 31, 31));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Hasta el");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
+        jPanel1.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 220, 40));
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Reporte del");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        fechaInicioDC.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jPanel1.add(fechaInicioDC, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 130, 40));
+
+        fechaFinDC.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jPanel1.add(fechaFinDC, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 130, 40));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Tipo de mesa");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
-
-        jButton3.setText("Imprimir");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 610, 150, 70));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Ubicacion");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, 30));
+        jPanel1.add(nombreCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 220, 40));
 
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Tipo de mesa");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
-
-        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel9.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Fecha de reservacion");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
-        getContentPane().add(nombreCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 166, 180, 40));
-        getContentPane().add(nombreCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 230, 40));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         new Admistrador().setVisible(true);
         dispose();
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_atrasBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton atrasBtn;
+    private com.toedter.calendar.JDateChooser fechaFinDC;
+    private com.toedter.calendar.JDateChooser fechaInicioDC;
+    private javax.swing.JButton generarPDFBtn;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private Control.PanelRound mostrarPDF;
     private javax.swing.JTextField nombreCliente;
-    private javax.swing.JTextField nombreCliente1;
     private javax.swing.JTextField nombreCliente2;
-    private Control.PanelRound panelRound1;
     private Control.PanelRound tituloPanel;
     // End of variables declaration//GEN-END:variables
 }

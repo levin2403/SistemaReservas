@@ -34,11 +34,6 @@
             <version>SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>TimePicker</groupId>
-            <artifactId>123123</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>TMF</groupId>
             <artifactId>TimeFrameWork</artifactId>
             <version>1.0..0</version>
