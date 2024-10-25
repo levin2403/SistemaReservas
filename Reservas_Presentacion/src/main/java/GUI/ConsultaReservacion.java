@@ -4,9 +4,12 @@
  */
 package GUI;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author osval
+ * @author Sebastian Murrieta
  */
 public class ConsultaReservacion extends javax.swing.JFrame {
 
@@ -15,6 +18,8 @@ public class ConsultaReservacion extends javax.swing.JFrame {
      */
     public ConsultaReservacion() {
         initComponents();
+        cargarClientes();
+        cargarMesas();
     }
 
     /**
@@ -34,12 +39,12 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         Fondo = new javax.swing.JPanel();
         buscarBtn = new javax.swing.JButton();
         cancelarBtn = new javax.swing.JButton();
-        fechaReservaCB = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         nombreClienteCB = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -140,9 +145,6 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         });
         Fondo.add(cancelarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, 140, 50));
 
-        fechaReservaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Fondo.add(fechaReservaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 300, 40));
-
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,6 +169,9 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         jTextField1.setText("jTextField1");
         Fondo.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 300, 40));
 
+        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Fondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, 290, 40));
+
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -180,15 +185,34 @@ public class ConsultaReservacion extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buscarBtnActionPerformed
 
+        
+
+    }//GEN-LAST:event_buscarBtnActionPerformed
+    private void cargarClientes() {
+        // Cargar clientes desde la base de datos 
+        String[] clientes = {"Cliente 1", "Cliente 2", "Cliente 3"}; // Ejemplo
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(clientes);
+        nombreClienteCB.setModel(model);
+    }
+
+    private void cargarMesas() {
+        // Cargar mesas desde la base de datos 
+        String[] columnas = {"No.Mesa", "Tamaño de mesa", "Estado", "Lugar"};
+        Object[][] data = {
+            {1, "Para 4", "Disponible", "Interior"},
+            {2, "Para 2", "Reservado", "Exterior"}
+        }; // Ejemplo de datos
+
+        DefaultTableModel model = new DefaultTableModel(data, columnas);
+        mesasTabla.setModel(model);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton buscarBtn;
     private javax.swing.JButton cancelarBtn;
-    private javax.swing.JComboBox<String> fechaReservaCB;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

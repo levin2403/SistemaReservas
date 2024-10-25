@@ -17,31 +17,34 @@ import javax.swing.JComboBox;
  *
  * @author skevi
  */
-public class ClienteFCD implements IClienteFCD{
+public class ClienteFCD implements IClienteFCD {
 
     IClienteBO clienteBO;
 
     public ClienteFCD() {
         this.clienteBO = new ClienteBO();
     }
-   
+
     /**
-     * 
-     * @param combo 
+     *
+     * @param combo
      */
     @Override
-    public void cargarComboBoxClientes(JComboBox combo) throws FacadeException{
-        try{
-        List<ClienteDTO> clientes = clienteBO.obtenerClientes();
-        
+    public void cargarComboBoxClientes(JComboBox combo) throws FacadeException {
+        try {
+            List<ClienteDTO> clientes = clienteBO.obtenerClientes();
+
+            // Limpiar el combo antes de cargar nuevos elementos
+            combo.removeAllItems();
+
+            // Agregar los clientes al combo
             for (ClienteDTO cliente : clientes) {
                 combo.addItem(cliente);
             }
+        } catch (BOException be) {
+            // Lanzar una excepción en caso de error en las capas inferiores
+            throw new FacadeException("Error al cargar los clientes: " + be.getMessage(), be);
         }
-        catch(BOException be){
-            throw new FacadeException(be.getMessage());
-        }
-        
     }
-    
+
 }

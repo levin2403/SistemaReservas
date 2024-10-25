@@ -20,12 +20,12 @@ public class RestauranteDTO {
     private LocalTime horaCierre;   // Hora de cierre
 
     /**
-     * 
+     *
      */
     public RestauranteDTO() {
     }
 
-    public RestauranteDTO(String nombre, String direccion, 
+    public RestauranteDTO(String nombre, String direccion,
             String telefono, LocalTime horaApertura, LocalTime horaCierre) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -34,7 +34,7 @@ public class RestauranteDTO {
         this.horaCierre = horaCierre;
     }
 
-    public RestauranteDTO(String id, String nombre, String direccion, 
+    public RestauranteDTO(String id, String nombre, String direccion,
             String telefono, LocalTime horaApertura, LocalTime horaCierre) {
         this.id = id;
         this.nombre = nombre;
@@ -45,7 +45,6 @@ public class RestauranteDTO {
     }
 
     // Getters y Setters
-    
     public String getId() {
         return id;
     }
@@ -96,10 +95,10 @@ public class RestauranteDTO {
 
     @Override
     public String toString() {
-        return "RestauranteDTO{" + "id=" + id + ", nombre=" + nombre + 
-                ", direccion=" + direccion + ", telefono=" + telefono + 
-                ", horaApertura=" + horaApertura + ", horaCierre=" + 
-                horaCierre;
+        return "RestauranteDTO{" + "id=" + id + ", nombre=" + nombre
+                + ", direccion=" + direccion + ", telefono=" + telefono
+                + ", horaApertura=" + horaApertura + ", horaCierre="
+                + horaCierre + '}';
     }
 
 }
