@@ -17,9 +17,9 @@ public class ReservaFCD implements IReservaFCD{
     public void agregarReserva() throws FacadeException {
         
         // lista de reservas del dia que se selecciono para la mesa 
-        // seleccionada
+        // seleccionada - responsabilidad de la base de datos
         
-        //lista de reservas del cliente seleccionado.
+        //lista de reservas del cliente seleccionado. - responsabilidad de la base de datos
         
         // verificamos que la fecha no sea la misma del dia de hoy 
         // ni mayor a un mes
