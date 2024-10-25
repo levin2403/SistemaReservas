@@ -4,7 +4,10 @@
  */
 package interfacesFachada;
 
+import DTOs.ClienteDTO;
+import DTOs.MesaDTO;
 import Excepciones.FacadeException;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,6 +15,8 @@ import Excepciones.FacadeException;
  */
 public interface IReservaFCD {
     
-    public void agregarReserva() throws FacadeException;
+    public void agregarReserva(ClienteDTO cliente, MesaDTO mesa, 
+            LocalDateTime horaFecha, int numPersonas, double costo) 
+            throws FacadeException;
     
 }

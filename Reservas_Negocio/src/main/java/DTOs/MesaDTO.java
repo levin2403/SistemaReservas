@@ -38,6 +38,15 @@ public class MesaDTO {
         this.restaurante = restaurante;
     }
 
+    public MesaDTO(String codigoMesa, String tipoMesa, int capacidadMinima, 
+            int capacidadMaxima, String ubicacion) {
+        this.codigoMesa = codigoMesa;
+        this.tipoMesa = tipoMesa;
+        this.capacidadMinima = capacidadMinima;
+        this.capacidadMaxima = capacidadMaxima;
+        this.ubicacion = ubicacion;
+    }
+    
     public String getId() {
         return id;
     }

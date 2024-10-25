@@ -94,7 +94,7 @@ public class Reservaciones extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Mesas para la reservacion");
-        Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, -1, -1));
+        Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 90, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
