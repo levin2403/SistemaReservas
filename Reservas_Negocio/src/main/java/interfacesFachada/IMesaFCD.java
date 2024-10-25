@@ -4,10 +4,16 @@
  */
 package interfacesFachada;
 
+import Excepciones.FacadeException;
+import javax.swing.JTable;
+
 /**
  *
  * @author skevi
  */
 public interface IMesaFCD {
+    
+    public void cargarTablaMesas(JTable table) throws FacadeException;
+    public String calcularPrecio(String tamaño);
     
 }

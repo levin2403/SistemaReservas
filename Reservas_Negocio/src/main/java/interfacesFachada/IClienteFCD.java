@@ -5,6 +5,8 @@
 package interfacesFachada;
 
 import Entidades.Cliente;
+import Excepciones.FacadeException;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -12,6 +14,6 @@ import Entidades.Cliente;
  */
 public interface IClienteFCD {
     
-    public void agregarCliente();
+    public void cargarComboBoxClientes(JComboBox combo) throws FacadeException;
     
 }

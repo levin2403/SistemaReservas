@@ -1,4 +1,4 @@
-package DTO;
+package DTOs;
 
 import DTOs.RestauranteDTO;
 import java.time.LocalDateTime;

@@ -4,7 +4,7 @@
  */
 package Interfaces;
 
-import DTO.MesaDTO;
+import DTOs.MesaDTO;
 import Excepciones.BOException;
 import java.util.List;
 

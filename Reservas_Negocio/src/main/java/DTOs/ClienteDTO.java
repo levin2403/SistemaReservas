@@ -1,4 +1,4 @@
-package DTO;
+package DTOs;
 
 import java.util.List;
 
@@ -16,7 +16,6 @@ public class ClienteDTO {
     private String id;
     private String nombre;
     private String telefono;
-    List<ReservaDTO> reservas;
 
     // Constructor por defecto
     public ClienteDTO() {
@@ -44,7 +43,6 @@ public class ClienteDTO {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
-        this.reservas = reservas;
     }
 
     // Getters y Setters
@@ -72,19 +70,10 @@ public class ClienteDTO {
         this.telefono = telefono;
     }
 
-    public List<ReservaDTO> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<ReservaDTO> reservas) {
-        this.reservas = reservas;
-    }
 
     @Override
     public String toString() {
-        return "ClienteDTO{" + "id=" + id + ", nombreCompleto=" + 
-                nombre+ ", telefono=" + telefono + 
-                ", reservas=" + reservas + '}';
+        return  nombre + ", " + telefono;
     }
 
 }

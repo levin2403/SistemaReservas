@@ -4,7 +4,7 @@
  */
 package Interfaces;
 
-import DTO.ReservaDTO;
+import DTOs.ReservaDTO;
 import Entidades.Reserva;
 import Excepciones.BOException;
 import java.time.LocalDate;

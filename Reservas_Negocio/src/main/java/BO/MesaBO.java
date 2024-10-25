@@ -2,7 +2,7 @@ package BO;
 
 import Convertidores.MesaCVR;
 import DAO.MesaDAO;
-import DTO.MesaDTO;
+import DTOs.MesaDTO;
 import Entidades.Mesa;
 import Excepciones.BOException;
 import Excepciones.ConversionException;

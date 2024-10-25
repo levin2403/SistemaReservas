@@ -5,13 +5,9 @@
 package Convertidores;
 
 
-import DTO.MesaDTO;
 import DTOs.RestauranteDTO;
-import Entidades.Mesa;
 import Entidades.Restaurante;
 import Excepciones.ConversionException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,13 +16,13 @@ public class RestauranteCVR {
     private static final Logger LOG = Logger.
             getLogger(RestauranteCVR.class.getName());
     
-    private final MesaCVR mesaCVR; // convertidor de mesa
+//    private final MesaCVR mesaCVR; // convertidor de mesa
 
     /**
      * Constructor por defecto.
      */
     public RestauranteCVR() {
-        this.mesaCVR = new MesaCVR();
+//        this.mesaCVR =new MesaCVR();
     }
     
     /**
@@ -53,14 +49,14 @@ public class RestauranteCVR {
         restaurante.setHoraApertura(restauranteDTO.getHoraApertura());
         restaurante.setHoraCierre(restauranteDTO.getHoraCierre());
 
-        // Convertir la lista de mesas
-        if (restauranteDTO.getMesas() != null) {
-            List<Mesa> mesas = new ArrayList<>();
-            for (MesaDTO mesaDTO : restauranteDTO.getMesas()) {
-                mesas.add(mesaCVR.toEntity(mesaDTO));
-            }
-            restaurante.setMesas(mesas);
-        }
+//        // Convertir la lista de mesas
+//        if (restauranteDTO.getMesas() != null) {
+//            List<Mesa> mesas = new ArrayList<>();
+//            for (MesaDTO mesaDTO : restauranteDTO.getMesas()) {
+//                mesas.add(mesaCVR.toEntity(mesaDTO));
+//            }
+//            restaurante.setMesas(mesas);
+//        }
         
         LOG.log(Level.INFO, "Exito en la conversion de DTO a Entidad "
                 + "Restaurante");
@@ -98,14 +94,14 @@ public class RestauranteCVR {
         restauranteDTO.setHoraApertura(restaurante.getHoraApertura());
         restauranteDTO.setHoraCierre(restaurante.getHoraCierre());
 
-        // Convertir la lista de mesas
-        if (restaurante.getMesas() != null) {
-            List<MesaDTO> mesasDTO = new ArrayList<>();
-            for (Mesa mesa : restaurante.getMesas()) {
-                mesasDTO.add(mesaCVR.toDTO(mesa));
-            }
-            restauranteDTO.setMesas(mesasDTO);
-        }
+//        // Convertir la lista de mesas
+//        if (restaurante.getMesas() != null) {
+//            List<MesaDTO> mesasDTO = new ArrayList<>();
+//            for (Mesa mesa : restaurante.getMesas()) {
+//                mesasDTO.add(mesaCVR.toDTO(mesa));
+//            }
+//            restauranteDTO.setMesas(mesasDTO);
+//        }
         
         LOG.log(Level.INFO, "Exito en la conversion de Entidad Restaurante "
                 + "a DTO");

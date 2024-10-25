@@ -4,7 +4,7 @@
  */
 package Interfaces;
 
-import DTO.ClienteDTO;
+import DTOs.ClienteDTO;
 import Excepciones.BOException;
 import java.util.List;
 

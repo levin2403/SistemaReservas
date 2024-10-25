@@ -4,15 +4,11 @@
  */
 package Convertidores;
 
-import DTO.ClienteDTO;
-import DTO.ReservaDTO;
+import DTOs.ClienteDTO;
 import Entidades.Cliente;
-import Entidades.Reserva;
 import Excepciones.ConversionException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 
 
@@ -25,15 +21,14 @@ public class ClienteCVR {
 
     private static final Logger LOG = Logger.
             getLogger(ClienteCVR.class.getName());
-   
     
-    private ReservaCVR reservaCVR; // Convertidor de reserva
-
+    // No necesitas esta variable de instancia, ya que estás usando un Singleton
+    // private ReservaST reservaST; 
+    
     /**
      * Constructor por defecto.
      */
     public ClienteCVR() {
-        this.reservaCVR = new ReservaCVR();
     }
             
     /**
@@ -49,24 +44,13 @@ public class ClienteCVR {
         try{
             
         if (clienteDTO == null) {
-            return null; // Retorna null si el DTO es nulo
+            return null; 
         }
 
         Cliente cliente = new Cliente();
         cliente.setId(Long.valueOf(clienteDTO.getId())); // Asigna el ID
         cliente.setNombre(clienteDTO.getNombre()); // Asigna el nombre
         cliente.setTelefono(clienteDTO.getTelefono()); // Asigna el teléfono
-        
-        // Convierte la lista de reservas usando el convertidor
-        if (clienteDTO.getReservas() != null) {
-            List<Reserva> reservas = clienteDTO.getReservas()
-                                                 .stream()
-                                                 .map(reservaCVR::toEntity)
-                                                 .collect(Collectors.toList());
-            cliente.setReservas(reservas);
-        } else {
-            cliente.setReservas(null); // Asigna null si no hay reservas
-        }
         
         LOG.log(Level.INFO, "Exito en la conversion de DTO a Cliente");
         
@@ -88,35 +72,22 @@ public class ClienteCVR {
      * @throws Excepciones.ConversionException
      */
     public ClienteDTO toDTO(Cliente cliente) throws ConversionException{
-        try{
-        
         if (cliente == null) {
-            return null; // Retorna null si la entidad es nula
+            return null; // Alternativamente, podrías lanzar una excepción aquí
         }
 
-        ClienteDTO clienteDTO = new ClienteDTO();
-        clienteDTO.setId(String.valueOf(cliente.getId())); // Asigna el ID
-        clienteDTO.setNombre(cliente.getNombre()); // Asigna el nombre
-        clienteDTO.setTelefono(cliente.getTelefono()); // Asigna el teléfono
+        try {
+            ClienteDTO clienteDTO = new ClienteDTO();
+            clienteDTO.setId(String.valueOf(cliente.getId())); 
+            clienteDTO.setNombre(cliente.getNombre() != null ? cliente.getNombre() : "");
+            clienteDTO.setTelefono(cliente.getTelefono() != null ? cliente.getTelefono() : "");
 
-        // Convierte la lista de reservas usando el convertidor
-        if (cliente.getReservas() != null) {
-            List<ReservaDTO> reservasDTO = cliente.getReservas()
-                                                   .stream()
-                                                   .map(reservaCVR::toDTO)
-                                                   .collect(Collectors.toList());
-            clienteDTO.setReservas(reservasDTO);
-        } else {
-            clienteDTO.setReservas(null); // Asigna null si no hay reservas
-        }
-        
-        LOG.log(Level.INFO, "Exito en la conversion de Cliente a DTO");
+            LOG.log(Level.INFO, "Éxito en la conversión de Cliente a DTO");
+            return clienteDTO;
 
-        return clienteDTO;
-        
-        }catch(NullPointerException ex){
-             LOG.log(Level.SEVERE, "Error en la conversion a DTO");
-             throw new ConversionException();
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Error en la conversión a DTO", ex);
+            throw new ConversionException("Error en la conversión a DTO: " + ex.getMessage());
         }
     }
 }

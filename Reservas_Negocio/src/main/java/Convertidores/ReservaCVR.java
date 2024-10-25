@@ -4,7 +4,7 @@
  */
 package Convertidores;
 
-import DTO.ReservaDTO;
+import DTOs.ReservaDTO;
 import Entidades.Reserva;
 import Excepciones.ConversionException;
 import java.util.logging.Level;
@@ -15,11 +15,14 @@ public class ReservaCVR {
 
     private static final Logger LOG = Logger.
             getLogger(ReservaCVR.class.getName());
-
+    
     private final ClienteCVR clienteCVR; // convertidor de cliente
     private final MesaCVR mesaCVR; // convertidor de mesa
     private final RestauranteCVR restauranteCVR; // convertidor de restaurante
 
+    /**
+     * 
+     */
     public ReservaCVR() {
         this.clienteCVR = new ClienteCVR();
         this.mesaCVR = new MesaCVR();

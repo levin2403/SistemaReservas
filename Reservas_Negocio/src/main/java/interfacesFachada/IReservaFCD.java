@@ -4,12 +4,14 @@
  */
 package interfacesFachada;
 
+import Excepciones.FacadeException;
+
 /**
  *
  * @author skevi
  */
 public interface IReservaFCD {
     
-    public void agregarReserva();
+    public void agregarReserva() throws FacadeException;
     
 }

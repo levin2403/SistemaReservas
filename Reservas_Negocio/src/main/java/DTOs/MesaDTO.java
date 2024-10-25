@@ -1,4 +1,4 @@
-package DTO;
+package DTOs;
 
 import DTOs.RestauranteDTO;
 import java.util.List;
@@ -12,7 +12,6 @@ public class MesaDTO {
     private int capacidadMaxima;
     private String ubicacion;
     private RestauranteDTO restaurante;  
-    private List<ReservaDTO> reservas;
 
     public MesaDTO() {
     }
@@ -29,7 +28,7 @@ public class MesaDTO {
 
     public MesaDTO(String id, String codigoMesa, String tipoMesa, 
             int capacidadMinima, int capacidadMaxima, String ubicacion, 
-            RestauranteDTO restaurante, List<ReservaDTO> reservas) {
+            RestauranteDTO restaurante) {
         this.id = id;
         this.codigoMesa = codigoMesa;
         this.tipoMesa = tipoMesa;
@@ -37,7 +36,6 @@ public class MesaDTO {
         this.capacidadMaxima = capacidadMaxima;
         this.ubicacion = ubicacion;
         this.restaurante = restaurante;
-        this.reservas = reservas;
     }
 
     public String getId() {
@@ -96,21 +94,12 @@ public class MesaDTO {
         this.restaurante = restaurante;
     }
 
-    public List<ReservaDTO> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<ReservaDTO> reservas) {
-        this.reservas = reservas;
-    }
-
     @Override
     public String toString() {
         return "MesaDTO{" + "id=" + id + ", codigoMesa=" + codigoMesa + 
                 ", tipoMesa=" + tipoMesa + ", capacidadMinima=" + 
                 capacidadMinima + ", capacidadMaxima=" + capacidadMaxima + 
-                ", ubicacion=" + ubicacion + ", restaurante=" + restaurante + 
-                ", reservas=" + reservas + '}';
+                ", ubicacion=" + ubicacion + ", restaurante=" + restaurante;
     }
 
 }

@@ -12,11 +12,16 @@ import Entidades.Cliente;
 import Entidades.Mesa;
 import Entidades.Reserva;
 import Entidades.Restaurante;
+import Excepciones.DAOException;
+import Interfaces.IClienteDAO;
+import Interfaces.IReservaDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -77,7 +82,6 @@ public class IncercionRestaurante {
 
 //        // Crear instancias del DAO
 //        ClienteDAO clienteDAO = new ClienteDAO();
-        ReservaDAO reservaDAO = new ReservaDAO();
 //
 //        // Obtener un cliente y una mesa ya existentes en la base de datos
 //        Cliente cliente = clienteDAO.obtenerCliente(1L); // Supongamos que el cliente con ID 1 existe
@@ -116,6 +120,17 @@ public class IncercionRestaurante {
 //          for (Reserva reserva : reservas) {
 //              System.out.println(reserva.toString());
 //        }
-    }
+    
   
+    IReservaDAO reservaDAO = new ReservaDAO();
+    IClienteDAO clienteDAO = new ClienteDAO();
+    
+    try{
+    List<Cliente> clientes = clienteDAO.obtenerClientes();
+        System.out.println(clientes.toString());
+     }
+    catch(DAOException ex){
+        System.out.println("la cague" + ex.getMessage());
+    }
+  }
 }

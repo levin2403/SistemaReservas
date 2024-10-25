@@ -2,7 +2,7 @@ package BO;
 
 import Convertidores.ClienteCVR;
 import DAO.ClienteDAO;
-import DTO.ClienteDTO;
+import DTOs.ClienteDTO;
 import Entidades.Cliente;
 import Excepciones.BOException;
 import Excepciones.ConversionException;
@@ -66,13 +66,17 @@ public class ClienteBO implements IClienteBO {
             
             return clienteDTO;
         } catch (DAOException de) {
+            
             // Registrar un error en el log si hay un problema en la capa DAO
             LOG.log(Level.SEVERE, "Error al obtener el cliente por ID en BO", de);
             throw new BOException(de.getMessage());  // Re-lanzar como BOException
+            
         } catch (ConversionException ce) {
+            
             // Registrar un error si falla la conversión de entidad a DTO
             LOG.log(Level.SEVERE, "Error en la conversión al obtener el cliente por ID", ce);
             throw new BOException("Error al obtener el cliente por ID");
+            
         }
     }
 
@@ -88,23 +92,29 @@ public class ClienteBO implements IClienteBO {
         try {
             // Obtener la lista de entidades Cliente desde el DAO
             List<Cliente> entidades = clienteDAO.obtenerClientes();
-            // Crear una lista de DTO para retornar
+            
             List<ClienteDTO> dto = new ArrayList<>();
            
             // Convertir cada entidad Cliente a DTO
-            for (ClienteDTO clienteDTO : dto) {
-                entidades.add(clienteCVR.toEntity(clienteDTO));
+            for (Cliente cliente : entidades) {
+                dto.add(clienteCVR.toDTO(cliente));
             }
-           
+          
             return dto; // Retornar la lista de clientes en formato DTO
+            
         } catch (DAOException de) {
+            
             // Registrar un error si ocurre un problema en la capa DAO
             LOG.log(Level.SEVERE, "Error al obtener los clientes en BO", de);
-            throw new BOException(de.getMessage());  // Re-lanzar como BOException
+            throw new BOException(de.getMessage());  
+            
         } catch (ConversionException ce) {
+            
             // Registrar un error si falla la conversión de entidad a DTO
             LOG.log(Level.SEVERE, "Error en la conversión al obtener los clientes", ce);
             throw new BOException("Error al obtener los clientes");
+            
         }
+        
     }
 }

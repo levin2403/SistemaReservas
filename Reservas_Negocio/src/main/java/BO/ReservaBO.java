@@ -2,7 +2,7 @@ package BO;
 
 import Convertidores.ReservaCVR;
 import DAO.ReservaDAO;
-import DTO.ReservaDTO;
+import DTOs.ReservaDTO;
 import Entidades.Reserva;
 import Excepciones.BOException;
 import Excepciones.DAOException;

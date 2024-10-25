@@ -4,8 +4,8 @@
  */
 package Convertidores;
 
-import DTO.MesaDTO;
-import DTO.ReservaDTO;
+import DTOs.MesaDTO;
+import DTOs.ReservaDTO;
 import Entidades.Mesa;
 import Entidades.Reserva;
 import Excepciones.ConversionException;
@@ -18,14 +18,13 @@ public class MesaCVR {
 
     private static final Logger LOG = Logger.
             getLogger(MesaCVR.class.getName());
-    
+   
    
     private RestauranteCVR restauranteCVR; // Convertidor de restaurante.
     private ReservaCVR reservaCVR; // Convertidor de reserva.
 
     public MesaCVR() {
         this.restauranteCVR = new RestauranteCVR();
-        this.reservaCVR = new ReservaCVR();
     }
     
     /**
@@ -57,14 +56,14 @@ public class MesaCVR {
                     toEntity(mesaDTO.getRestaurante()));
         }
 
-        // Convierte la lista de reservas usando el convertidor
-        if (mesaDTO.getReservas() != null) {
-            List<Reserva> reservas = mesaDTO.getReservas()
-                                              .stream()
-                                              .map(reservaCVR::toEntity)
-                                              .collect(Collectors.toList());
-            mesa.setReservas(reservas);
-        }
+//        // Convierte la lista de reservas usando el convertidor
+//        if (mesaDTO.getReservas() != null) {
+//            List<Reserva> reservas = mesaDTO.getReservas()
+//                                              .stream()
+//                                              .map(reservaCVR::toEntity)
+//                                              .collect(Collectors.toList());
+//            mesa.setReservas(reservas);
+//        }
         
         LOG.log(Level.INFO, "Exito en la conversion de DTO a Entidad");
         
@@ -105,14 +104,14 @@ public class MesaCVR {
             mesaDTO.setRestaurante(restauranteCVR.toDTO(mesa.getRestaurante()));
         }
 
-        // Convierte la lista de reservas usando el convertidor
-        if (mesa.getReservas() != null) {
-            List<ReservaDTO> reservasDTO = mesa.getReservas()
-                                                 .stream()
-                                                 .map(reservaCVR::toDTO)
-                                                 .collect(Collectors.toList());
-            mesaDTO.setReservas(reservasDTO);
-        }
+//        // Convierte la lista de reservas usando el convertidor
+//        if (mesa.getReservas() != null) {
+//            List<ReservaDTO> reservasDTO = mesa.getReservas()
+//                                                 .stream()
+//                                                 .map(reservaCVR::toDTO)
+//                                                 .collect(Collectors.toList());
+//            mesaDTO.setReservas(reservasDTO);
+//        }
 
         LOG.log(Level.INFO, "Exito en la conversion de Cliente a DTO");
         

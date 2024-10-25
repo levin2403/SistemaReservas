@@ -4,9 +4,7 @@
  */
 package DTOs;
 
-import DTO.MesaDTO;
 import java.time.LocalTime;
-import java.util.List;
 
 /**
  *
@@ -20,7 +18,6 @@ public class RestauranteDTO {
     private String telefono; // telefono del restaurante
     private LocalTime horaApertura; // Hora de apertura
     private LocalTime horaCierre;   // Hora de cierre
-    private List<MesaDTO> mesas;
 
     /**
      * 
@@ -38,15 +35,13 @@ public class RestauranteDTO {
     }
 
     public RestauranteDTO(String id, String nombre, String direccion, 
-            String telefono, LocalTime horaApertura, LocalTime horaCierre, 
-            List<MesaDTO> mesas) {
+            String telefono, LocalTime horaApertura, LocalTime horaCierre) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
-        this.mesas = mesas;
     }
 
     // Getters y Setters
@@ -99,20 +94,12 @@ public class RestauranteDTO {
         this.horaCierre = horaCierre;
     }
 
-    public List<MesaDTO> getMesas() {
-        return mesas;
-    }
-
-    public void setMesas(List<MesaDTO> mesas) {
-        this.mesas = mesas;
-    }
-
     @Override
     public String toString() {
         return "RestauranteDTO{" + "id=" + id + ", nombre=" + nombre + 
                 ", direccion=" + direccion + ", telefono=" + telefono + 
                 ", horaApertura=" + horaApertura + ", horaCierre=" + 
-                horaCierre + ", mesas=" + mesas + '}';
+                horaCierre;
     }
 
 }
