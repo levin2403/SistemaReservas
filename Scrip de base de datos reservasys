@@ -1,4 +1,4 @@
-Scrip de base de datos 
+-- Scrip de base de datos 
 
 CREATE DATABASE IF NOT EXISTS reservasys;
 USE reservasys;
