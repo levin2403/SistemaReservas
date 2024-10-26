@@ -1,11 +1,16 @@
 package Fachada;
 
+import DTOs.ReservaDTO;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.swing.JFileChooser;
 
 /**
@@ -14,7 +19,7 @@ import javax.swing.JFileChooser;
  */
 public class PdfGenerator {
 
-    public boolean generarPDFDesdeFormulario(String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
+    public boolean generarPDFDesdeFormulario(String fechaInicio, String fechaFin, String tipoMesa, String ubicacion, List<ReservaDTO> reservas) {
         // Se solicita al usuario la ubicación donde guardar el PDF
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar PDF");
@@ -53,6 +58,21 @@ public class PdfGenerator {
             agregarParrafoSiNoVacio(document, "Tipo de Mesa: ", tipoMesa);
             agregarParrafoSiNoVacio(document, "Ubicación: ", ubicacion);
 
+            // Formateador para fechas
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+// Agrega las reservas al documento
+            document.add(new Paragraph("Reservaciones:").setFontSize(16));
+            for (ReservaDTO reserva : reservas) {
+                // Filtrar reservas directamente durante la adición al PDF
+                if (filtrarReserva(reserva, fechaInicio, fechaFin, tipoMesa, ubicacion)) {
+                    document.add(new Paragraph("Cliente: " + reserva.getCliente().getNombre()
+                            + ", Fecha: " + reserva.getFechaHoraReserva().format(formatter)
+                            + ", Número de Personas: " + reserva.getNumeroPersonas()
+                            + ", Tipo de Mesa: " + reserva.getMesa().getTipoMesa()
+                            + ", Ubicación: " + reserva.getMesa().getUbicacion()));
+                }
+            }
             // Cierra el documento
             document.close();
 
@@ -71,5 +91,33 @@ public class PdfGenerator {
         if (contenido != null && !contenido.trim().isEmpty()) {
             document.add(new Paragraph(etiqueta + contenido));
         }
+    }
+
+    // Método para filtrar reservas basadas en los criterios
+    private boolean filtrarReserva(ReservaDTO reserva, String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
+        boolean fechaValida = true;
+        boolean tipoMesaValido = true;
+        boolean ubicacionValida = true;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime inicio = LocalDate.parse(fechaInicio, formatter).atStartOfDay();
+        LocalDateTime fin = LocalDate.parse(fechaFin, formatter).atTime(23, 59);
+
+        // Filtrar por fechas
+        if (reserva.getFechaHoraReserva().isBefore(inicio) || reserva.getFechaHoraReserva().isAfter(fin)) {
+            fechaValida = false;
+        }
+
+        // Filtrar por tipo de mesa
+        if (!tipoMesa.isEmpty() && !reserva.getMesa().getTipoMesa().equalsIgnoreCase(tipoMesa)) {
+            tipoMesaValido = false;
+        }
+
+        // Filtrar por ubicación
+        if (!ubicacion.isEmpty() && !reserva.getMesa().getUbicacion().equalsIgnoreCase(ubicacion)) {
+            ubicacionValida = false;
+        }
+
+        return fechaValida && tipoMesaValido && ubicacionValida;
     }
 }

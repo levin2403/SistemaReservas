@@ -4,8 +4,14 @@
  */
 package GUI;
 
+import DTOs.ReservaDTO;
+import Fachada.FiltrosFCD;
 import Fachada.PdfGenerator;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -166,29 +172,63 @@ public class Reportes extends javax.swing.JFrame {
     }//GEN-LAST:event_atrasBtnActionPerformed
 
     private void generarPDFBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFBtnActionPerformed
-        // Validaciones
-        if (fechaInicioDC.getDate() == null || fechaFinDC.getDate() == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione las fechas.");
-            return;
-        }
+        try {
+            // Validar fechas y campos obligatorios
+            if (!validarFechas() || !validarCamposObligatorios()) {
+                return;
+            }
 
-        // Obtener los valores de los campos
-        String fechaInicio = new SimpleDateFormat("dd/MM/yyyy").format(fechaInicioDC.getDate());
-        String fechaFin = new SimpleDateFormat("dd/MM/yyyy").format(fechaFinDC.getDate());
-        String tipoMesa = tipoMesaTxt.getText().trim();
-        String ubicacion = ubicacionTxt.getText().trim();
+            // Formatear fechas
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaInicio = dateFormat.format(fechaInicioDC.getDate());
+            String fechaFin = dateFormat.format(fechaFinDC.getDate());
 
-        // Crear instancia de PDF y generar el reporte
-        PdfGenerator pdf = new PdfGenerator();
+            // Obtener valores de campos de texto
+            String tipoMesa = tipoMesaTxt.getText().trim();
+            String ubicacion = ubicacionTxt.getText().trim();
 
-        // Generar el reporte aplicando filtros solo si se ingresaron valores
-        if (pdf.generarPDFDesdeFormulario(fechaInicio, fechaFin, tipoMesa, ubicacion)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Reporte generado exitosamente.");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al generar el reporte.");
+            // Obtener reservas (esto depende de cómo estés obteniendo las reservas)
+            List<ReservaDTO> reservas = obtenerReservas();
+
+            // Llamar a la clase PdfGenerator para crear el PDF
+            PdfGenerator pdfGenerator = new PdfGenerator();
+            boolean exito = pdfGenerator.generarPDFDesdeFormulario(fechaInicio, fechaFin, tipoMesa, ubicacion, reservas);
+
+            // Mostrar mensaje según el resultado
+            if (exito) {
+                mostrarExito("Reporte generado exitosamente.");
+            } else {
+                mostrarError("Error al generar el reporte.");
+            }
+        } catch (Exception e) {
+            mostrarError("Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_generarPDFBtnActionPerformed
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
+    private void mostrarExito(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean validarFechas() {
+        if (fechaInicioDC.getDate().after(fechaFinDC.getDate())) {
+            mostrarError("La fecha de inicio no puede ser posterior a la fecha de fin.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarCamposObligatorios() {
+        return true;
+    }
+
+    private List<ReservaDTO> obtenerReservas() {
+        // y devolver una lista de objetos ReservaDTO.
+        List<ReservaDTO> reservas = new ArrayList<>();
+        return reservas;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton atrasBtn;
