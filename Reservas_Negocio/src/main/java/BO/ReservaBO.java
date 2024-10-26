@@ -1,10 +1,14 @@
 package BO;
 
+import Convertidores.ClienteCVR;
 import Convertidores.ReservaCVR;
 import DAO.ReservaDAO;
+import DTOs.ClienteDTO;
 import DTOs.ReservaDTO;
+import Entidades.Cliente;
 import Entidades.Reserva;
 import Excepciones.BOException;
+import Excepciones.ConversionException;
 import Excepciones.DAOException;
 import Interfaces.IReservaBO;
 import Interfaces.IReservaDAO;
@@ -30,6 +34,9 @@ public class ReservaBO implements IReservaBO {
    
     // instancia del convertidor de Reservas.
     private final ReservaCVR reservaCVR; 
+    
+    //instancia del convertidor de cliente
+    private final ClienteCVR clienteCVR;
 
     /**
      * Constructor por defecto de la clase.
@@ -37,7 +44,7 @@ public class ReservaBO implements IReservaBO {
     public ReservaBO() {
         this.reservaDAO = new ReservaDAO();
         this.reservaCVR = new ReservaCVR();
-        
+        this.clienteCVR = new ClienteCVR();
     }
 
     /**
@@ -144,6 +151,32 @@ public class ReservaBO implements IReservaBO {
         catch(DAOException de){
             LOG.log(Level.SEVERE, "Error al agregar la reserva en dao", de);
             throw new BOException(de.getMessage());
+        }
+    }
+
+    /**
+     * Verifica que el cliente dado en el parametro ya no tenga mas 
+     * reservaciones a partir de la hora y fecha dada, en caso de tener 
+     * reservaciones a partir de esa fecha y hora se regresara un nulo
+     * indicando que hay reservaciones activas, por otro lado en caso de no 
+     * haber encontrado ninguna retornara un false.
+     * 
+     * @param cliente Cliente de cual queremos buscar las resarvaciones.
+     * @return True en caso de que haya reservaciones, false en caso contrario
+     * @throws Excepciones.BOException En caso de excepcion uno nunc sabe.
+     */
+    @Override
+    public boolean verificarReservaciones(ClienteDTO cliente) throws BOException {
+        try{
+            Cliente clienteEntidad = clienteCVR.toEntity(cliente);
+            return reservaDAO.verificarReservaciones(clienteEntidad);
+        }
+        catch(ConversionException ce){
+            LOG.log(Level.SEVERE, "Error en verificar las reservaciones en BO");
+            throw new BOException(ce.getMessage());
+        } catch (DAOException ex) {
+            LOG.log(Level.SEVERE, "Error en verificar las reservaciones en BO");
+            throw new BOException(ex.getMessage());
         }
     }
     

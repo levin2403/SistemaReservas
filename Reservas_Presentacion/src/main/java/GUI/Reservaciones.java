@@ -1,11 +1,20 @@
 package GUI;
 
 
+import DTOs.ClienteDTO;
+import DTOs.MesaDTO;
 import Excepciones.FacadeException;
 import Fachada.ClienteFCD;
 import Fachada.MesaFCD;
+import Fachada.ReservaFCD;
 import interfacesFachada.IClienteFCD;
 import interfacesFachada.IMesaFCD;
+import interfacesFachada.IReservaFCD;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
@@ -14,17 +23,25 @@ import javax.swing.table.TableModel;
  */
 public class Reservaciones extends javax.swing.JFrame {
 
-    IClienteFCD clienteFCD;
-    IMesaFCD mesaFCD;
+    IClienteFCD clienteFCD; //
+    IMesaFCD mesaFCD; //
+    IReservaFCD reservaFCD; //
     
+    /**
+     * 
+     */
     public Reservaciones() {
         initComponents();
         cargarDatosIniciales();
     }
 
+    /**
+     * 
+     */
     private void cargarDatosIniciales(){
         this.clienteFCD = new ClienteFCD();
         this.mesaFCD = new MesaFCD();
+        this.reservaFCD = new ReservaFCD();
         
         try{
             clienteFCD.cargarComboBoxClientes(cbxClientes);
@@ -34,6 +51,64 @@ public class Reservaciones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar las los "
                     + "datos de inicio", "Error", JOptionPane.ERROR);
         }
+    }
+    
+    /**
+     * Verifica que ningun Dato sea nulo.
+     * 
+     * @return true en caso de que no haya nulos, false en caso contrario.
+     */
+    private boolean VerificarDatos(){
+        if (dcFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Porfavor seleccione una "
+                    + "fecha");
+            return false;
+        }
+        else if (tblMesas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una mesa antes "
+                    + "de continuar");
+        }
+        return true;
+    }
+    
+    private MesaDTO formarMesa(){
+        int selectedRow = tblMesas.getSelectedRow();
+        
+        String codigoMesa = tblMesas.getValueAt(selectedRow, 0).toString(); // Cambia el índice según tu tabla
+        String tipoMesa = tblMesas.getValueAt(selectedRow, 1).toString();   // Cambia el índice según tu tabla
+        int capacidadMinima = Integer.parseInt(tblMesas.getValueAt(selectedRow, 2).toString()); // Cambia el índice según tu tabla
+        int capacidadMaxima = Integer.parseInt(tblMesas.getValueAt(selectedRow, 3).toString()); // Cambia el índice según tu tabla
+        String ubicacion = tblMesas.getValueAt(selectedRow, 4).toString();   // Cambia el índice según tu tabla
+        
+        MesaDTO mesa = new MesaDTO(codigoMesa, tipoMesa, capacidadMinima, 
+                capacidadMaxima, ubicacion);
+        
+        // retornamos la mesa.
+        return mesa;
+    }
+    
+    /**
+     * 
+     * 
+     * @return 
+     */
+    private LocalDateTime formarFechaHora(){
+        //convertimos la fecha del selector de fechas a instant
+        Instant instant = dcFecha.getDate().toInstant();
+
+        //convertir Instant a LocalDate en la zona horaria del sistema
+        LocalDate fecha = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+        System.out.println("Fecha obtenida" + fecha.toString());
+        
+        ///////
+        LocalTime time = LocalTime.parse((String)cbxHoras.getSelectedItem());
+        
+        //formamos el LocalDateTime
+        LocalDateTime horaFecha = fecha.atTime(time);
+        System.out.println(horaFecha.toString());
+        
+        //devolvemos el LocalDateTime formado;
+        return horaFecha;
     }
     
     @SuppressWarnings("unchecked")
@@ -53,12 +128,12 @@ public class Reservaciones extends javax.swing.JFrame {
         panelRound2 = new Control.PanelRound();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMesas = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        timePicker1 = new com.raven.swing.TimePicker();
+        dcFecha = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtCosto = new javax.swing.JTextField();
+        cbxHoras = new javax.swing.JComboBox<>();
+        cbxNumPersonas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -100,21 +175,22 @@ public class Reservaciones extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Costo:");
-        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 510, -1, -1));
+        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 510, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cliente:");
-        Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, -1, -1));
+        Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, -1, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Numero de personas");
-        Fondo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, -1, -1));
+        jLabel7.setText("Numero de personas:");
+        Fondo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
 
-        Fondo.add(cbxClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 430, 300, 40));
+        cbxClientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Fondo.add(cbxClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, 300, 40));
 
         panelRound1.setBackground(new java.awt.Color(51, 51, 51));
         panelRound1.setRoundBottomLeft(50);
@@ -190,29 +266,31 @@ public class Reservaciones extends javax.swing.JFrame {
         );
 
         Fondo.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, 520, 560));
-        Fondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 300, 40));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8" }));
-        Fondo.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 300, 40));
-
-        timePicker1.setForeground(new java.awt.Color(51, 51, 51));
-        Fondo.add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 220, 330));
+        Fondo.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 300, 40));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Hora de reservación");
-        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jLabel4.setText("Hora de reservación:");
+        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Fecha de reservación");
-        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
+        jLabel5.setText("Fecha de reservación:");
+        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
         txtCosto.setEditable(false);
         txtCosto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        Fondo.add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 550, 300, 40));
+        Fondo.add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 510, 300, 40));
+
+        cbxHoras.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbxHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", " " }));
+        Fondo.add(cbxHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 300, 40));
+
+        cbxNumPersonas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbxNumPersonas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8" }));
+        Fondo.add(cbxNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 300, 40));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -221,7 +299,33 @@ public class Reservaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
+        try{
+            if (VerificarDatos()) {
+                
+                
+
+                //recolectamos los datos
+                ClienteDTO cliente = (ClienteDTO) cbxClientes.getSelectedItem();
+                //obtiene la mesa seleccionada en la tabla.
+                MesaDTO mesa = formarMesa();
+                // obtenemos la fecha y la hora.
+                LocalDateTime fechaHora = formarFechaHora();
+                //obtenemos el numero de personas
+                String num = (String) cbxNumPersonas.getSelectedItem();
+                int numPersonas = Integer.parseInt(num);
+                //obtenemos el costo
+                double costo = Double.parseDouble(txtCosto.getText());
+                
+                //guardamos reserva
+                reservaFCD.agregarReserva(cliente, mesa, fechaHora, 
+                        numPersonas, costo);
+
+            }
         
+        }catch(FacadeException fe){
+            JOptionPane.showMessageDialog(this, fe.getMessage(), 
+                    "Error padrino", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_confirmarBtnActionPerformed
 
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
@@ -278,9 +382,10 @@ public class Reservaciones extends javax.swing.JFrame {
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton cancelarBtn;
     private javax.swing.JComboBox<String> cbxClientes;
+    private javax.swing.JComboBox<String> cbxHoras;
+    private javax.swing.JComboBox<String> cbxNumPersonas;
     private javax.swing.JButton confirmarBtn;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dcFecha;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -291,7 +396,6 @@ public class Reservaciones extends javax.swing.JFrame {
     private Control.PanelRound panelRound1;
     private Control.PanelRound panelRound2;
     private javax.swing.JTable tblMesas;
-    private com.raven.swing.TimePicker timePicker1;
     private javax.swing.JTextField txtCosto;
     // End of variables declaration//GEN-END:variables
 }

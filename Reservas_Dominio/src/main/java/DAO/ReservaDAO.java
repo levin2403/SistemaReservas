@@ -273,10 +273,50 @@ public class ReservaDAO implements IReservaDAO{
 
         return resultados; // Devolver la lista de reservas
     }
+    
+    /**
+     * Verifica que el cliente dado en el parametro ya no tenga mas 
+     * reservaciones a partir de la hora y fecha dada, en caso de tener 
+     * reservaciones a partir de esa fecha y hora se regresara un nulo
+     * indicando que hay reservaciones activas, por otro lado en caso de no 
+     * haber encontrado ninguna retornara un false.
+     * 
+     * @param cliente Cliente de cual queremos buscar las resarvaciones.
+     * @return True en caso de que haya reservaciones, false en caso contrario
+     */
+     @Override
+      public boolean verificarReservaciones(Cliente cliente) throws DAOException {
+          EntityManager em = null;
+          try {
+              LocalDateTime horaActual = LocalDateTime.now();
+              em = conexion.getEntityManager();
 
+              TypedQuery<Long> query = em.createQuery(
+                  "SELECT COUNT(r) FROM Reserva r " +
+                  "WHERE r.cliente = :cliente " +
+                  "AND r.estado = 'ACTIVA' " +
+                  "AND r.fechaHoraReserva >= :horaActual", Long.class); // Ajuste en el operador
+              query.setParameter("cliente", cliente);
+              query.setParameter("horaActual", horaActual);
 
+              return query.getSingleResult() > 0;
 
-
-
+          } catch (PersistenceException pe) {
+              LOG.log(Level.SEVERE, "Error al verificar las reservaciones "
+                    + "de cliente", pe);
+              throw new DAOException("Error al verificar las reservaciones "
+                    + "del cliente.", pe);
+          } catch (ConexionException ex) {
+              Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, 
+                    null, ex);
+              throw new DAOException("Error al obtener el EntityManager para "
+                    + "verificar las reservaciones del cliente.", ex);
+          } finally {
+              if (em != null && em.isOpen()) {
+                  em.close();
+            }
+        }
+    }
+    
     
 }

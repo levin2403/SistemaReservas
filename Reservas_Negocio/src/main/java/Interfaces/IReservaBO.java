@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import DTOs.ClienteDTO;
 import DTOs.ReservaDTO;
 import Entidades.Reserva;
 import Excepciones.BOException;
@@ -75,5 +76,19 @@ public interface IReservaBO {
         String telefonoCliente, LocalDate fechaReserva,
         String areaRestaurante, LocalDate fechaInicio, 
         LocalDate fechaFin, Integer tamanoMesa) throws BOException;
+    
+    
+    /**
+     * Verifica que el cliente dado en el parametro ya no tenga mas 
+     * reservaciones a partir de la hora y fecha dada, en caso de tener 
+     * reservaciones a partir de esa fecha y hora se regresara un nulo
+     * indicando que hay reservaciones activas, por otro lado en caso de no 
+     * haber encontrado ninguna retornara un false.
+     * 
+     * @param cliente Cliente de cual queremos buscar las resarvaciones.
+     * @return True en caso de que haya reservaciones, false en caso contrario
+     * @throws Excepciones.BOException
+     */
+    public boolean verificarReservaciones(ClienteDTO cliente)throws BOException;
     
 }

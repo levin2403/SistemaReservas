@@ -20,10 +20,10 @@ import java.time.LocalTime;
  */
 public class ReservaFCD implements IReservaFCD{
     
-    IReservaBO reseraBO;
+    IReservaBO reservaBO;
 
     public ReservaFCD() {
-        this.reseraBO = new ReservaBO();
+        this.reservaBO = new ReservaBO();
     }
 
     /**
@@ -39,51 +39,137 @@ public class ReservaFCD implements IReservaFCD{
     public void agregarReserva(ClienteDTO cliente, MesaDTO mesa, 
             LocalDateTime horaFecha, int numPersonas, double costo) 
             throws FacadeException {
-//        try{
-        // lista de reservas del dia que se selecciono para la mesa 
-        // seleccionada 
-        
-        //lista de reservas del cliente seleccionado. 
-        
-        //verificamos el tamaño de la mesa sea la correcta para la 
-        //cantidad de personas
-        if (numPersonas < mesa.getCapacidadMinima() || 
-                numPersonas > mesa.getCapacidadMaxima()) {
-            
-            // verificamos que la fecha no sea la misma del dia de hoy 
-            // ni mayor a un mes.
-            LocalDateTime masUnDia = horaFecha.plusHours(24);
-            LocalDateTime masUnMes = horaFecha.plusMonths(1);
-            if (horaFecha.isAfter(masUnDia) || horaFecha.isBefore(masUnMes)) {
-                
-                // verificamos que las reservaciones que la hora de la 
-                // reservacion sea 1 hora antes del cierre.
-                LocalTime horaElegida = horaFecha.toLocalTime();
-                LocalTime horaCierre = LocalTime.of(22,0);
-                if (horaElegida.isBefore(horaCierre)) {
-                    //verificamos las reservas de la mesa seleccionada y 
-                    //vemos si entra dentro del rango de las 5 horas.
-                    if (true) {
-                        
-                    }
-                }else{
-                    throw new FacadeException("La hora elegida es superior a "
-                            + "la hora de cierre");
-                }
-            }else{
-                throw new FacadeException("Porfavor eliga una fecha para la "
-                        + "reservacion no menor a 24 horas a partir de hoy "
-                        + "ni mayora a un mes");
-            }
-        }else{
-            throw new FacadeException("Porfavor seleccione una cantida de "
-                    + "personas valida para el tamaño de la mesa");
+        try{
+             verificarTamañoMesa(mesa, numPersonas);
+             verificarFechaReservacion(horaFecha);
+             verificarHoraReservacion(horaFecha);
+             verificarReservacionesCliente(cliente,horaFecha);
+//            verificarDisponibilidad(mesa,horaFecha);
+//            hacerReserva(cliente, mesa, horaFecha, numPersonas, costo);
+        }catch(FacadeException ex){
+            throw new FacadeException(ex.getMessage());
         }
-//        }catch(BOException ex){
-//            throw new FacadeException(ex.getMessage());
-//        }
         
     }
     
-   
+    /**
+     * 
+     * @param mesa
+     * @param numPersonas
+     * @throws FacadeException 
+     */
+    private void verificarTamañoMesa(MesaDTO mesa, int numPersonas)
+            throws FacadeException{
+        if (numPersonas < mesa.getCapacidadMinima()) {
+            throw new FacadeException("El numero de personas es menor a "
+                    + "la capacidad de la mesa");
+        }
+        else if (numPersonas > mesa.getCapacidadMaxima()) {
+            throw new FacadeException("El numero de personas es mayor a "
+                    + "la capacidad de la mesa");
+        }       
+    }
+    
+    /**
+     * Valida que la reservacion no se pueda hacer a menos de 24 horas
+     * al igual que no se pueda hacer a más de un mes.
+     * 
+     * @param horaFecha Fecha y hora de la reservación.
+     * @throws FacadeException Excepción si la fecha no es válida.
+     */
+    private void verificarFechaReservacion(LocalDateTime horaFecha) 
+            throws FacadeException {
+
+        // Obtener la fecha y hora de 24 horas a partir de ahora
+        LocalDateTime masUnDia = LocalDateTime.now().plusHours(24);
+        // Obtener la fecha y hora de 1 mes a partir de ahora
+        LocalDateTime masUnMes = LocalDateTime.now().plusMonths(1);
+
+        // Verificar si la horaFecha es antes de 24 horas
+        if (horaFecha.isBefore(masUnDia)) {
+            throw new FacadeException("La reservación no se puede realizar a "
+                    + "menos de 24 horas, seleccione otra hora");
+        }
+        // Verificar si la horaFecha es después de un mes
+        else if (horaFecha.isAfter(masUnMes)) {
+            throw new FacadeException("La reservación no se puede realizar "
+                    + "a fechas mayores de un mes a partir del día de hoy");
+        }
+    }
+
+    /**
+     * verifica que la hora de la reservacion no sea menor a la hora de 
+     * apertura y no mayor a la hora de cierre.
+     * 
+     * @param horaFecha
+     * @throws FacadeException 
+     */
+    private void verificarHoraReservacion(LocalDateTime horaFecha) 
+            throws FacadeException{
+        
+        LocalTime horaElegida = horaFecha.toLocalTime();
+        LocalTime horaCierre = LocalTime.of(21,0);
+        LocalTime horaApertura = LocalTime.of(12,0);
+        
+        if (horaElegida.isAfter(horaCierre)){
+            throw new FacadeException("La hora de la reservacion no puede ser "
+                    + "despues del cierre del restaurante");
+        }
+        else if (horaElegida.isBefore(horaApertura)){
+            throw new FacadeException("La hora de la reservacion no puede ser "
+                    + "antes de la apertura del restaurante");
+        }
+    }
+    
+    /**
+     * Verifica dentro de la base de datos que el cliente no tenga mas 
+     * reservaciones a partir de la fecha y hora seleccionada, en caso 
+     * de tener mas reservaciones, se le negara hacer la reservacion.
+     * 
+     * @param cliente
+     * @param horaFecha
+     * @throws FacadeException 
+     */
+    private void verificarReservacionesCliente(ClienteDTO cliente, 
+            LocalDateTime horaFecha) throws FacadeException{
+        try{
+            boolean resultado = reservaBO.
+                    verificarReservaciones(cliente);
+            
+            if (!resultado) {
+                throw new FacadeException("El cliente ya tiene reservaciones "
+                        + "activas a partir de esta fecha");
+            }
+            
+        }catch(BOException be){
+            throw new FacadeException(be.getMessage());
+        }
+    }
+    
+    /**
+     * 
+     * 
+     * @param mesa
+     * @param horaFecha
+     * @throws FacadeException 
+     */
+    private void  verificarDisponibilidad(MesaDTO mesa, 
+            LocalDateTime horaFecha) throws FacadeException{
+        
+    }
+    
+    /**
+     * Realiza la reserva al cliente despues de haber pasado todos los filtros 
+     * 
+     * @param cliente
+     * @param mesa
+     * @param horaFecha
+     * @param numPersonas
+     * @param costo 
+     */
+    private void hacerReserva(ClienteDTO cliente, MesaDTO mesa, 
+            LocalDateTime horaFecha, int numPersonas, double costo){
+        
+    }
+    
 }
