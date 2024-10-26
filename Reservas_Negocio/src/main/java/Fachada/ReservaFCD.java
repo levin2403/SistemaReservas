@@ -5,14 +5,19 @@
 package Fachada;
 
 import BO.ReservaBO;
+import BO.RestauranteBO;
 import DTOs.ClienteDTO;
 import DTOs.MesaDTO;
+import DTOs.ReservaDTO;
+import DTOs.RestauranteDTO;
 import Excepciones.BOException;
 import Excepciones.FacadeException;
 import Interfaces.IReservaBO;
+import Interfaces.IRestauranteBO;
 import interfacesFachada.IReservaFCD;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,9 +26,11 @@ import java.time.LocalTime;
 public class ReservaFCD implements IReservaFCD{
     
     IReservaBO reservaBO;
+    IRestauranteBO restauranteBO;
 
     public ReservaFCD() {
         this.reservaBO = new ReservaBO();
+        this.restauranteBO = new RestauranteBO();
     }
 
     /**
@@ -43,9 +50,10 @@ public class ReservaFCD implements IReservaFCD{
              verificarTamañoMesa(mesa, numPersonas);
              verificarFechaReservacion(horaFecha);
              verificarHoraReservacion(horaFecha);
-             verificarReservacionesCliente(cliente,horaFecha);
-//            verificarDisponibilidad(mesa,horaFecha);
-//            hacerReserva(cliente, mesa, horaFecha, numPersonas, costo);
+             verificarReservacionesCliente(cliente);
+             verificarDisponibilidad(mesa,horaFecha);
+             System.out.println("paso prueba");
+            hacerReserva(cliente, mesa, horaFecha, numPersonas, costo);
         }catch(FacadeException ex){
             throw new FacadeException(ex.getMessage());
         }
@@ -130,13 +138,14 @@ public class ReservaFCD implements IReservaFCD{
      * @param horaFecha
      * @throws FacadeException 
      */
-    private void verificarReservacionesCliente(ClienteDTO cliente, 
-            LocalDateTime horaFecha) throws FacadeException{
+    private void verificarReservacionesCliente(ClienteDTO cliente) 
+            throws FacadeException{
         try{
+
             boolean resultado = reservaBO.
                     verificarReservaciones(cliente);
             
-            if (!resultado) {
+            if (resultado) {
                 throw new FacadeException("El cliente ya tiene reservaciones "
                         + "activas a partir de esta fecha");
             }
@@ -147,7 +156,7 @@ public class ReservaFCD implements IReservaFCD{
     }
     
     /**
-     * 
+     * Comparamos si en el dia elegido la mesa anterior 
      * 
      * @param mesa
      * @param horaFecha
@@ -155,7 +164,19 @@ public class ReservaFCD implements IReservaFCD{
      */
     private void  verificarDisponibilidad(MesaDTO mesa, 
             LocalDateTime horaFecha) throws FacadeException{
-        
+        try{
+            
+            boolean resultado = reservaBO.verificarPorDia(mesa, horaFecha);
+            
+            if (!resultado) {
+                throw new FacadeException("La mesa no se encuntra disponible "
+                        + "en las hora especificada");
+            }
+            
+        }
+        catch(BOException be){
+            throw new FacadeException();
+        }
     }
     
     /**
@@ -168,8 +189,33 @@ public class ReservaFCD implements IReservaFCD{
      * @param costo 
      */
     private void hacerReserva(ClienteDTO cliente, MesaDTO mesa, 
-            LocalDateTime horaFecha, int numPersonas, double costo){
-        
+            LocalDateTime horaFecha, int numPersonas, double costo) 
+            throws FacadeException{
+        try{
+            
+            //opcion para saber si desea agregar la reservacion
+            int respuesta = JOptionPane.showConfirmDialog(null, 
+                    "¿Esta seguro que desea agregar la reservacion?", 
+                    "Agregar reservacion", JOptionPane.YES_NO_OPTION);
+            
+            //si la respuesta fue si
+            if (respuesta == JOptionPane.YES_OPTION){
+            RestauranteDTO restaurante = restauranteBO.consultar();
+            
+            ReservaDTO reserva = new ReservaDTO(horaFecha, numPersonas, costo, 
+                    "ACTIVA", 0, cliente, mesa, restaurante);
+            
+            
+            reservaBO.agregarReserva(reserva);
+            
+            JOptionPane.showMessageDialog(null, "Reservacion agregada con "
+                    + "exito");
+            }
+            
+        }
+        catch(BOException be){
+            throw new FacadeException();
+        }
     }
     
 }

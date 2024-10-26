@@ -5,6 +5,7 @@
 package Interfaces;
 
 import DTOs.ClienteDTO;
+import DTOs.MesaDTO;
 import DTOs.ReservaDTO;
 import Entidades.Reserva;
 import Excepciones.BOException;
@@ -52,7 +53,7 @@ public interface IReservaBO {
      *         reservas del día especificado.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
-    public List<ReservaDTO> consultarPorDia(LocalDateTime dia) 
+    public boolean verificarPorDia(MesaDTO mesa, LocalDateTime dia) 
             throws BOException;
     
     /**

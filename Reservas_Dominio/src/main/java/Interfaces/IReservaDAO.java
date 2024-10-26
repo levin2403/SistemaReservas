@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Entidades.Cliente;
+import Entidades.Mesa;
 import Entidades.Reserva;
 import Excepciones.DAOException;
 import java.time.LocalDate;
@@ -45,13 +46,15 @@ public interface IReservaDAO {
     /**
      * Consulta y recupera una lista de reservas para un día específico.
      * 
+     * @param mesa
      * @param dia La fecha del día para el cual se desean consultar las 
      *            reservas.
      * @return Una lista de objetos {@link Reserva} que representan las 
      * reservas del día especificado.
      * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public List<Reserva> consultarPorDia(LocalDateTime dia)throws DAOException;
+    public boolean verificarPorDia(Mesa mesa, LocalDateTime dia) 
+            throws DAOException;
     
     /**
      * Metodo que mediante filtros obtiene las reservas que mas se adapten

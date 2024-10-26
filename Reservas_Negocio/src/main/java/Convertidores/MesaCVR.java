@@ -43,7 +43,7 @@ public class MesaCVR {
         }
 
         Mesa mesa = new Mesa();
-        mesa.setId(Long.valueOf(mesaDTO.getId())); // Asigna el ID
+        mesa.setId(mesaDTO.getId() != null ? Long.valueOf(mesaDTO.getId()) : null);
         mesa.setCodigoMesa(mesaDTO.getCodigoMesa()); // Asigna el código de mesa
         mesa.setTipoMesa(mesaDTO.getTipoMesa()); // Asigna el tipo de mesa
         mesa.setCapacidadMinima(mesaDTO.getCapacidadMinima()); 
@@ -54,6 +54,9 @@ public class MesaCVR {
         if (mesaDTO.getRestaurante() != null) {
             mesa.setRestaurante(restauranteCVR.
                     toEntity(mesaDTO.getRestaurante()));
+        }
+        else{
+            mesa.setRestaurante(null);
         }
 
 //        // Convierte la lista de reservas usando el convertidor
@@ -92,7 +95,7 @@ public class MesaCVR {
         }
 
         MesaDTO mesaDTO = new MesaDTO();
-        mesaDTO.setId(String.valueOf(mesa.getId())); // Asigna el ID
+        mesaDTO.setId(String.valueOf(mesa.getId()) != null ? String.valueOf(mesa.getId()) : null); // Asigna el ID
         mesaDTO.setCodigoMesa(mesa.getCodigoMesa()); // Asigna el código de mesa
         mesaDTO.setTipoMesa(mesa.getTipoMesa()); // Asigna el tipo de mesa
         mesaDTO.setCapacidadMinima(mesa.getCapacidadMinima()); // Asigna capacidad mínima

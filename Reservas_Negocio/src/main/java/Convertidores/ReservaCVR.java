@@ -45,7 +45,8 @@ public class ReservaCVR {
         }
 
         Reserva reserva = new Reserva();
-        reserva.setId(Long.valueOf(reservaDTO.getId()));
+        reserva.setId(reservaDTO.getId() != null && !reservaDTO.getId().
+                isEmpty() ? Long.valueOf(reservaDTO.getId()) : null);
         reserva.setFechaHoraReserva(reservaDTO.getFechaHoraReserva());
         reserva.setNumeroPersonas(reservaDTO.getNumeroPersonas());
         reserva.setCosto(reservaDTO.getCosto());

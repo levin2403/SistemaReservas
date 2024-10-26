@@ -32,6 +32,11 @@ public class Reservaciones extends javax.swing.JFrame {
      */
     public Reservaciones() {
         initComponents();
+        
+        this.clienteFCD = new ClienteFCD();
+        this.mesaFCD = new MesaFCD();
+        this.reservaFCD = new ReservaFCD();
+        
         cargarDatosIniciales();
     }
 
@@ -39,10 +44,6 @@ public class Reservaciones extends javax.swing.JFrame {
      * 
      */
     private void cargarDatosIniciales(){
-        this.clienteFCD = new ClienteFCD();
-        this.mesaFCD = new MesaFCD();
-        this.reservaFCD = new ReservaFCD();
-        
         try{
             clienteFCD.cargarComboBoxClientes(cbxClientes);
             mesaFCD.cargarTablaMesas(tblMesas);
@@ -301,9 +302,7 @@ public class Reservaciones extends javax.swing.JFrame {
     private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
         try{
             if (VerificarDatos()) {
-                
-                
-
+           
                 //recolectamos los datos
                 ClienteDTO cliente = (ClienteDTO) cbxClientes.getSelectedItem();
                 //obtiene la mesa seleccionada en la tabla.
@@ -357,25 +356,6 @@ public class Reservaciones extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tblMesasMouseClicked
 
-//    private void configurarTabla() {
-//        // Configurar el aspecto de la tabla
-//        tblMesas.setRowHeight(25);
-//        tblMesas.getTableHeader().setReorderingAllowed(false);
-//
-//        // Configurar el renderizador para centrar el texto
-//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-//
-//        for (int i = 0; i < tblMesas.getColumnCount(); i++) {
-//            tblMesas.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-//        }
-//
-//        // Ajustar el ancho de las columnas
-//        tblMesas.getColumnModel().getColumn(0).setPreferredWidth(80);  // No. Mesa
-//        tblMesas.getColumnModel().getColumn(1).setPreferredWidth(120); // Tamaño
-//        tblMesas.getColumnModel().getColumn(2).setPreferredWidth(100); // Disponibilidad
-//        tblMesas.getColumnModel().getColumn(3).setPreferredWidth(150); // Lugar
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;

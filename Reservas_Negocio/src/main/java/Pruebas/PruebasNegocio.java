@@ -6,9 +6,11 @@ package Pruebas;
 
 import BO.ClienteBO;
 import BO.MesaBO;
+import BO.ReservaBO;
 import DAO.ClienteDAO;
 import DAO.MesaDAO;
 import DAO.ReservaDAO;
+import DTOs.ClienteDTO;
 import DTOs.MesaDTO;
 import Entidades.Cliente;
 import Excepciones.BOException;
@@ -17,6 +19,7 @@ import Interfaces.IClienteBO;
 import Interfaces.IClienteDAO;
 import Interfaces.IMesaBO;
 import Interfaces.IMesaDAO;
+import Interfaces.IReservaBO;
 import Interfaces.IReservaDAO;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,31 +51,14 @@ public class PruebasNegocio {
 //              System.out.println(mesa.toString());
 //        }
 
-          IClienteDAO clienteDAO = new ClienteDAO();
+          IClienteBO clienteBO = new ClienteBO();
           
-          IReservaDAO reservaDAO = new ReservaDAO();
+          IReservaBO reservaBO = new ReservaBO();
           
-          IMesaDAO mesaDAO = new MesaDAO();
-          
-          LocalDateTime fechaHoraEspecifica = LocalDateTime.of(2024, 10, 26, 10, 30);
+          IMesaBO mesaBO = new MesaBO();
           
           
-          try{              
-              Cliente cliente = clienteDAO.obtenerCliente(4L);
-              
-              boolean resultado = reservaDAO.
-                      verificarReservaciones(cliente);
-              
-              if (resultado) {
-                  System.out.println("Ya tiene reservaciones activas");
-              }
-              else if (!resultado){
-                  System.out.println("No tiene reservaciones activas");
-              }
-          }
-          catch(DAOException ex){
-              
-          }
+          
 
     }
     

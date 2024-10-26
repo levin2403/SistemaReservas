@@ -64,8 +64,7 @@ public class ClienteDTO {
 
    @Override
     public String toString() {
-        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + 
-               ", telefono=" + telefono + ", reservas=" + reservas.size() + '}';
+        return nombre + ", " + telefono;
     }
 
 }

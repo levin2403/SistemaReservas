@@ -14,11 +14,13 @@ import Excepciones.DAOException;
 import Interfaces.IReservaDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -54,31 +56,48 @@ public class ReservaDAO implements IReservaDAO{
      * @param reserva reserva a agregar.
      */
     @Override
-    public void agregarReserva(Reserva reserva) throws DAOException{
+    public void agregarReserva(Reserva reserva) throws DAOException {
         EntityManager em = null;
         try {
-            em = conexion.getEntityManager(); // Obtener el EntityManager
-            em.getTransaction().begin(); // Iniciar la transacción
-            em.persist(reserva); // Persistir la reserva
-            em.getTransaction().commit(); // Confirmar la transacción
-            LOG.log(Level.INFO, "Reserva agregada con \u00e9xito: {0}", 
-                    reserva);
+            em = conexion.getEntityManager();
+            em.getTransaction().begin();
+
+            // Buscar la mesa por su código en lugar de ID
+            TypedQuery<Mesa> query = em.createQuery(
+            "SELECT m FROM Mesa m WHERE m.codigoMesa = :codigoMesa", Mesa.class);
+            query.setParameter("codigoMesa", reserva.getMesa().getCodigoMesa());
+            Mesa mesa = query.getSingleResult();
+
+            if (mesa == null) {
+                throw new DAOException("Mesa no encontrada con código: " + reserva.getMesa().getCodigoMesa());
+            }
+
+            reserva.setMesa(mesa); // Asignar la mesa obtenida a la reserva
+            em.persist(reserva); // Persistir la reserva con la mesa asociada
+            em.getTransaction().commit();
+
+            LOG.log(Level.INFO, "Reserva agregada con éxito: {0}", reserva);
+        } catch (NoResultException nre) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            LOG.log(Level.SEVERE, "No se encontró una mesa con el código proporcionado: {0}", reserva.getMesa().getCodigoMesa());
+            throw new DAOException("No se encontró la mesa con el código proporcionado.", nre);
         } catch (PersistenceException pe) {
             if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); 
+                em.getTransaction().rollback();
             }
-            
-            LOG.log(Level.SEVERE, "Error al agregar la reserva: {0}", 
-                    pe.getMessage());
-            
-            throw new DAOException("Error al agregar la reserva");
-            
+            LOG.log(Level.SEVERE, "Error al agregar la reserva: {0}", pe.getMessage());
+            throw new DAOException("Error al agregar la reserva", pe);
         } catch (ConexionException ex) {
-            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, 
-                    null, ex);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Error al obtener el EntityManager para agregar la reserva.", ex);
         } finally {
-            if (em != null) {
-                em.close(); // Cerrar el EntityManager
+            if (em != null && em.isOpen()) {
+                em.close();
             }
         }
     }
@@ -123,56 +142,67 @@ public class ReservaDAO implements IReservaDAO{
     }
 
     /**
-     * Busca las reservaciones echas en un dia especifico.
-     * 
-     * @param dia
-     * @return 
+     * Verifica si una mesa está disponible para una reserva en una fecha y hora específicas.
+     * No permite reservas para la misma mesa en las siguientes 5 horas.
+     *
+     * @param mesa La mesa que se desea reservar.
+     * @param dia La fecha y hora deseada para la reserva.
+     * @return true si la mesa está disponible, false si ya existe una reserva en el intervalo de 5 horas.
+     * @throws DAOException Si ocurre un error en la conexión o en la consulta.
      */
     @Override
-    public List<Reserva> consultarPorDia(LocalDateTime dia) throws DAOException{
+    public boolean verificarPorDia(Mesa mesa, LocalDateTime dia) throws DAOException {
         EntityManager em = null;
-        List<Reserva> reservas = null;
-
         try {
             em = conexion.getEntityManager();
 
-            // Definir el rango de tiempo para todo el día
-            LocalDateTime inicioDia = dia.toLocalDate().atStartOfDay(); 
-            LocalDateTime finDia = dia.toLocalDate().atTime(23, 59, 59);
+            // Obtener las reservas de la mesa en el día especificado
+            LocalDateTime inicioDelDia = dia.toLocalDate().atStartOfDay();
+            LocalDateTime finDelDia = dia.toLocalDate().atTime(23, 59, 59); // Fin del día
 
-            // Crear la consulta JPQL para obtener todas las reservas en ese 
-            // rango de tiempo
             TypedQuery<Reserva> query = em.createQuery(
-                "SELECT r FROM Reserva r WHERE r.fechaHoraReserva BETWEEN "
-                        + ":inicioDia AND :finDia", 
-                Reserva.class
-            );
+                "SELECT r FROM Reserva r " +
+                "WHERE r.fechaHoraReserva BETWEEN :inicioDelDia AND :finDelDia " +
+                "AND r.estado = 'ACTIVA'", Reserva.class);
 
-            // Establecer los parámetros de fecha/hora
-            query.setParameter("inicioDia", inicioDia);
-            query.setParameter("finDia", finDia);
+            query.setParameter("inicioDelDia", inicioDelDia);
+            query.setParameter("finDelDia", finDelDia);
 
-            // Obtener la lista de resultados
-            reservas = query.getResultList();
+            // Obtener todas las reservas activas para la mesa en el día especificado
+            List<Reserva> reservas = query.getResultList();
+
+            if (reservas.isEmpty()) {
+                return true; // No hay reservas activas, se puede reservar
+            }
+
+            // Hora de la nueva reserva
+            LocalTime miHora = dia.toLocalTime();
+
+            // Verificar si la hora de la nueva reserva está dentro del intervalo de alguna reserva activa
+            for (Reserva reserva : reservas) {
+                LocalTime minimo = reserva.getFechaHoraReserva().toLocalTime();
+                LocalTime maximo = minimo.plusHours(5L);
+
+                if (miHora.isAfter(minimo) && miHora.isBefore(maximo)) {
+                    return false; // La nueva reserva está dentro del rango de 5 horas
+                }
+            }
+
+            return true; // Si no encontramos reservas que interfieran, se puede reservar
 
         } catch (PersistenceException pe) {
-            LOG.log(Level.SEVERE, "Error al consultar reservas por d\u00eda: "
-                    + "{0}", pe.getMessage());
-            
-            throw new DAOException("Error al consultar la reservas");
-            
-            
+            LOG.log(Level.SEVERE, "Error al verificar la disponibilidad de la mesa", pe);
+            throw new DAOException("Error al verificar la disponibilidad de la mesa.", pe);
         } catch (ConexionException ex) {
-            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, 
-                    null, ex);
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Error al obtener el EntityManager para verificar la disponibilidad de la mesa.", ex);
         } finally {
-            if (em != null) {
-                em.close(); // Cerrar el EntityManager
+            if (em != null && em.isOpen()) {
+                em.close();
             }
         }
-
-        return reservas;
     }
+
 
     /**
      * Metodo que mediante filtros obtiene las reservas que mas se adapten

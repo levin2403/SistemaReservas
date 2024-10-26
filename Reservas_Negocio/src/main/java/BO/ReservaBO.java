@@ -1,11 +1,14 @@
 package BO;
 
 import Convertidores.ClienteCVR;
+import Convertidores.MesaCVR;
 import Convertidores.ReservaCVR;
 import DAO.ReservaDAO;
 import DTOs.ClienteDTO;
+import DTOs.MesaDTO;
 import DTOs.ReservaDTO;
 import Entidades.Cliente;
+import Entidades.Mesa;
 import Entidades.Reserva;
 import Excepciones.BOException;
 import Excepciones.ConversionException;
@@ -37,6 +40,9 @@ public class ReservaBO implements IReservaBO {
     
     //instancia del convertidor de cliente
     private final ClienteCVR clienteCVR;
+    
+    //instancia del convertidor de mesa.
+    private final MesaCVR mesaCVR;
 
     /**
      * Constructor por defecto de la clase.
@@ -45,6 +51,7 @@ public class ReservaBO implements IReservaBO {
         this.reservaDAO = new ReservaDAO();
         this.reservaCVR = new ReservaCVR();
         this.clienteCVR = new ClienteCVR();
+        this.mesaCVR = new MesaCVR();
     }
 
     /**
@@ -92,28 +99,27 @@ public class ReservaBO implements IReservaBO {
 
     /**
      * 
+     * @param mesa
      * @param dia
      * @return
      * @throws BOException 
      */
     @Override
-    public List<ReservaDTO> consultarPorDia(LocalDateTime dia) 
+    public boolean verificarPorDia(MesaDTO mesa, LocalDateTime dia)
             throws BOException {
         try{
-           List<Reserva> entidades = reservaDAO.consultarPorDia(dia);
-           List<ReservaDTO> dto = new ArrayList<>();
+            Mesa mesaEntidad = mesaCVR.toEntity(mesa);
             
-            for (Reserva reserva : entidades) {
-                dto.add(reservaCVR.toDTO(reserva));
-            }
-           
-            return dto;
+            boolean resultado = reservaDAO.verificarPorDia(mesaEntidad, dia);
+            return resultado;
         }
         catch(DAOException de){
             LOG.log(Level.SEVERE, "Error al agregar la reserva en dao", de);
             throw new BOException(de.getMessage());
+        } catch (ConversionException ex) {
+            Logger.getLogger(ReservaBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BOException("Error al verificar la reserva por dia");
         }
-        
     }
 
     /**
