@@ -4,9 +4,18 @@
  */
 package GUI;
 
+import DTOs.ReservaDTO;
+import Fachada.FiltrosFCD;
+import Fachada.PdfGenerator;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author osval
+ * @author Sebastian Murrieta
  */
 public class Reportes extends javax.swing.JFrame {
 
@@ -33,13 +42,13 @@ public class Reportes extends javax.swing.JFrame {
         atrasBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        nombreCliente = new javax.swing.JTextField();
+        ubicacionTxt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         fechaInicioDC = new com.toedter.calendar.JDateChooser();
         fechaFinDC = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        nombreCliente2 = new javax.swing.JTextField();
+        tipoMesaTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(25, 25, 25));
@@ -99,6 +108,11 @@ public class Reportes extends javax.swing.JFrame {
 
         generarPDFBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         generarPDFBtn.setText("Generar PDF");
+        generarPDFBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarPDFBtnActionPerformed(evt);
+            }
+        });
         getContentPane().add(generarPDFBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 591, 180, 60));
 
         atrasBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -118,7 +132,7 @@ public class Reportes extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Hasta el");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
-        jPanel1.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 220, 40));
+        jPanel1.add(ubicacionTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 220, 40));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
@@ -143,7 +157,7 @@ public class Reportes extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Ubicacion");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, 30));
-        jPanel1.add(nombreCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 220, 40));
+        jPanel1.add(tipoMesaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 220, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -157,6 +171,64 @@ public class Reportes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_atrasBtnActionPerformed
 
+    private void generarPDFBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFBtnActionPerformed
+        try {
+            // Validar fechas y campos obligatorios
+            if (!validarFechas() || !validarCamposObligatorios()) {
+                return;
+            }
+
+            // Formatear fechas
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaInicio = dateFormat.format(fechaInicioDC.getDate());
+            String fechaFin = dateFormat.format(fechaFinDC.getDate());
+
+            // Obtener valores de campos de texto
+            String tipoMesa = tipoMesaTxt.getText().trim();
+            String ubicacion = ubicacionTxt.getText().trim();
+
+            // Obtener reservas (esto depende de cómo estés obteniendo las reservas)
+            List<ReservaDTO> reservas = obtenerReservas();
+
+            // Llamar a la clase PdfGenerator para crear el PDF
+            PdfGenerator pdfGenerator = new PdfGenerator();
+            boolean exito = pdfGenerator.generarPDFDesdeFormulario(fechaInicio, fechaFin, tipoMesa, ubicacion, reservas);
+
+            // Mostrar mensaje según el resultado
+            if (exito) {
+                mostrarExito("Reporte generado exitosamente.");
+            } else {
+                mostrarError("Error al generar el reporte.");
+            }
+        } catch (Exception e) {
+            mostrarError("Error inesperado: " + e.getMessage());
+        }
+    }//GEN-LAST:event_generarPDFBtnActionPerformed
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mostrarExito(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean validarFechas() {
+        if (fechaInicioDC.getDate().after(fechaFinDC.getDate())) {
+            mostrarError("La fecha de inicio no puede ser posterior a la fecha de fin.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarCamposObligatorios() {
+        return true;
+    }
+
+    private List<ReservaDTO> obtenerReservas() {
+        // y devolver una lista de objetos ReservaDTO.
+        List<ReservaDTO> reservas = new ArrayList<>();
+        return reservas;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton atrasBtn;
@@ -169,8 +241,8 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private Control.PanelRound mostrarPDF;
-    private javax.swing.JTextField nombreCliente;
-    private javax.swing.JTextField nombreCliente2;
+    private javax.swing.JTextField tipoMesaTxt;
     private Control.PanelRound tituloPanel;
+    private javax.swing.JTextField ubicacionTxt;
     // End of variables declaration//GEN-END:variables
 }

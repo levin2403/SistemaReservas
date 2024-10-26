@@ -1,5 +1,6 @@
 package DTOs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,38 +13,28 @@ import java.util.List;
  * @author sebastian
  */
 public class ClienteDTO {
-
     private String id;
     private String nombre;
     private String telefono;
+    private List<ReservaDTO> reservas; // Incluido
 
     // Constructor por defecto
     public ClienteDTO() {
     }
 
-    /**
-     * 
-     * @param nombre
-     * @param telefono 
-     */
     public ClienteDTO(String nombre, String telefono) {
         this.nombre = nombre;
         this.telefono = telefono;
+        this.reservas = new ArrayList<>(); // Inicializar lista vacía
     }
 
-    /**
-     * 
-     * @param id
-     * @param nombre
-     * @param telefono
-     * @param reservas 
-     */
-    public ClienteDTO(String id, String nombre, String telefono, 
-            List<ReservaDTO> reservas) {
+    public ClienteDTO(String id, String nombre, String telefono, List<ReservaDTO> reservas) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
+        this.reservas = reservas != null ? reservas : new ArrayList<>(); // Inicializar lista
     }
+
 
     // Getters y Setters
     public String getId() {
@@ -71,9 +62,10 @@ public class ClienteDTO {
     }
 
 
-    @Override
+   @Override
     public String toString() {
-        return  nombre + ", " + telefono;
+        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + 
+               ", telefono=" + telefono + ", reservas=" + reservas.size() + '}';
     }
 
 }
