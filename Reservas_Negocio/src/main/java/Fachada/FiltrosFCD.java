@@ -1,40 +1,58 @@
 package Fachada;
 
+import DAO.ReservaDAO; // Asegúrate de importar tu DAO
 import DTOs.ReservaDTO;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import Excepciones.DAOException;
+import interfacesFachada.IFiltrosFCD;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import java.util.stream.Collectors;
 
 /**
- * Clase para filtrar reservas según criterios de fecha, tipo de mesa y ubicación.
- * 
- * @author Sebastian Murrieta Verduzco - 233463
+ * Clase para filtrar reservas según criterios de cliente, teléfono y fecha.
+ *
+ * Author: Sebastian
+ *
+ * Implementación de los filtros de reservas según criterios de cliente,
+ * teléfono y fecha.
  */
-public class FiltrosFCD {
+public class FiltrosFCD implements IFiltrosFCD {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private List<ReservaDTO> reservas; // Lista de reservas
+    private ReservaDAO reservaDAO; // DAO para obtener reservas
 
-    public List<ReservaDTO> obtenerReservasPorFiltros(String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDateTime inicio = LocalDate.parse(fechaInicio, formatter).atStartOfDay();
-        LocalDateTime fin = LocalDate.parse(fechaFin, formatter).atTime(23, 59);
-
-        String jpql = "SELECT r FROM Reserva r WHERE r.fecha BETWEEN :inicio AND :fin";
-        if (!tipoMesa.isEmpty()) jpql += " AND r.tipoMesa = :tipoMesa";
-        if (!ubicacion.isEmpty()) jpql += " AND r.ubicacion = :ubicacion";
-
-        TypedQuery<ReservaDTO> query = entityManager.createQuery(jpql, ReservaDTO.class)
-                .setParameter("inicio", inicio)
-                .setParameter("fin", fin);
-
-        if (!tipoMesa.isEmpty()) query.setParameter("tipoMesa", tipoMesa);
-        if (!ubicacion.isEmpty()) query.setParameter("ubicacion", ubicacion);
-
-        return query.getResultList();
+    // Constructor que recibe una lista de reservas
+    public FiltrosFCD(List<ReservaDTO> reservas) {
+        this.reservas = reservas;
+        this.reservaDAO = new ReservaDAO(); // Inicializa tu DAO
     }
+
+    // Constructor sin parámetros
+    public FiltrosFCD() {
+        this.reservaDAO = new ReservaDAO(); // Inicializa tu DAO
+    }
+
+    /**
+     * Filtra las reservas según los parámetros de nombre del cliente, teléfono
+     * y fecha de la reserva.
+     *
+     * @param nombreCliente Nombre del cliente para el filtro.
+     * @param telefono Teléfono del cliente para el filtro.
+     * @param fecha Fecha de la reserva para el filtro.
+     * @return Lista de reservas que cumplen con los criterios de filtro.
+     */
+    @Override
+    public List<ReservaDTO> filtrarReservas(String nombreCliente, String telefono, Date fecha) {
+        return reservas.stream()
+                .filter(reserva -> (nombreCliente == null || reserva.getCliente().getNombre().equals(nombreCliente))
+                && (telefono == null || reserva.getCliente().getTelefono().equals(telefono))
+                && (fecha == null || reserva.getFechaHoraReserva().toLocalDate().equals(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())))
+                .collect(Collectors.toList());
+    }
+
+    public List<ReservaDTO> obtenerTodasLasReservas() {
+        return null;
+    }
+       
 }

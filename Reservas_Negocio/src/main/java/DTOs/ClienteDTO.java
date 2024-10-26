@@ -13,6 +13,7 @@ import java.util.List;
  * @author sebastian
  */
 public class ClienteDTO {
+
     private String id;
     private String nombre;
     private String telefono;
@@ -20,6 +21,11 @@ public class ClienteDTO {
 
     // Constructor por defecto
     public ClienteDTO() {
+    }
+
+    public ClienteDTO(String nombre) {
+        this.nombre = nombre;
+        this.reservas = new ArrayList<>(); // Inicializar lista vacía
     }
 
     public ClienteDTO(String nombre, String telefono) {
@@ -34,7 +40,6 @@ public class ClienteDTO {
         this.telefono = telefono;
         this.reservas = reservas != null ? reservas : new ArrayList<>(); // Inicializar lista
     }
-
 
     // Getters y Setters
     public String getId() {
@@ -61,10 +66,9 @@ public class ClienteDTO {
         this.telefono = telefono;
     }
 
-
-   @Override
+    @Override
     public String toString() {
-        return nombre + ", " + telefono;
+        return nombre + ", ";
     }
 
 }

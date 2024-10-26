@@ -5,11 +5,9 @@
 package GUI;
 
 import DTOs.ReservaDTO;
-import Fachada.FiltrosFCD;
 import Fachada.PdfGenerator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -36,6 +34,8 @@ public class Reportes extends javax.swing.JFrame {
     private void initComponents() {
 
         mostrarPDF = new Control.PanelRound();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMesas = new javax.swing.JTable();
         tituloPanel = new Control.PanelRound();
         Titulo = new javax.swing.JLabel();
         generarPDFBtn = new javax.swing.JButton();
@@ -57,21 +57,55 @@ public class Reportes extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        mostrarPDF.setBackground(new java.awt.Color(255, 102, 102));
+        mostrarPDF.setBackground(new java.awt.Color(51, 51, 51));
         mostrarPDF.setRoundBottomLeft(50);
         mostrarPDF.setRoundBottomRight(50);
         mostrarPDF.setRoundTopLeft(50);
         mostrarPDF.setRoundTopRight(50);
 
+        tblMesas.setBackground(new java.awt.Color(102, 102, 102));
+        tblMesas.setForeground(new java.awt.Color(255, 255, 255));
+        tblMesas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "No.Mesa", "Tamaño de mesa", "Cliente", "Lugar", "Fehca de reservacion"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMesasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblMesas);
+
         javax.swing.GroupLayout mostrarPDFLayout = new javax.swing.GroupLayout(mostrarPDF);
         mostrarPDF.setLayout(mostrarPDFLayout);
         mostrarPDFLayout.setHorizontalGroup(
             mostrarPDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mostrarPDFLayout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         mostrarPDFLayout.setVerticalGroup(
             mostrarPDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
+            .addGroup(mostrarPDFLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         getContentPane().add(mostrarPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 6, 700, 660));
@@ -91,22 +125,24 @@ public class Reportes extends javax.swing.JFrame {
         tituloPanel.setLayout(tituloPanelLayout);
         tituloPanelLayout.setHorizontalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tituloPanelLayout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+            .addGroup(tituloPanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
                 .addComponent(Titulo)
-                .addGap(43, 43, 43))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         tituloPanelLayout.setVerticalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tituloPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(29, 29, 29)
                 .addComponent(Titulo)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         getContentPane().add(tituloPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+        generarPDFBtn.setBackground(new java.awt.Color(102, 102, 102));
         generarPDFBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        generarPDFBtn.setForeground(new java.awt.Color(255, 255, 255));
         generarPDFBtn.setText("Generar PDF");
         generarPDFBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +151,9 @@ public class Reportes extends javax.swing.JFrame {
         });
         getContentPane().add(generarPDFBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 591, 180, 60));
 
+        atrasBtn.setBackground(new java.awt.Color(102, 102, 102));
         atrasBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        atrasBtn.setForeground(new java.awt.Color(255, 255, 255));
         atrasBtn.setText("Cancelar");
         atrasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +170,9 @@ public class Reportes extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Hasta el");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
+
+        ubicacionTxt.setBackground(new java.awt.Color(51, 51, 51));
+        ubicacionTxt.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(ubicacionTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 220, 40));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -140,9 +181,11 @@ public class Reportes extends javax.swing.JFrame {
         jLabel11.setText("Reporte del");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
+        fechaInicioDC.setBackground(new java.awt.Color(51, 51, 51));
         fechaInicioDC.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(fechaInicioDC, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 130, 40));
 
+        fechaFinDC.setBackground(new java.awt.Color(51, 51, 51));
         fechaFinDC.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(fechaFinDC, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 130, 40));
 
@@ -157,6 +200,9 @@ public class Reportes extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Ubicacion");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, 30));
+
+        tipoMesaTxt.setBackground(new java.awt.Color(51, 51, 51));
+        tipoMesaTxt.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(tipoMesaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 220, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
@@ -174,7 +220,7 @@ public class Reportes extends javax.swing.JFrame {
     private void generarPDFBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFBtnActionPerformed
         try {
             // Validar fechas y campos obligatorios
-            if (!validarFechas() || !validarCamposObligatorios()) {
+            if (validarFechas()) {
                 return;
             }
 
@@ -204,6 +250,10 @@ public class Reportes extends javax.swing.JFrame {
             mostrarError("Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_generarPDFBtnActionPerformed
+
+    private void tblMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMesasMouseClicked
+
+    }//GEN-LAST:event_tblMesasMouseClicked
     private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
@@ -217,10 +267,6 @@ public class Reportes extends javax.swing.JFrame {
             mostrarError("La fecha de inicio no puede ser posterior a la fecha de fin.");
             return false;
         }
-        return true;
-    }
-
-    private boolean validarCamposObligatorios() {
         return true;
     }
 
@@ -240,7 +286,9 @@ public class Reportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private Control.PanelRound mostrarPDF;
+    private javax.swing.JTable tblMesas;
     private javax.swing.JTextField tipoMesaTxt;
     private Control.PanelRound tituloPanel;
     private javax.swing.JTextField ubicacionTxt;

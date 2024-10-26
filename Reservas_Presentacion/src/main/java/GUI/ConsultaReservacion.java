@@ -4,7 +4,17 @@
  */
 package GUI;
 
+import DTOs.ReservaDTO;
+import Excepciones.FacadeException;
+import Fachada.ClienteFCD;
+import Fachada.FiltrosFCD;
+import interfacesFachada.IClienteFCD;
+import interfacesFachada.IFiltrosFCD;
+import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,13 +23,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaReservacion extends javax.swing.JFrame {
 
+    private IFiltrosFCD filtros;
+    private IClienteFCD clienteFCD;
+
     /**
      * Creates new form Principal
      */
     public ConsultaReservacion() {
+
         initComponents();
+        filtros = new FiltrosFCD(); // Inicialización correcta
+        clienteFCD = new ClienteFCD(); // Inicialización de clienteFCD
         cargarClientes();
-        cargarMesas();
+        //cargarTabla();
     }
 
     /**
@@ -33,7 +49,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
 
         mesasPanel = new Control.PanelRound();
         jScrollPane1 = new javax.swing.JScrollPane();
-        mesasTabla = new javax.swing.JTable();
+        reservacionesTabla = new javax.swing.JTable();
         tituloPanel = new Control.PanelRound();
         Titulo = new javax.swing.JLabel();
         Fondo = new javax.swing.JPanel();
@@ -43,7 +59,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         nombreClienteCB = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        numeroTelefonoTxt = new javax.swing.JTextField();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,18 +73,29 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         mesasPanel.setRoundTopLeft(50);
         mesasPanel.setRoundTopRight(50);
 
-        mesasTabla.setModel(new javax.swing.table.DefaultTableModel(
+        reservacionesTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "No.Mesa", "Tamaño de mesa", "Estado", "Lugar"
+                "No.Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"
             }
-        ));
-        jScrollPane1.setViewportView(mesasTabla);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(reservacionesTabla);
+        if (reservacionesTabla.getColumnModel().getColumnCount() > 0) {
+            reservacionesTabla.getColumnModel().getColumn(0).setMinWidth(20);
+        }
 
         javax.swing.GroupLayout mesasPanelLayout = new javax.swing.GroupLayout(mesasPanel);
         mesasPanel.setLayout(mesasPanelLayout);
@@ -166,8 +193,8 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         nombreClienteCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Fondo.add(nombreClienteCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 300, 40));
 
-        jTextField1.setText("jTextField1");
-        Fondo.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 300, 40));
+        numeroTelefonoTxt.setText("jTextField1");
+        Fondo.add(numeroTelefonoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 300, 40));
 
         jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Fondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, 290, 40));
@@ -185,28 +212,71 @@ public class ConsultaReservacion extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+// Aplicación de filtros
+        String clienteSeleccionado = nombreClienteCB.getSelectedItem() != null ? nombreClienteCB.getSelectedItem().toString() : null;
+        String telefono = numeroTelefonoTxt.getText().isEmpty() ? null : numeroTelefonoTxt.getText();
+        Date fechaSeleccionada = jDateChooser1.getDate(); // Puede ser null si no se selecciona fecha
 
-        
+        // Usar el objeto de filtros existente
+        List<ReservaDTO> reservasFiltradas = filtros.filtrarReservas(clienteSeleccionado, telefono, fechaSeleccionada);
 
+        // Actualización de tabla con reservas
+        String[] columnas = {"No.Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"};
+        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+
+        if (reservasFiltradas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron reservas con los filtros aplicados.");
+        } else {
+            for (ReservaDTO reserva : reservasFiltradas) {
+                model.addRow(new Object[]{
+                    reserva.getMesa().getCodigoMesa(),
+                    reserva.getFechaHoraReserva(), // Asegúrate de tener el método getFechaHoraReserva() en ReservaDTO
+                    reserva.getMesa().getTipoMesa(),
+                    reserva.getMesa().getUbicacion(),
+                    reserva.getCliente().getNombre() // Asegúrate de tener el método getNombre() en ClienteDTO
+                });
+            }
+        }
+        reservacionesTabla.setModel(model);
     }//GEN-LAST:event_buscarBtnActionPerformed
     private void cargarClientes() {
-        // Cargar clientes desde la base de datos 
-        String[] clientes = {"Cliente 1", "Cliente 2", "Cliente 3"}; // Ejemplo
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(clientes);
-        nombreClienteCB.setModel(model);
-    }
+        DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
+        nombreClienteCB.setModel(combo);
 
-    private void cargarMesas() {
-        // Cargar mesas desde la base de datos 
-        String[] columnas = {"No.Mesa", "Tamaño de mesa", "Estado", "Lugar"};
-        Object[][] data = {
-            {1, "Para 4", "Disponible", "Interior"},
-            {2, "Para 2", "Reservado", "Exterior"}
-        }; // Ejemplo de datos
-
-        DefaultTableModel model = new DefaultTableModel(data, columnas);
-        mesasTabla.setModel(model);
+        try {
+            clienteFCD.cargarComboBoxClientes(nombreClienteCB); // Llama al método de la interfaz para cargar los clientes
+        } catch (FacadeException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + e.getMessage());
+        }
     }
+//
+//    private void cargarTabla() {
+//        // Obtiene todas las reservas (puedes adaptar esto según tu lógica de negocio)
+//        List<ReservaDTO> reservas = filtros.obtenerTodasLasReservas(); // Asegúrate de que este método exista en FiltrosFCD
+//        DefaultTableModel model = new DefaultTableModel();
+//
+//        // Definición de las columnas
+//        model.addColumn("No. Mesa");
+//        model.addColumn("Fecha y hora");
+//        model.addColumn("Tamaño de mesa");
+//        model.addColumn("Lugar");
+//        model.addColumn("Cliente");
+//
+//        // Agregar filas a la tabla
+//        for (ReservaDTO reserva : reservas) {
+//            model.addRow(new Object[]{
+//                reserva.getMesa().getCodigoMesa(),
+//                reserva.getFechaHoraReserva(), // Asegúrate de que ReservaDTO tenga el método getFechaHoraReserva()
+//                reserva.getMesa().getTipoMesa(),
+//                reserva.getMesa().getUbicacion(),
+//                reserva.getCliente().getNombre() // Asegúrate de que ClienteDTO tenga el método getNombre()
+//            });
+//        }
+//
+//        reservacionesTabla.setModel(model);
+//    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Titulo;
@@ -217,10 +287,10 @@ public class ConsultaReservacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private Control.PanelRound mesasPanel;
-    private javax.swing.JTable mesasTabla;
     private javax.swing.JComboBox<String> nombreClienteCB;
+    private javax.swing.JTextField numeroTelefonoTxt;
+    private javax.swing.JTable reservacionesTabla;
     private Control.PanelRound tituloPanel;
     // End of variables declaration//GEN-END:variables
 }
