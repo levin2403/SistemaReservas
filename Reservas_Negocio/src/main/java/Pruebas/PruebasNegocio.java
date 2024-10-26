@@ -12,6 +12,7 @@ import DAO.MesaDAO;
 import DAO.ReservaDAO;
 import DTOs.ClienteDTO;
 import DTOs.MesaDTO;
+import DTOs.ReservaDTO;
 import Entidades.Cliente;
 import Excepciones.BOException;
 import Excepciones.DAOException;
@@ -21,7 +22,9 @@ import Interfaces.IMesaBO;
 import Interfaces.IMesaDAO;
 import Interfaces.IReservaBO;
 import Interfaces.IReservaDAO;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -59,7 +62,20 @@ public class PruebasNegocio {
           
           
           
-
+          try{
+          LocalDateTime inicio = LocalDateTime.of(2024, 10, 26, 12, 0); // Año completo
+          LocalDateTime fin = LocalDateTime.of(2024, 10, 30, 22, 0);    // Año completo
+              
+          List<ReservaDTO> reservas = reservaBO.buscarReservas("", inicio, fin);
+          
+              for (ReservaDTO reserva : reservas) {
+                  System.out.println(reserva.toString());
+              }
+          
+          }
+          catch(BOException ex){
+              System.out.println("la cague");
+          }
     }
     
 }

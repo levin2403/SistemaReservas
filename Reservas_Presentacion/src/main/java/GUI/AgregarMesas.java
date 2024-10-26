@@ -100,7 +100,7 @@ public class AgregarMesas extends javax.swing.JFrame {
             .addGroup(agregarMesaPnLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(jLabel1)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         agregarMesaPnLayout.setVerticalGroup(
             agregarMesaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

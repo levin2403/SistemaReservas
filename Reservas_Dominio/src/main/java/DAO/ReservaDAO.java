@@ -348,5 +348,163 @@ public class ReservaDAO implements IReservaDAO{
         }
     }
     
-    
+      
+    /**
+     * Obtiene todas las reservas dentro de la base de datos.
+     * 
+     * @return Lista de reservas registradas.
+     */
+    @Override
+    public List<Reserva> obtenerReservas() throws DAOException {
+        EntityManager em = null;
+        List<Reserva> reservas = new ArrayList<>(); // Inicializar la lista para almacenar las reservas
+        try {
+            em = conexion.getEntityManager(); // Obtener el EntityManager
+            em.getTransaction().begin(); // Iniciar la transacción
+
+            // Crear y ejecutar la consulta
+            reservas = em.createQuery("SELECT r FROM Reserva r", Reserva.class).getResultList();
+
+            em.getTransaction().commit(); // Confirmar la transacción
+        } catch (PersistenceException pe) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback(); // Revertir la transacción en caso de error
+            }
+            LOG.log(Level.SEVERE, "Error al obtener reservas: {0}", pe.getMessage());
+            
+            throw new DAOException("Error al consultar las reservas");
+            
+        } catch (ConexionException ex) {
+            
+            LOG.log(Level.SEVERE, "Error al realizar la conexion", ex);
+            
+            throw new DAOException("Error al consultar las reservas");
+            
+        } finally {
+            if (em != null) {
+                em.close(); // Cerrar el EntityManager
+            }
+        }
+        return reservas; // Devolver la lista de reservas
+    }
+
+    /**
+     * Buscar reservas por nombre y intervalo de fechas.
+     * Esta opción permite buscar únicamente por nombre, buscar por 
+     * intervalo de fechas o todos en conjunto.
+     * 
+     * @param nombre nombre del cliente.
+     * @param inicio fecha de inicio para buscar.
+     * @param fin fecha de fin para buscar.
+     * @return lista de reservas filtradas
+     * @throws DAOException En caso de error
+     */
+    @Override
+    public List<Reserva> buscarReservas(String nombre, LocalDateTime inicio, 
+            LocalDateTime fin) throws DAOException {
+        EntityManager em = null;
+        List<Reserva> reservas = new ArrayList<>();
+
+        try {
+            em = conexion.getEntityManager();
+            em.getTransaction().begin();
+
+            // Construir la consulta base
+            StringBuilder jpql = new StringBuilder("SELECT r FROM Reserva r WHERE 1=1");
+
+            // Filtros dinámicos
+            if (nombre != null && !nombre.isEmpty()) {
+                jpql.append(" AND r.cliente.nombre LIKE :nombre");
+            }
+            if (inicio != null) {
+                jpql.append(" AND r.fechaHoraReserva >= :inicio");
+            }
+            if (fin != null) {
+                jpql.append(" AND r.fechaHoraReserva <= :fin");
+            }
+
+            // Crear la consulta con el JPQL construido
+            TypedQuery<Reserva> query = em.createQuery(jpql.toString(), Reserva.class);
+
+            // Establecer los parámetros según corresponda
+            if (nombre != null && !nombre.isEmpty()) {
+                query.setParameter("nombre", "%" + nombre + "%");
+            }
+            if (inicio != null) {
+                query.setParameter("inicio", inicio);
+            }
+            if (fin != null) {
+                query.setParameter("fin", fin);
+            }
+
+            // Ejecutar y obtener resultados
+            reservas = query.getResultList();
+
+            em.getTransaction().commit();
+        } catch (PersistenceException pe) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new DAOException("Error al buscar reservas: " + pe.getMessage(), pe);
+        } catch (ConexionException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
+        return reservas;
+    }
+
+
+    /**
+     * Actualiza la reserva dada en el parámetro.
+     *
+     * @param reserva La reserva a actualizar.
+     * @throws DAOException En caso de error en la base de datos.
+     */
+    @Override
+    public void actualizarReserva(Reserva reserva) throws DAOException {
+        EntityManager em = null;
+        try {
+            // Obtener el EntityManager
+            em = conexion.getEntityManager();
+            em.getTransaction().begin();
+
+            // Buscar la reserva existente por su ID
+            Reserva reservaExistente = em.find(Reserva.class, reserva.getId());
+
+            if (reservaExistente == null) {
+                throw new DAOException("No se encontró la reserva con ID: " + reserva.getId());
+            }
+
+            // Verificar y actualizar los atributos de la reserva
+            reservaExistente.setFechaHoraReserva(reserva.getFechaHoraReserva());
+            reservaExistente.setNumeroPersonas(reserva.getNumeroPersonas());
+            reservaExistente.setCosto(reserva.getCosto());
+            reservaExistente.setEstado(reserva.getEstado());
+            reservaExistente.setMesa(reserva.getMesa()); // Asignar la mesa actualizada si es necesario
+
+            // Persistir la reserva actualizada
+            em.merge(reservaExistente);
+
+            // Confirmar la transacción
+            em.getTransaction().commit();
+
+            LOG.log(Level.INFO, "Reserva actualizada con éxito: {0}", reservaExistente);
+
+            } catch (PersistenceException pe) {
+                if (em != null && em.getTransaction().isActive()) {
+                    em.getTransaction().rollback();
+                }
+                throw new DAOException("Error al buscar reservas: " + pe.getMessage(), pe);
+            } catch (ConexionException ex) {
+                Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (em != null) {
+                    em.close();
+                }
+            }
+    }
 }

@@ -15,6 +15,7 @@ import Excepciones.FacadeException;
 import Interfaces.IReservaBO;
 import Interfaces.IRestauranteBO;
 import interfacesFachada.IReservaFCD;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.swing.JOptionPane;
@@ -217,5 +218,79 @@ public class ReservaFCD implements IReservaFCD{
             throw new FacadeException();
         }
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
+    /**
+     * 
+     * @param reserva 
+     * @throws Excepciones.FacadeException 
+     */
+    @Override
+    public void cancelarReserva(ReservaDTO reserva) throws FacadeException{
+        try{
+            if (reserva.getEstado().equalsIgnoreCase("CANCELADA")) {
+                throw new FacadeException("La reserva ya se encuentra "
+                        + "cancelada");
+            }
+            
+            LocalDateTime hoy = LocalDateTime.now();
+            
+            if (reserva.getFechaHoraReserva().isBefore(hoy)) {
+                throw new FacadeException("La reserva ya a pasado, no puede "
+                        + "ser cancelada");
+            }
+            
+            
+            //opcion para saber si desea agregar la reservacion
+            int respuesta = JOptionPane.showConfirmDialog(null, 
+                    "¿Esta seguro que desea agregar la reservacion?", 
+                    "Agregar reservacion", JOptionPane.YES_NO_OPTION);
+            
+            //si la respuesta fue si
+            if (respuesta == JOptionPane.YES_OPTION){
+            
+                reserva.setEstado("CANCELADA");
+                reserva.setMulta(calcularMulta(reserva));
+            
+                System.out.println(reserva.toString());
+            
+                 JOptionPane.showMessageDialog(null, "Reservacion cancelada "
+                         + "con exito");
+                 
+                 reservaBO.actualizarReserva(reserva);
+            }
+
+        }
+        catch(BOException be){
+            throw new FacadeException(be.getMessage());
+        }
+    }
+    
+    /**
+     * Metodo que calcula la multa.
+     * 
+     * @param reserva El objeto que contiene la información de la reserva
+     * @return El monto de la multa según el tiempo de antelación de la cancelación
+     */
+    private double calcularMulta(ReservaDTO reserva) {
+        // Suponiendo que la fecha y hora actual representa el momento de la cancelación
+        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime fechaReserva = reserva.getFechaHoraReserva();
+        double costoReserva = reserva.getCosto();
+
+        // Calculamos la diferencia en horas entre el momento actual y la fecha de la reserva
+        long horasDeAnticipacion = Duration.between(ahora, fechaReserva).toHours();
+
+        // Aplicamos las reglas de penalización según el tiempo de anticipación
+        if (horasDeAnticipacion > 48) {
+            return 0.0; // Sin multa
+        } else if (horasDeAnticipacion >= 24) {
+            return costoReserva * 0.25; // Multa del 25%
+        } else {
+            return costoReserva * 0.50; // Multa del 50%
+        }
+    }
+
     
 }

@@ -185,5 +185,71 @@ public class ReservaBO implements IReservaBO {
             throw new BOException(ex.getMessage());
         }
     }
+
+    @Override
+    public List<ReservaDTO> obtenerReservas() throws BOException {
+        try{
+           List<Reserva> entidades = reservaDAO.obtenerReservas();           
+           List<ReservaDTO> dto = new ArrayList<>();
+            
+            for (Reserva reserva : entidades) {
+                dto.add(reservaCVR.toDTO(reserva));
+            }
+           
+            return dto;
+        }
+        catch(DAOException de){
+            LOG.log(Level.SEVERE, "Error al agregar la reserva en dao", de);
+            throw new BOException(de.getMessage());
+        }    
+    }
+
+    /**
+     * 
+     * @param nombre
+     * @param inicio
+     * @param fin
+     * @return
+     * @throws BOException 
+     */
+    @Override
+    public List<ReservaDTO> buscarReservas(String nombre, 
+            LocalDateTime inicio, LocalDateTime fin) throws BOException {
+        try{
+           List<Reserva> entidades = reservaDAO.buscarReservas(nombre, 
+                   inicio, fin);
+           List<ReservaDTO> dto = new ArrayList<>();
+            
+            for (Reserva reserva : entidades) {
+                dto.add(reservaCVR.toDTO(reserva));
+            }
+           
+            return dto;
+        }
+        catch(DAOException de){
+            LOG.log(Level.SEVERE, "Error al agregar la reserva en dao", de);
+            throw new BOException(de.getMessage());
+        }        
+    }
+
+    /**
+     * 
+     * @param reservaDTO
+     * @throws BOException 
+     */
+    @Override
+    public void actualizarReserva(ReservaDTO reservaDTO) throws BOException {
+         try{
+            
+             Reserva reserva = reservaCVR.toEntity(reservaDTO);
+           
+             reservaDAO.actualizarReserva(reserva);
+             
+        }
+        catch(DAOException de){
+            LOG.log(Level.SEVERE, "Error al agregar la reserva en dao", de);
+            throw new BOException(de.getMessage());
+        }     
+    }
     
 }

@@ -6,6 +6,7 @@ package interfacesFachada;
 
 import DTOs.ClienteDTO;
 import DTOs.MesaDTO;
+import DTOs.ReservaDTO;
 import Excepciones.FacadeException;
 import java.time.LocalDateTime;
 
@@ -19,4 +20,5 @@ public interface IReservaFCD {
             LocalDateTime horaFecha, int numPersonas, double costo) 
             throws FacadeException;
     
+    public void cancelarReserva(ReservaDTO reserva) throws FacadeException;
 }

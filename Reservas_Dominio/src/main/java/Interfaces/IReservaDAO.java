@@ -91,6 +91,33 @@ public interface IReservaDAO {
      */
     public boolean verificarReservaciones(Cliente cliente)throws DAOException;
     
+    /**
+     * 
+     * @return
+     * @throws DAOException 
+     */
+    public List<Reserva> obtenerReservas() throws DAOException;
+    
+    /**
+     * Buscar por nombre por nombre y intervalo de fechas, esta la opcion de
+     * buscar unicamente por Nombre o buscar por intervalo de fechas o 
+     * todos en conjunto.
+     * 
+     * @param nombre nombre del cliente.
+     * @param inicio fecha de inicio para buscar.
+     * @param fin fecha de fin para buscar.
+     * @return lista de reservas filtradas
+     * @throws DAOException En caso de error
+     */
+    public List<Reserva> buscarReservas(String nombre, LocalDateTime inicio, 
+            LocalDateTime fin) throws DAOException;
+    
+    /**
+     * 
+     * @param reserva
+     * @throws DAOException 
+     */
+    public void actualizarReserva(Reserva reserva) throws DAOException;
 }
 
 

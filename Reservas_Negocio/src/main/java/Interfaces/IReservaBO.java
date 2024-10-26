@@ -7,7 +7,6 @@ package Interfaces;
 import DTOs.ClienteDTO;
 import DTOs.MesaDTO;
 import DTOs.ReservaDTO;
-import Entidades.Reserva;
 import Excepciones.BOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -91,5 +90,34 @@ public interface IReservaBO {
      * @throws Excepciones.BOException
      */
     public boolean verificarReservaciones(ClienteDTO cliente)throws BOException;
+    
+    /**
+     * 
+     * @return
+     * @throws BOException 
+     */
+    public List<ReservaDTO> obtenerReservas() throws BOException;
+    
+    
+    /**
+     * Buscar por nombre por nombre y intervalo de fechas, esta la opcion de
+     * buscar unicamente por Nombre o buscar por intervalo de fechas o 
+     * todos en conjunto.
+     * 
+     * @param nombre nombre del cliente.
+     * @param inicio fecha de inicio para buscar.
+     * @param fin fecha de fin para buscar.
+     * @return lista de reservas filtradas
+     * @throws Excepciones.BOException En caso de erro en capas inferirores
+     */
+    public List<ReservaDTO> buscarReservas(String nombre, LocalDateTime inicio, 
+            LocalDateTime fin) throws BOException;
+    
+    /**
+     * 
+     * @param reserva
+     * @throws BOException 
+     */
+    public void actualizarReserva(ReservaDTO reservaDTO) throws BOException;
     
 }
