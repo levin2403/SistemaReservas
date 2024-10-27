@@ -20,6 +20,23 @@ import java.util.stream.Collectors;
  * Implementa el patrón Facade para simplificar la interfaz de filtrado de
  * reservas.
  * 
+ * <p>
+ * Esta clase proporciona métodos para filtrar reservas basándose en 
+ * varios criterios, como el nombre del cliente, el número de teléfono y 
+ * la fecha de la reserva. También permite filtrar por tipo de mesa, 
+ * ubicación y rango de fechas.
+ * </p>
+ * 
+ * <p>
+ * Se utilizan dos constructores: uno que acepta una lista de reservas 
+ * y otro que carga las reservas desde la base de datos.
+ * </p>
+ * 
+ * <p>
+ * Los métodos de filtrado devuelven listas de reservas que cumplen con 
+ * los criterios especificados.
+ * </p>
+ * 
  * @author Sebastian
  */
 public class FiltrosFCD implements IFiltrosFCD {

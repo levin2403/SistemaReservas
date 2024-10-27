@@ -19,6 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * This class represents a GUI window for generating reports based on
+ * reservations. It extends JFrame and provides functionalities to display,
+ * filter, and generate reports in PDF format.
  *
  * @author Sebastian Murrieta
  */
@@ -30,27 +33,43 @@ public class Reportes extends javax.swing.JFrame {
     private IReservaBO reservaBO;
 
     /**
-     * Creates new form Confirmacion
+     * Creates a new instance of the Reportes class, initializing components and
+     * fetching reservation data.
      */
     public Reportes() {
         initComponents();
-        filtros = new FiltrosFCD(); // Initialize correctly
-        clienteFCD = new ClienteFCD(); // Initialize clienteFCD
-        this.reservaBO = new ReservaBO();
+        filtros = new FiltrosFCD(); // Initialize the filters facade
+        clienteFCD = new ClienteFCD(); // Initialize the client facade
+        this.reservaBO = new ReservaBO(); // Initialize the reservation business object
 
         // Fetch and initialize the reservas before updating the table
-        obtenerReservas(); // This method fetches the reservas
+        obtenerReservas(); // This method fetches the reservations
         actualizarTablaReservas(); // Now you can update the table with the fetched data
     }
 
+    /**
+     * Displays an error message dialog with the given message.
+     *
+     * @param mensaje The error message to display.
+     */
     private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Displays a success message dialog with the given message.
+     *
+     * @param mensaje The success message to display.
+     */
     private void mostrarExito(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Validates the start and end dates for the reservation report.
+     *
+     * @return true if the dates are valid, false otherwise.
+     */
     private boolean validarFechas() {
         if (fechaInicioDC.getDate().after(fechaFinDC.getDate())) {
             mostrarError("La fecha de inicio no puede ser posterior a la fecha de fin.");
@@ -59,9 +78,15 @@ public class Reportes extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Fetches the list of reservations from the database using the business
+     * object.
+     *
+     * @return A list of Reservation Data Transfer Objects (ReservaDTO).
+     */
     private List<ReservaDTO> obtenerReservas() {
         try {
-            // Llama a reservaBO para obtener las reservas de la base de datos.
+            // Calls reservaBO to obtain the reservations from the database.
             this.reservas = reservaBO.obtenerReservas();
         } catch (Exception e) {
             mostrarError("Error al obtener las reservas: " + e.getMessage());
@@ -69,6 +94,9 @@ public class Reportes extends javax.swing.JFrame {
         return reservas;
     }
 
+    /**
+     * Updates the table displaying the reservations with the current data.
+     */
     private void actualizarTablaReservas() {
         String[] columnas = {"No.Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"};
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
@@ -284,7 +312,12 @@ public class Reportes extends javax.swing.JFrame {
         dispose();
 
     }//GEN-LAST:event_atrasBtnActionPerformed
-
+    /**
+     * Handles the action of generating the PDF report when the button is
+     * clicked. It validates the dates and generates the report if valid.
+     *
+     * @param evt The action event triggered by clicking the button.
+     */
     private void generarPDFBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFBtnActionPerformed
         try {
             // Validar fechas y campos obligatorios

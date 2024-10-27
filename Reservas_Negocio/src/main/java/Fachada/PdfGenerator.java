@@ -5,6 +5,9 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.properties.TextAlignment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -14,13 +17,30 @@ import java.util.List;
 import javax.swing.JFileChooser;
 
 /**
- *
- * @author Sebastian Murrieta
+ * La clase {@code PdfGenerator} se encarga de generar un documento PDF que contiene un reporte
+ * de reservas basado en filtros proporcionados por el usuario. Utiliza la biblioteca iText para
+ * la creación del PDF.
+ * 
+ * <p>Esta clase permite a los usuarios seleccionar una ubicación para guardar el archivo PDF
+ * y proporciona una interfaz para filtrar reservas por fecha, tipo de mesa y ubicación.</p>
+ * 
+ * <p>Autor: Sebastian Murrieta</p>
  */
 public class PdfGenerator {
 
+    /**
+     * Genera un documento PDF desde un formulario con filtros específicos de reservas.
+     *
+     * @param fechaInicio La fecha de inicio del filtro en formato "dd/MM/yyyy".
+     * @param fechaFin La fecha de fin del filtro en formato "dd/MM/yyyy".
+     * @param tipoMesa El tipo de mesa a filtrar.
+     * @param ubicacion La ubicación a filtrar.
+     * @param reservas Una lista de objetos {@code ReservaDTO} que contienen la información de reservas.
+     * @return {@code true} si el PDF se generó correctamente, {@code false} si hubo un error
+     *         o si el usuario canceló la operación.
+     */
     public boolean generarPDFDesdeFormulario(String fechaInicio, String fechaFin, String tipoMesa, String ubicacion, List<ReservaDTO> reservas) {
-        // Se solicita al usuario la ubicación donde guardar el PDF
+        // Solicita al usuario la ubicación donde guardar el PDF
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar PDF");
         fileChooser.setSelectedFile(new File("Reporte_" + System.currentTimeMillis() + ".pdf")); // Nombre por defecto
@@ -34,47 +54,24 @@ public class PdfGenerator {
             return false; // Indica que el usuario canceló la operación
         }
 
-        // Se obtiene el archivo seleccionado por el usuario
-        File archivoDestino = fileChooser.getSelectedFile();
+        // Se obtiene el archivo seleccionado por el usuario y asegura la extensión .pdf
+        File archivoDestino = obtenerArchivoPDF(fileChooser.getSelectedFile());
 
-        // Se asegura de que el archivo tenga la extensión .pdf
-        if (!archivoDestino.getName().toLowerCase().endsWith(".pdf")) {
-            archivoDestino = new File(archivoDestino.getAbsolutePath() + ".pdf");
-        }
-
-        try {
-            // Se crea el documento PDF en la ubicación especificada por el usuario
-            PdfWriter writer = new PdfWriter(archivoDestino);
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
+        try (PdfWriter writer = new PdfWriter(archivoDestino);
+             PdfDocument pdf = new PdfDocument(writer);
+             Document document = new Document(pdf)) {
 
             // Agrega título y filtros aplicados al documento
-            document.add(new Paragraph("Reporte de Reservas").setFontSize(20));
-            document.add(new Paragraph("Filtros aplicados:").setFontSize(16));
+            agregarTituloYFiltros(document, fechaInicio, fechaFin, tipoMesa, ubicacion);
 
-            // Solo agrega información si el filtro correspondiente no está vacío
-            agregarParrafoSiNoVacio(document, "Fecha de Inicio: ", fechaInicio);
-            agregarParrafoSiNoVacio(document, "Fecha de Fin: ", fechaFin);
-            agregarParrafoSiNoVacio(document, "Tipo de Mesa: ", tipoMesa);
-            agregarParrafoSiNoVacio(document, "Ubicación: ", ubicacion);
+            // Calcular el total ganado
+            double totalGanado = calcularTotalGanado(reservas, fechaInicio, fechaFin, tipoMesa, ubicacion);
+            document.add(new Paragraph("Total Ganado: $" + String.format("%.2f", totalGanado)).setFontSize(16));
 
-            // Formateador para fechas
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-// Agrega las reservas al documento
-            document.add(new Paragraph("Reservaciones:").setFontSize(16));
-            for (ReservaDTO reserva : reservas) {
-                // Filtrar reservas directamente durante la adición al PDF
-                if (filtrarReserva(reserva, fechaInicio, fechaFin, tipoMesa, ubicacion)) {
-                    document.add(new Paragraph("Cliente: " + reserva.getCliente().getNombre()
-                            + ", Fecha: " + reserva.getFechaHoraReserva().format(formatter)
-                            + ", Número de Personas: " + reserva.getNumeroPersonas()
-                            + ", Tipo de Mesa: " + reserva.getMesa().getTipoMesa()
-                            + ", Ubicación: " + reserva.getMesa().getUbicacion()));
-                }
-            }
-            // Cierra el documento
-            document.close();
+            // Crear y agregar la tabla para reservas
+            Table table = crearTablaReservas(reservas, fechaInicio, fechaFin, tipoMesa, ubicacion);
+            document.add(new Paragraph("Reservas:").setFontSize(16));
+            document.add(table);
 
             return true; // Indica que el PDF se generó correctamente
         } catch (FileNotFoundException e) {
@@ -86,38 +83,113 @@ public class PdfGenerator {
         }
     }
 
-    // Método auxiliar para agregar un párrafo si el contenido no está vacío
+    private File obtenerArchivoPDF(File archivoDestino) {
+        if (!archivoDestino.getName().toLowerCase().endsWith(".pdf")) {
+            archivoDestino = new File(archivoDestino.getAbsolutePath() + ".pdf");
+        }
+        return archivoDestino;
+    }
+
+    private void agregarTituloYFiltros(Document document, String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
+        document.add(new Paragraph("Reporte de Reservas").setFontSize(20));
+        document.add(new Paragraph("Filtros aplicados:").setFontSize(16));
+        agregarParrafoSiNoVacio(document, "Fecha de Inicio: ", fechaInicio);
+        agregarParrafoSiNoVacio(document, "Fecha de Fin: ", fechaFin);
+        agregarParrafoSiNoVacio(document, "Tipo de Mesa: ", tipoMesa);
+        agregarParrafoSiNoVacio(document, "Ubicación: ", ubicacion);
+    }
+
+    private Table crearTablaReservas(List<ReservaDTO> reservas, String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
+        Table table = new Table(6); // Ahora con 6 columnas
+        table.addHeaderCell(createCenteredCell("Cliente"));
+        table.addHeaderCell(createCenteredCell("Fecha"));
+        table.addHeaderCell(createCenteredCell("Número de Personas"));
+        table.addHeaderCell(createCenteredCell("Tipo de Mesa"));
+        table.addHeaderCell(createCenteredCell("Ubicación"));
+        table.addHeaderCell(createCenteredCell("Multa")); // Nueva columna para multas
+
+        // Formateador para fechas
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        // Agrega las reservas al documento
+        for (ReservaDTO reserva : reservas) {
+            // Filtrar reservas directamente durante la adición al PDF
+            if (filtrarReserva(reserva, fechaInicio, fechaFin, tipoMesa, ubicacion)) {
+                table.addCell(createCenteredCell(reserva.getCliente().getNombre()));
+                table.addCell(createCenteredCell(reserva.getFechaHoraReserva().format(formatter)));
+                table.addCell(createCenteredCell(String.valueOf(reserva.getNumeroPersonas())));
+                table.addCell(createCenteredCell(reserva.getMesa().getTipoMesa()));
+                table.addCell(createCenteredCell(reserva.getMesa().getUbicacion()));
+                
+                // Muestra "No" si la multa es 0.0, de lo contrario muestra el valor de la multa
+                double multa = reserva.getMulta();
+                String multaTexto = (multa == 0.0) ? "No" : String.valueOf(multa);
+                table.addCell(createCenteredCell(multaTexto)); // Agrega la multa
+            }
+        }
+        return table;
+    }
+
+    /**
+     * Método auxiliar para crear una celda centrada en una tabla PDF.
+     *
+     * @param content El contenido a incluir en la celda.
+     * @return Una celda centrada que contiene el contenido proporcionado.
+     */
+    private Cell createCenteredCell(String content) {
+        Cell cell = new Cell();
+        cell.add(new Paragraph(content));
+        cell.setTextAlignment(TextAlignment.CENTER);
+        return cell;
+    }
+
+    /**
+     * Método auxiliar para agregar un párrafo al documento PDF si el contenido no está vacío.
+     *
+     * @param document El documento al que se añadirá el párrafo.
+     * @param etiqueta La etiqueta que precederá al contenido.
+     * @param contenido El contenido a agregar al documento.
+     */
     private void agregarParrafoSiNoVacio(Document document, String etiqueta, String contenido) {
         if (contenido != null && !contenido.trim().isEmpty()) {
             document.add(new Paragraph(etiqueta + contenido));
         }
     }
 
-    // Método para filtrar reservas basadas en los criterios
+    /**
+     * Filtra reservas basadas en los criterios proporcionados.
+     *
+     * @param reserva El objeto {@code ReservaDTO} a evaluar.
+     * @param fechaInicio La fecha de inicio del filtro en formato "dd/MM/yyyy".
+     * @param fechaFin La fecha de fin del filtro en formato "dd/MM/yyyy".
+     * @param tipoMesa El tipo de mesa a filtrar.
+     * @param ubicacion La ubicación a filtrar.
+     * @return {@code true} si la reserva cumple con todos los criterios, {@code false} de lo contrario.
+     */
     private boolean filtrarReserva(ReservaDTO reserva, String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
-        boolean fechaValida = true;
-        boolean tipoMesaValido = true;
-        boolean ubicacionValida = true;
+        boolean fechaValida = validarFechas(reserva, fechaInicio, fechaFin);
+        boolean tipoMesaValido = tipoMesa.isEmpty() || reserva.getMesa().getTipoMesa().equalsIgnoreCase(tipoMesa);
+        boolean ubicacionValida = ubicacion.isEmpty() || reserva.getMesa().getUbicacion().equalsIgnoreCase(ubicacion);
 
+        return fechaValida && tipoMesaValido && ubicacionValida;
+    }
+
+    private boolean validarFechas(ReservaDTO reserva, String fechaInicio, String fechaFin) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime inicio = LocalDate.parse(fechaInicio, formatter).atStartOfDay();
         LocalDateTime fin = LocalDate.parse(fechaFin, formatter).atTime(23, 59);
+        return !reserva.getFechaHoraReserva().isBefore(inicio) && !reserva.getFechaHoraReserva().isAfter(fin);
+    }
 
-        // Filtrar por fechas
-        if (reserva.getFechaHoraReserva().isBefore(inicio) || reserva.getFechaHoraReserva().isAfter(fin)) {
-            fechaValida = false;
+    private double calcularTotalGanado(List<ReservaDTO> reservas, String fechaInicio, String fechaFin, String tipoMesa, String ubicacion) {
+        double totalGanado = 0.0;
+
+        for (ReservaDTO reserva : reservas) {
+            if (filtrarReserva(reserva, fechaInicio, fechaFin, tipoMesa, ubicacion)) {
+                totalGanado += reserva.getCosto(); // Asegúrate de que este método esté en ReservaDTO
+                totalGanado += reserva.getMulta(); // Agrega la multa al total
+            }
         }
-
-        // Filtrar por tipo de mesa
-        if (!tipoMesa.isEmpty() && !reserva.getMesa().getTipoMesa().equalsIgnoreCase(tipoMesa)) {
-            tipoMesaValido = false;
-        }
-
-        // Filtrar por ubicación
-        if (!ubicacion.isEmpty() && !reserva.getMesa().getUbicacion().equalsIgnoreCase(ubicacion)) {
-            ubicacionValida = false;
-        }
-
-        return fechaValida && tipoMesaValido && ubicacionValida;
+        return totalGanado;
     }
 }
