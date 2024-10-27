@@ -5,6 +5,7 @@ import DTOs.ReservaDTO;
 import Excepciones.DAOException;
 import interfacesFachada.IFiltrosFCD;
 import java.time.ZoneId;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,31 +25,38 @@ public class FiltrosFCD implements IFiltrosFCD {
 
     // Constructor que recibe una lista de reservas
     public FiltrosFCD(List<ReservaDTO> reservas) {
-        this.reservas = reservas;
         this.reservaDAO = new ReservaDAO(); // Inicializa tu DAO
+        this.reservas = reservas; // Asigna la lista de reservas pasada como argumento
     }
 
-    // Constructor sin parámetros
     public FiltrosFCD() {
         this.reservaDAO = new ReservaDAO(); // Inicializa tu DAO
+        try {
+            this.reservas = reservaDAO.obtenerReservas(); // Inicializa reservas
+        } catch (DAOException e) {
+            e.printStackTrace(); // Maneja la excepción adecuadamente
+            this.reservas = Collections.emptyList(); // Asegúrate de que reservas no sea null
+        }
     }
 
-    /**
-     * Filtra las reservas según los parámetros de nombre del cliente, teléfono
-     * y fecha de la reserva.
-     *
-     * @param nombreCliente Nombre del cliente para el filtro.
-     * @param telefono Teléfono del cliente para el filtro.
-     * @param fecha Fecha de la reserva para el filtro.
-     * @return Lista de reservas que cumplen con los criterios de filtro.
-     */
     @Override
     public List<ReservaDTO> filtrarReservas(String nombreCliente, String telefono, Date fecha) {
+        try {
+            if (reservas == null || reservas.isEmpty()) {
+                reservas = reservaDAO.obtenerReservas(); // Asegúrate de obtener las reservas aquí
+                if (reservas == null) {
+                    return Collections.emptyList();
+                }
+            }
+        } catch (DAOException e) {
+            e.printStackTrace(); // Maneja la excepción adecuadamente
+            return Collections.emptyList(); // Retorna una lista vacía en caso de error
+        }
+
         return reservas.stream()
-                .filter(reserva -> (nombreCliente == null || reserva.getCliente().getNombre().equals(nombreCliente))
+                .filter(reserva -> (nombreCliente == null || reserva.getCliente().getNombre().equalsIgnoreCase(nombreCliente))
                 && (telefono == null || reserva.getCliente().getTelefono().equals(telefono))
                 && (fecha == null || reserva.getFechaHoraReserva().toLocalDate().equals(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())))
                 .collect(Collectors.toList());
     }
-
 }

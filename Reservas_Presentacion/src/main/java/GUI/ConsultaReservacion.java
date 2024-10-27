@@ -79,6 +79,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
 
     private void cargarClientes() {
         DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
+        combo.addElement("Seleccione un cliente"); // Valor nulo principal para filtrado
         nombreClienteCB.setModel(combo);
 
         try {
