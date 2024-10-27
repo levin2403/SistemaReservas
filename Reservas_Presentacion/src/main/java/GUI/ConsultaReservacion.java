@@ -4,16 +4,18 @@
  */
 package GUI;
 
+import BO.ReservaBO;
 import DTOs.ReservaDTO;
+import Excepciones.BOException;
 import Excepciones.FacadeException;
 import Fachada.ClienteFCD;
 import Fachada.FiltrosFCD;
+import Interfaces.IReservaBO;
 import interfacesFachada.IClienteFCD;
 import interfacesFachada.IFiltrosFCD;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +27,8 @@ public class ConsultaReservacion extends javax.swing.JFrame {
 
     private IFiltrosFCD filtros;
     private IClienteFCD clienteFCD;
+    private List<ReservaDTO> reservas;
+    private IReservaBO reservaBO;
 
     /**
      * Creates new form Principal
@@ -34,8 +38,43 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         initComponents();
         filtros = new FiltrosFCD(); // Inicialización correcta
         clienteFCD = new ClienteFCD(); // Inicialización de clienteFCD
+        this.reservaBO = new ReservaBO();
         cargarClientes();
-        //cargarTabla();
+        cargarDatosIniciales();
+    }
+
+    public void cargarDatosIniciales() {
+        try {
+            // Obtener las reservas iniciales desde la capa de negocio
+            this.reservas = reservaBO.obtenerReservas();
+
+            // Cargar los datos en la tabla
+            cargarTabla();
+        } catch (BOException be) {
+            // Mostrar el mensaje de error en caso de excepción
+            JOptionPane.showMessageDialog(this, be.getMessage());
+        }
+    }
+
+    private void cargarTabla() {
+        // Usamos el DefaultTableModel con nombres de columnas definidos en el constructor
+        DefaultTableModel model = new DefaultTableModel(new Object[]{
+            "No. Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"
+        }, 0);
+
+        // Agregar filas a la tabla
+        for (ReservaDTO reserva : this.reservas) {
+            model.addRow(new Object[]{
+                reserva.getMesa().getCodigoMesa(),
+                reserva.getFechaHoraReserva(),
+                reserva.getMesa().getTipoMesa(),
+                reserva.getMesa().getUbicacion(),
+                reserva.getCliente().getNombre()
+            });
+        }
+
+        // Asignar el modelo a la tabla
+        reservacionesTabla.setModel(model);
     }
 
     /**
@@ -249,32 +288,6 @@ public class ConsultaReservacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + e.getMessage());
         }
     }
-//
-//    private void cargarTabla() {
-//        // Obtiene todas las reservas (puedes adaptar esto según tu lógica de negocio)
-//        List<ReservaDTO> reservas = filtros.obtenerTodasLasReservas(); // Asegúrate de que este método exista en FiltrosFCD
-//        DefaultTableModel model = new DefaultTableModel();
-//
-//        // Definición de las columnas
-//        model.addColumn("No. Mesa");
-//        model.addColumn("Fecha y hora");
-//        model.addColumn("Tamaño de mesa");
-//        model.addColumn("Lugar");
-//        model.addColumn("Cliente");
-//
-//        // Agregar filas a la tabla
-//        for (ReservaDTO reserva : reservas) {
-//            model.addRow(new Object[]{
-//                reserva.getMesa().getCodigoMesa(),
-//                reserva.getFechaHoraReserva(), // Asegúrate de que ReservaDTO tenga el método getFechaHoraReserva()
-//                reserva.getMesa().getTipoMesa(),
-//                reserva.getMesa().getUbicacion(),
-//                reserva.getCliente().getNombre() // Asegúrate de que ClienteDTO tenga el método getNombre()
-//            });
-//        }
-//
-//        reservacionesTabla.setModel(model);
-//    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
