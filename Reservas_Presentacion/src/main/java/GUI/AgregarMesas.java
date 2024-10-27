@@ -94,6 +94,7 @@ public class AgregarMesas extends javax.swing.JFrame {
         txfGeneral = new javax.swing.JTextField();
         txfTerraza = new javax.swing.JTextField();
         txfVentana = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -102,11 +103,11 @@ public class AgregarMesas extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Ubicacion:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, -1));
 
         txfNumMesas.setBackground(new java.awt.Color(102, 102, 102));
         txfNumMesas.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(txfNumMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 300, 40));
+        getContentPane().add(txfNumMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 270, 40));
 
         agregarMesaPn.setBackground(new java.awt.Color(51, 51, 51));
         agregarMesaPn.setCursorHandEnabled(true);
@@ -154,7 +155,7 @@ public class AgregarMesas extends javax.swing.JFrame {
                 regresarBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 50));
+        getContentPane().add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 650, 140, 50));
 
         agregarBtn.setBackground(new java.awt.Color(102, 102, 102));
         agregarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -165,69 +166,87 @@ public class AgregarMesas extends javax.swing.JFrame {
                 agregarBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(agregarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 140, 50));
+        getContentPane().add(agregarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 140, 50));
 
         cbxTamaño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PEQUEÑA", "MEDIANA", "GRANDE" }));
-        getContentPane().add(cbxTamaño, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 300, 40));
+        getContentPane().add(cbxTamaño, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 270, 40));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 20, 480));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, 20, 480));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Horario restaurante");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 70, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 100, -1, -1));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tamaño de mesa:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
 
         cbxUbicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TERRAZA", "VENTANA", "GENERAL" }));
-        getContentPane().add(cbxUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 300, 40));
+        getContentPane().add(cbxUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 270, 40));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("General:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, -1, -1));
-        getContentPane().add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 120, -1, 290));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 430, 400, 10));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 640, -1, -1));
+        getContentPane().add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, -1, 290));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 460, 400, 10));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Numero de mesas:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, -1, -1));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Numero de mesas por ubicacion");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 450, -1, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 480, -1, -1));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Terraza:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 510, -1, -1));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 540, -1, -1));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Ventana:");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 560, -1, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 590, -1, -1));
 
         txfGeneral.setEditable(false);
-        getContentPane().add(txfGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 610, 110, 30));
+        txfGeneral.setBackground(new java.awt.Color(102, 102, 102));
+        getContentPane().add(txfGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 640, 110, 30));
 
         txfTerraza.setEditable(false);
-        getContentPane().add(txfTerraza, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 510, 110, 30));
+        txfTerraza.setBackground(new java.awt.Color(102, 102, 102));
+        getContentPane().add(txfTerraza, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 540, 110, 30));
 
         txfVentana.setEditable(false);
-        getContentPane().add(txfVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 560, 110, 30));
+        txfVentana.setBackground(new java.awt.Color(102, 102, 102));
+        getContentPane().add(txfVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 590, 110, 30));
+
+        jPanel1.setBackground(new java.awt.Color(22, 22, 22));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1280, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -288,6 +307,7 @@ public class AgregarMesas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton regresarBtn;

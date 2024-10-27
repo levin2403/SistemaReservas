@@ -77,6 +77,17 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         reservacionesTabla.setModel(model);
     }
 
+    private void cargarClientes() {
+        DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
+        nombreClienteCB.setModel(combo);
+
+        try {
+            clienteFCD.cargarComboBoxClientes(nombreClienteCB); // Llama al método de la interfaz para cargar los clientes
+        } catch (FacadeException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + e.getMessage());
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -221,7 +232,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Numero de telefono");
-        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
@@ -229,12 +240,14 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         jLabel6.setText("Nombre del cliente");
         Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, -1));
 
-        nombreClienteCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        nombreClienteCB.setForeground(new java.awt.Color(255, 255, 255));
         Fondo.add(nombreClienteCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 300, 40));
 
-        numeroTelefonoTxt.setText("jTextField1");
+        numeroTelefonoTxt.setBackground(new java.awt.Color(86, 86, 86));
         Fondo.add(numeroTelefonoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 300, 40));
 
+        jDateChooser1.setBackground(new java.awt.Color(86, 86, 86));
+        jDateChooser1.setForeground(new java.awt.Color(255, 255, 255));
         jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Fondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 200, 290, 40));
 
@@ -247,7 +260,6 @@ public class ConsultaReservacion extends javax.swing.JFrame {
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
         new Admistrador().setVisible(true);
         dispose();
-
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
@@ -278,16 +290,6 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         }
         reservacionesTabla.setModel(model);
     }//GEN-LAST:event_buscarBtnActionPerformed
-    private void cargarClientes() {
-        DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
-        nombreClienteCB.setModel(combo);
-
-        try {
-            clienteFCD.cargarComboBoxClientes(nombreClienteCB); // Llama al método de la interfaz para cargar los clientes
-        } catch (FacadeException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + e.getMessage());
-        }
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

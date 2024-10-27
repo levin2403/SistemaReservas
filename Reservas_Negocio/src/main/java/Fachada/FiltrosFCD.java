@@ -51,8 +51,4 @@ public class FiltrosFCD implements IFiltrosFCD {
                 .collect(Collectors.toList());
     }
 
-    public List<ReservaDTO> obtenerReservas() {
-        return null;
-    }
-       
 }

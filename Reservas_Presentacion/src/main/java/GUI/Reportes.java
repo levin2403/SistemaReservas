@@ -4,12 +4,15 @@
  */
 package GUI;
 
+import BO.ReservaBO;
 import DTOs.ReservaDTO;
 import Fachada.PdfGenerator;
+import Interfaces.IReservaBO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,11 +20,55 @@ import javax.swing.JOptionPane;
  */
 public class Reportes extends javax.swing.JFrame {
 
+    private IReservaBO reservaBO;
+    private List<ReservaDTO> reservas;
+
     /**
      * Creates new form Confirmacion
      */
     public Reportes() {
         initComponents();
+        actualizarTablaReservas();
+        this.reservaBO = new ReservaBO();
+    }
+
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mostrarExito(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean validarFechas() {
+        if (fechaInicioDC.getDate().after(fechaFinDC.getDate())) {
+            mostrarError("La fecha de inicio no puede ser posterior a la fecha de fin.");
+            return false;
+        }
+        return true;
+    }
+
+    private List<ReservaDTO> obtenerReservas() {
+        // y devolver una lista de objetos ReservaDTO.
+        List<ReservaDTO> reservas = new ArrayList<>();
+        return reservas;
+    }
+
+    private void actualizarTablaReservas() {
+
+        String[] columnas = {"No.Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"};
+        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+
+        for (ReservaDTO reserva : reservas) {
+            model.addRow(new Object[]{
+                reserva.getMesa().getCodigoMesa(),
+                reserva.getFechaHoraReserva(),
+                reserva.getMesa().getTipoMesa(),
+                reserva.getMesa().getUbicacion(),
+                reserva.getCliente().getNombre()
+            });
+        }
+        tblMesas.setModel(model);
     }
 
     /**
@@ -49,6 +96,7 @@ public class Reportes extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         tipoMesaTxt = new javax.swing.JTextField();
+        buscarBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(25, 25, 25));
@@ -82,11 +130,6 @@ public class Reportes extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
-            }
-        });
-        tblMesas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblMesasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblMesas);
@@ -205,6 +248,17 @@ public class Reportes extends javax.swing.JFrame {
         tipoMesaTxt.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(tipoMesaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 220, 40));
 
+        buscarBtn.setBackground(new java.awt.Color(102, 102, 102));
+        buscarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        buscarBtn.setForeground(new java.awt.Color(255, 255, 255));
+        buscarBtn.setText("Buscar");
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, 140, 50));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -251,33 +305,14 @@ public class Reportes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_generarPDFBtnActionPerformed
 
-    private void tblMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMesasMouseClicked
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
 
-    }//GEN-LAST:event_tblMesasMouseClicked
-    private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    }//GEN-LAST:event_buscarBtnActionPerformed
 
-    private void mostrarExito(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private boolean validarFechas() {
-        if (fechaInicioDC.getDate().after(fechaFinDC.getDate())) {
-            mostrarError("La fecha de inicio no puede ser posterior a la fecha de fin.");
-            return false;
-        }
-        return true;
-    }
-
-    private List<ReservaDTO> obtenerReservas() {
-        // y devolver una lista de objetos ReservaDTO.
-        List<ReservaDTO> reservas = new ArrayList<>();
-        return reservas;
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton atrasBtn;
+    private javax.swing.JButton buscarBtn;
     private com.toedter.calendar.JDateChooser fechaFinDC;
     private com.toedter.calendar.JDateChooser fechaInicioDC;
     private javax.swing.JButton generarPDFBtn;
