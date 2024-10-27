@@ -37,13 +37,13 @@ public interface IMesaDAO {
     public List<Mesa> consultarMesas() throws DAOException;
     
     /**
-     * Devuelve la cantidad de mesas dependiendo de su tipo;
+     * Devuelve la cantidad de mesas dependiendo de su ubicacion;
      * 
-     * @param tipo
+     * @param ubicacion
      * @return El número de mesas clasificadas como pequeñas.
      * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
-    public int cantidadMesasPorTipo(String tipo) throws DAOException;
+    public int cantidadMesasPorUbicacion(String ubicacion) throws DAOException;
     
     /**
      * Obtiene una lista de mesas dependiendo su tipo especidicado en el 

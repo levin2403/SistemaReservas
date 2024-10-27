@@ -108,21 +108,22 @@ public class MesaDAO implements IMesaDAO{
     }
 
     /**
-     * Retorna la cantidad de mesas por tipo
+     * Retorna la cantidad de mesas por su ubicacion
      * 
-     * @param tipo Tipo de mesa;
-     * @return Entero con la cantidad de mesas de ese tipo.
+     * @param ubicacion
+     * @return Entero con la cantidad de mesas en esa ubicacion.
      */
     @Override
-    public int cantidadMesasPorTipo(String tipo) throws DAOException {
+    public int cantidadMesasPorUbicacion(String ubicacion) throws DAOException {
         EntityManager em = null;
         int cantidad = 0;
         try {
             em = conexion.getEntityManager(); // Obtener el EntityManager
             Query query = em.createQuery("SELECT COUNT(m) FROM Mesa m "
-                    + "WHERE m.tipoMesa = :tipo"); // Crear la consulta
-            query.setParameter("tipo", tipo); // Pasar el parámetro
+                    + "WHERE m.ubicacion = :ubicacion"); // Crear la consulta
+            query.setParameter("ubicacion", ubicacion); // Pasar el parámetro
             cantidad = ((Long) query.getSingleResult()).intValue(); 
+            
         } catch (PersistenceException pe) {
             LOG.log(Level.SEVERE, 
                     "Error al obtener la cantidad de mesas por tipo: {0}", 

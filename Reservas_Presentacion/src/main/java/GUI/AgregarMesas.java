@@ -1,79 +1,112 @@
 
 package GUI;
 
+import BO.MesaBO;
+import Excepciones.BOException;
+import Excepciones.FacadeException;
+import Fachada.MesaFCD;
+import Interfaces.IMesaBO;
+import interfacesFachada.IMesaFCD;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sebastian Murrieta Verduzco - 233463
  */
 public class AgregarMesas extends javax.swing.JFrame {
 
+    IMesaBO mesaBO;
+    IMesaFCD mesaFCD;
+    
     /**
      * Creates new form NewJFrame
      */
     public AgregarMesas() {
         initComponents();
+        iniciarDependencias();
+        cargarCantidadTipos();
+        configuracionInicial();
     }
 
+    /**
+     * 
+     */
+    private void configuracionInicial(){
+        this.setLocationRelativeTo(this);
+        this.setSize(1200, 720);
+        this.setBackground(Color.BLACK);
+    }
+    
+    private void iniciarDependencias(){
+        this.mesaBO = new MesaBO();
+        this.mesaFCD = new MesaFCD();
+    }
+    
+    /**
+     * 
+     */
+    private void cargarCantidadTipos(){
+        try{
+           //recuperamos el numero de la base de datos. 
+           int terraza = mesaBO.cantidadMesasPorUbicacion("TERRAZA");
+           int ventana = mesaBO.cantidadMesasPorUbicacion("VENTANA");
+           int general = mesaBO.cantidadMesasPorUbicacion("GENERAL");
+           
+           // se los asignamos a sus respectivos TextFields
+           this.txfTerraza.setText(String.valueOf(terraza));
+           this.txfVentana.setText(String.valueOf(ventana));
+           this.txfGeneral.setText(String.valueOf(general));
+           
+        }
+        catch(BOException be){
+            JOptionPane.showMessageDialog(this, be.getMessage());
+        }
+    }
+    
+    private void limpiarEntradas(){
+        this.txfNumMesas.setText("");
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        mesasTabla = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        lugarMesaCB = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        numeroMesaTxt = new javax.swing.JTextField();
+        txfNumMesas = new javax.swing.JTextField();
         agregarMesaPn = new Control.PanelRound();
         jLabel1 = new javax.swing.JLabel();
         regresarBtn = new javax.swing.JButton();
         agregarBtn = new javax.swing.JButton();
-        tamañoMesaCB1 = new javax.swing.JComboBox<>();
+        cbxTamaño = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cbxUbicacion = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        timePicker1 = new com.raven.swing.TimePicker();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txfGeneral = new javax.swing.JTextField();
+        txfTerraza = new javax.swing.JTextField();
+        txfVentana = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        mesasTabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "No.Mesa", "Tamaño de mesa", "Lugar", "Codigo de mesa"
-            }
-        ));
-        jScrollPane1.setViewportView(mesasTabla);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(731, 29, 527, 565));
-
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Tamaño de mesa");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+        jLabel3.setText("Ubicacion:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, -1, -1));
 
-        lugarMesaCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(lugarMesaCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 300, 40));
-
-        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Lugar");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, -1));
-
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Numero de mesa");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
-
-        numeroMesaTxt.setBackground(new java.awt.Color(102, 102, 102));
-        numeroMesaTxt.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(numeroMesaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 300, 40));
+        txfNumMesas.setBackground(new java.awt.Color(102, 102, 102));
+        txfNumMesas.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(txfNumMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 300, 40));
 
         agregarMesaPn.setBackground(new java.awt.Color(51, 51, 51));
         agregarMesaPn.setCursorHandEnabled(true);
@@ -121,7 +154,7 @@ public class AgregarMesas extends javax.swing.JFrame {
                 regresarBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 140, 50));
+        getContentPane().add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 140, 50));
 
         agregarBtn.setBackground(new java.awt.Color(102, 102, 102));
         agregarBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -132,10 +165,69 @@ public class AgregarMesas extends javax.swing.JFrame {
                 agregarBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(agregarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 610, 140, 50));
+        getContentPane().add(agregarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 140, 50));
 
-        tamañoMesaCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(tamañoMesaCB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 300, 40));
+        cbxTamaño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PEQUEÑA", "MEDIANA", "GRANDE" }));
+        getContentPane().add(cbxTamaño, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 300, 40));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 20, 480));
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Horario restaurante");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 70, -1, -1));
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Tamaño de mesa:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
+
+        cbxUbicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TERRAZA", "VENTANA", "GENERAL" }));
+        getContentPane().add(cbxUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 300, 40));
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("General:");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, -1, -1));
+        getContentPane().add(timePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 120, -1, 290));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 430, 400, 10));
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Numero de mesas:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Numero de mesas por ubicacion");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 450, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Terraza:");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 510, -1, -1));
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Ventana:");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 560, -1, -1));
+
+        txfGeneral.setEditable(false);
+        getContentPane().add(txfGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 610, 110, 30));
+
+        txfTerraza.setEditable(false);
+        getContentPane().add(txfTerraza, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 510, 110, 30));
+
+        txfVentana.setEditable(false);
+        getContentPane().add(txfVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 560, 110, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -151,22 +243,58 @@ public class AgregarMesas extends javax.swing.JFrame {
     }//GEN-LAST:event_regresarBtnActionPerformed
 
     private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
-        // TODO add your handling code here:
+        try{
+            
+            //recolectamos datos
+            int numero = Integer.parseInt(this.txfNumMesas.getText());
+            String tamaño = String.valueOf(this.cbxTamaño.getSelectedItem());
+            String ubicacion = String.valueOf(this.cbxUbicacion.
+                    getSelectedItem());
+
+            System.out.println(numero);
+            System.out.println(tamaño);
+            System.out.println(ubicacion);
+
+            // lo pasamos a la fachada
+            mesaFCD.agregarMesas(numero, tamaño, ubicacion);
+
+            //actualizamos el contador 
+            cargarCantidadTipos();
+
+            //limpio las entradas
+            limpiarEntradas();
+        
+        }
+        catch(FacadeException fe){
+            JOptionPane.showMessageDialog(this, fe.getMessage());
+        }
+        catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this, "Introduzca numeros validos");
+        }
     }//GEN-LAST:event_agregarBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarBtn;
     private Control.PanelRound agregarMesaPn;
+    private javax.swing.JComboBox<String> cbxTamaño;
+    private javax.swing.JComboBox<String> cbxUbicacion;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> lugarMesaCB;
-    private javax.swing.JTable mesasTabla;
-    private javax.swing.JTextField numeroMesaTxt;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton regresarBtn;
-    private javax.swing.JComboBox<String> tamañoMesaCB1;
+    private com.raven.swing.TimePicker timePicker1;
+    private javax.swing.JTextField txfGeneral;
+    private javax.swing.JTextField txfNumMesas;
+    private javax.swing.JTextField txfTerraza;
+    private javax.swing.JTextField txfVentana;
     // End of variables declaration//GEN-END:variables
 }

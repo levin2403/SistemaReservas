@@ -100,9 +100,9 @@ public class MesaBO implements IMesaBO {
      * @throws BOException 
      */
     @Override
-    public int cantidadMesasPorTipo(String tipo) throws BOException {
+    public int cantidadMesasPorUbicacion(String ubicacion) throws BOException {
         try{
-            return mesaDAO.cantidadMesasPorTipo(tipo);
+            return mesaDAO.cantidadMesasPorUbicacion(ubicacion);
         }
         catch(DAOException de){
             LOG.log(Level.SEVERE, "Error al consultar la cantidad de mesas "

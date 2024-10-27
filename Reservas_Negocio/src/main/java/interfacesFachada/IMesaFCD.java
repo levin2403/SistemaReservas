@@ -15,5 +15,7 @@ public interface IMesaFCD {
     
     public void cargarTablaMesas(JTable table) throws FacadeException;
     public String calcularPrecio(String tamaño);
+    public void agregarMesas(int numero, String tamaño, String ubicacion) 
+            throws FacadeException;
     
 }

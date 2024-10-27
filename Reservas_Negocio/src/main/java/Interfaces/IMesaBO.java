@@ -36,13 +36,13 @@ public interface IMesaBO {
     public List<MesaDTO> consultarMesas() throws BOException;
     
     /**
-     * Devuelve la cantidad de mesas dependiendo de su tipo;
+     * Devuelve la cantidad de mesas dependiendo de su ubicacion;
      * 
-     * @param tipo tipo de mesa a buscar.
+     * @param ubicacion ubicacion de la mesa a buscar.
      * @return El número de mesas clasificadas como pequeñas.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
-    public int cantidadMesasPorTipo(String tipo) throws BOException;
+    public int cantidadMesasPorUbicacion(String ubicacion) throws BOException;
     
     /**
      * Obtiene una lista de mesas dependiendo su tipo especidicado en el 
