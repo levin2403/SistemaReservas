@@ -6,8 +6,12 @@ package GUI;
 
 import BO.ReservaBO;
 import DTOs.ReservaDTO;
+import Fachada.ClienteFCD;
+import Fachada.FiltrosFCD;
 import Fachada.PdfGenerator;
 import Interfaces.IReservaBO;
+import interfacesFachada.IClienteFCD;
+import interfacesFachada.IFiltrosFCD;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +24,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Reportes extends javax.swing.JFrame {
 
-    private IReservaBO reservaBO;
+    private IFiltrosFCD filtros;
+    private IClienteFCD clienteFCD;
     private List<ReservaDTO> reservas;
+    private IReservaBO reservaBO;
 
     /**
      * Creates new form Confirmacion
      */
     public Reportes() {
         initComponents();
-        actualizarTablaReservas();
+        filtros = new FiltrosFCD(); // Initialize correctly
+        clienteFCD = new ClienteFCD(); // Initialize clienteFCD
         this.reservaBO = new ReservaBO();
+
+        // Fetch and initialize the reservas before updating the table
+        obtenerReservas(); // This method fetches the reservas
+        actualizarTablaReservas(); // Now you can update the table with the fetched data
     }
 
     private void mostrarError(String mensaje) {
@@ -49,13 +60,16 @@ public class Reportes extends javax.swing.JFrame {
     }
 
     private List<ReservaDTO> obtenerReservas() {
-        // y devolver una lista de objetos ReservaDTO.
-        List<ReservaDTO> reservas = new ArrayList<>();
+        try {
+            // Llama a reservaBO para obtener las reservas de la base de datos.
+            this.reservas = reservaBO.obtenerReservas();
+        } catch (Exception e) {
+            mostrarError("Error al obtener las reservas: " + e.getMessage());
+        }
         return reservas;
     }
 
     private void actualizarTablaReservas() {
-
         String[] columnas = {"No.Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"};
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
 
@@ -274,7 +288,7 @@ public class Reportes extends javax.swing.JFrame {
     private void generarPDFBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFBtnActionPerformed
         try {
             // Validar fechas y campos obligatorios
-            if (validarFechas()) {
+            if (!validarFechas()) {
                 return;
             }
 
@@ -287,12 +301,12 @@ public class Reportes extends javax.swing.JFrame {
             String tipoMesa = tipoMesaTxt.getText().trim();
             String ubicacion = ubicacionTxt.getText().trim();
 
-            // Obtener reservas (esto depende de cómo estés obteniendo las reservas)
-            List<ReservaDTO> reservas = obtenerReservas();
+            // Obtener reservas filtradas
+            List<ReservaDTO> reservasFiltradas = obtenerReservas();
 
             // Llamar a la clase PdfGenerator para crear el PDF
             PdfGenerator pdfGenerator = new PdfGenerator();
-            boolean exito = pdfGenerator.generarPDFDesdeFormulario(fechaInicio, fechaFin, tipoMesa, ubicacion, reservas);
+            boolean exito = pdfGenerator.generarPDFDesdeFormulario(fechaInicio, fechaFin, tipoMesa, ubicacion, reservasFiltradas);
 
             // Mostrar mensaje según el resultado
             if (exito) {
@@ -303,9 +317,28 @@ public class Reportes extends javax.swing.JFrame {
         } catch (Exception e) {
             mostrarError("Error inesperado: " + e.getMessage());
         }
+
     }//GEN-LAST:event_generarPDFBtnActionPerformed
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+        try {
+            // Obtener los filtros del formulario
+            String tipoMesa = tipoMesaTxt.getText().trim();
+            String ubicacion = ubicacionTxt.getText().trim();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaInicio = dateFormat.format(fechaInicioDC.getDate());
+            String fechaFin = dateFormat.format(fechaFinDC.getDate());
+
+            // Filtrar las reservas usando la clase FiltrosFCD y el nuevo método
+            FiltrosFCD filtros = new FiltrosFCD();
+            List<ReservaDTO> reservasFiltradas = filtros.filtrarReservasPorMesaUbicacionFecha(tipoMesa, ubicacion, fechaInicio, fechaFin);
+
+            // Actualizar la tabla con las reservas filtradas
+            reservas = reservasFiltradas;
+            actualizarTablaReservas();
+        } catch (Exception e) {
+            mostrarError("Error al filtrar las reservas: " + e.getMessage());
+        }
 
     }//GEN-LAST:event_buscarBtnActionPerformed
 

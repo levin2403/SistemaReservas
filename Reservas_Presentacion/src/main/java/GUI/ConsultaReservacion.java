@@ -13,6 +13,8 @@ import Fachada.FiltrosFCD;
 import Interfaces.IReservaBO;
 import interfacesFachada.IClienteFCD;
 import interfacesFachada.IFiltrosFCD;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -82,11 +84,38 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         combo.addElement("Seleccione un cliente"); // Valor nulo principal para filtrado
         nombreClienteCB.setModel(combo);
 
-        try {
-            clienteFCD.cargarComboBoxClientes(nombreClienteCB); // Llama al método de la interfaz para cargar los clientes
-        } catch (FacadeException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + e.getMessage());
-        }
+        // Agregar ActionListener al JComboBox
+        nombreClienteCB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Si se selecciona "Seleccione un cliente", no hacer nada
+                if ("Seleccione un cliente".equals(nombreClienteCB.getSelectedItem())) {
+                    return; // Salir si es la opción predeterminada
+                }
+
+                // Verificar si se ha hecho clic en el JComboBox
+                if (e.getSource() == nombreClienteCB) {
+                    // Limpiar el modelo actual
+                    combo.removeAllElements();
+
+                    // Agregar opción predeterminada
+                    combo.addElement("Seleccione un cliente");
+
+                    // Cargar clientes desde la base de datos
+                    try {
+                        clienteFCD.cargarComboBoxClientes(nombreClienteCB); // Llama al método de la interfaz para cargar los clientes
+                    } catch (FacadeException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al cargar clientes: " + ex.getMessage());
+                    }
+
+                    // Restablecer el JComboBox a la opción predeterminada
+                    nombreClienteCB.setSelectedItem("Seleccione un cliente");
+                }
+            }
+        });
+
+        // Establecer el estado por defecto en "Seleccione un cliente"
+        nombreClienteCB.setSelectedItem("Seleccione un cliente");
     }
 
     /**
