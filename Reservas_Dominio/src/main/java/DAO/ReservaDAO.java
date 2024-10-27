@@ -31,15 +31,15 @@ import javax.persistence.criteria.Root;
 
 /**
  * Clase de acceso a datos para la entidad de Reserva.
- * 
+ *
  * @author skevi
  */
-public class ReservaDAO implements IReservaDAO{
-    
+public class ReservaDAO implements IReservaDAO {
+
     //instancia de logger para hacer informes en consola
     private static final Logger LOG = Logger.
             getLogger(ReservaDAO.class.getName());
-    
+
     // instancia para establecer conexion
     Conexion conexion;
 
@@ -52,7 +52,7 @@ public class ReservaDAO implements IReservaDAO{
 
     /**
      * Metodo que agrega una reserva a la base de datos.
-     * 
+     *
      * @param reserva reserva a agregar.
      */
     @Override
@@ -64,7 +64,7 @@ public class ReservaDAO implements IReservaDAO{
 
             // Buscar la mesa por su código en lugar de ID
             TypedQuery<Mesa> query = em.createQuery(
-            "SELECT m FROM Mesa m WHERE m.codigoMesa = :codigoMesa", Mesa.class);
+                    "SELECT m FROM Mesa m WHERE m.codigoMesa = :codigoMesa", Mesa.class);
             query.setParameter("codigoMesa", reserva.getMesa().getCodigoMesa());
             Mesa mesa = query.getSingleResult();
 
@@ -103,51 +103,53 @@ public class ReservaDAO implements IReservaDAO{
     }
 
     /**
-     * 
+     *
      * @param inicio
      * @param fin
-     * @return 
+     * @return
      */
     @Override
-    public List<Reserva> consultarPorFecha(LocalDateTime inicio, 
-            LocalDateTime fin) throws DAOException{
+    public List<Reserva> consultarPorFecha(LocalDateTime inicio,
+            LocalDateTime fin) throws DAOException {
         EntityManager em = null;
-            List<Reserva> reservas = null;
-            try {
-                em = conexion.getEntityManager(); // Obtener el EntityManager
-                reservas = em.createQuery("SELECT r FROM Reserva r WHERE "
-                        + "r.fechaHoraReserva BETWEEN :inicio AND :fin", 
-                        Reserva.class)
-                             .setParameter("inicio", inicio)
-                             .setParameter("fin", fin)
-                             .getResultList(); // Ejecutar la consulta
-                LOG.log(Level.INFO, "{0} reservas encontradas entre {1} y {2}", 
-                        new Object[]{reservas.size(), inicio, fin});
-            } catch (PersistenceException pe) {
-                
-                LOG.log(Level.SEVERE, "Error al consultar las reservas: {0}", 
-                        pe.getMessage());
-                
-                throw new DAOException("Error al consultar las reservas");
-                
-            } catch (ConexionException ex) {
-            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, 
+        List<Reserva> reservas = null;
+        try {
+            em = conexion.getEntityManager(); // Obtener el EntityManager
+            reservas = em.createQuery("SELECT r FROM Reserva r WHERE "
+                    + "r.fechaHoraReserva BETWEEN :inicio AND :fin",
+                    Reserva.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .getResultList(); // Ejecutar la consulta
+            LOG.log(Level.INFO, "{0} reservas encontradas entre {1} y {2}",
+                    new Object[]{reservas.size(), inicio, fin});
+        } catch (PersistenceException pe) {
+
+            LOG.log(Level.SEVERE, "Error al consultar las reservas: {0}",
+                    pe.getMessage());
+
+            throw new DAOException("Error al consultar las reservas");
+
+        } catch (ConexionException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE,
                     null, ex);
         } finally {
-                if (em != null) {
-                    em.close(); // Cerrar el EntityManager
-                }
+            if (em != null) {
+                em.close(); // Cerrar el EntityManager
             }
-            return reservas; // Devolver la lista de reservas    }
+        }
+        return reservas; // Devolver la lista de reservas    }
     }
 
     /**
-     * Verifica si una mesa está disponible para una reserva en una fecha y hora específicas.
-     * No permite reservas para la misma mesa en las siguientes 5 horas.
+     * Verifica si una mesa está disponible para una reserva en una fecha y hora
+     * específicas. No permite reservas para la misma mesa en las siguientes 5
+     * horas.
      *
      * @param mesa La mesa que se desea reservar.
      * @param dia La fecha y hora deseada para la reserva.
-     * @return true si la mesa está disponible, false si ya existe una reserva en el intervalo de 5 horas.
+     * @return true si la mesa está disponible, false si ya existe una reserva
+     * en el intervalo de 5 horas.
      * @throws DAOException Si ocurre un error en la conexión o en la consulta.
      */
     @Override
@@ -161,9 +163,9 @@ public class ReservaDAO implements IReservaDAO{
             LocalDateTime finDelDia = dia.toLocalDate().atTime(23, 59, 59); // Fin del día
 
             TypedQuery<Reserva> query = em.createQuery(
-                "SELECT r FROM Reserva r " +
-                "WHERE r.fechaHoraReserva BETWEEN :inicioDelDia AND :finDelDia " +
-                "AND r.estado = 'ACTIVA'", Reserva.class);
+                    "SELECT r FROM Reserva r "
+                    + "WHERE r.fechaHoraReserva BETWEEN :inicioDelDia AND :finDelDia "
+                    + "AND r.estado = 'ACTIVA'", Reserva.class);
 
             query.setParameter("inicioDelDia", inicioDelDia);
             query.setParameter("finDelDia", finDelDia);
@@ -203,12 +205,11 @@ public class ReservaDAO implements IReservaDAO{
         }
     }
 
-
     /**
      * Metodo que mediante filtros obtiene las reservas que mas se adapten
-     * algunos datos del parametro pueden ser nulos pero aun asi se adapta
-     * a lo requerido
-     * 
+     * algunos datos del parametro pueden ser nulos pero aun asi se adapta a lo
+     * requerido
+     *
      * @param nombreCliente Nombre del cliente.
      * @param telefonoCliente Telefono del cliente.
      * @param fechaReserva Fecha en que fue realizada la reserva.
@@ -216,15 +217,15 @@ public class ReservaDAO implements IReservaDAO{
      * @param fechaInicio Fecha de inicio para la busqueda.
      * @param fechaFin Fecha de fin para la busqueda.
      * @param tamanoMesa Tamaño de la mesa.
-     * 
-     * @return Retorna lista de reservaciones que mas se adapten a 
-     *         los parametros
+     *
+     * @return Retorna lista de reservaciones que mas se adapten a los
+     * parametros
      */
     @Override
-    public List<Reserva> buscarReservasPorFiltros(String nombreCliente, 
-            String telefonoCliente, LocalDate fechaReserva, 
-            String areaRestaurante, LocalDate fechaInicio, 
-            LocalDate fechaFin, Integer tamanoMesa) throws DAOException{
+    public List<Reserva> buscarReservasPorFiltros(String nombreCliente,
+            String telefonoCliente, LocalDate fechaReserva,
+            String areaRestaurante, LocalDate fechaInicio,
+            LocalDate fechaFin, Integer tamanoMesa) throws DAOException {
 
         EntityManager em = null;
         List<Reserva> resultados = null;
@@ -245,23 +246,23 @@ public class ReservaDAO implements IReservaDAO{
 
             // Filtros de cliente
             if (nombreCliente != null && !nombreCliente.isEmpty()) {
-                predicates.add(cb.like(cliente.get("nombre"), "%" + 
-                        nombreCliente + "%"));
+                predicates.add(cb.like(cliente.get("nombre"), "%"
+                        + nombreCliente + "%"));
             }
 
             if (telefonoCliente != null && !telefonoCliente.isEmpty()) {
-                predicates.add(cb.equal(cliente.get("telefono"), 
+                predicates.add(cb.equal(cliente.get("telefono"),
                         telefonoCliente));
             }
 
             // Filtros de reserva
             if (fechaReserva != null) {
-                predicates.add(cb.equal(reserva.get("fechaHoraReserva"), 
+                predicates.add(cb.equal(reserva.get("fechaHoraReserva"),
                         fechaReserva.atStartOfDay()));
             }
 
             if (areaRestaurante != null && !areaRestaurante.isEmpty()) {
-                predicates.add(cb.equal(restaurante.get("area"), 
+                predicates.add(cb.equal(restaurante.get("area"),
                         areaRestaurante));
             }
 
@@ -286,15 +287,15 @@ public class ReservaDAO implements IReservaDAO{
             resultados = em.createQuery(cq).getResultList();
 
         } catch (PersistenceException pe) {
-            LOG.log(Level.SEVERE, "Error al buscar reservas por filtros: {0}", 
+            LOG.log(Level.SEVERE, "Error al buscar reservas por filtros: {0}",
                     pe.getMessage());
-            
+
             throw new DAOException("Error al buscar reservas");
-            
-        } catch (ConexionException ex) { 
-            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, 
+
+        } catch (ConexionException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE,
                     null, ex);
-            
+
         } finally {
             if (em != null) {
                 em.close();
@@ -303,55 +304,54 @@ public class ReservaDAO implements IReservaDAO{
 
         return resultados; // Devolver la lista de reservas
     }
-    
+
     /**
-     * Verifica que el cliente dado en el parametro ya no tenga mas 
-     * reservaciones a partir de la hora y fecha dada, en caso de tener 
-     * reservaciones a partir de esa fecha y hora se regresara un nulo
-     * indicando que hay reservaciones activas, por otro lado en caso de no 
-     * haber encontrado ninguna retornara un false.
-     * 
+     * Verifica que el cliente dado en el parametro ya no tenga mas
+     * reservaciones a partir de la hora y fecha dada, en caso de tener
+     * reservaciones a partir de esa fecha y hora se regresara un nulo indicando
+     * que hay reservaciones activas, por otro lado en caso de no haber
+     * encontrado ninguna retornara un false.
+     *
      * @param cliente Cliente de cual queremos buscar las resarvaciones.
      * @return True en caso de que haya reservaciones, false en caso contrario
      */
-     @Override
-      public boolean verificarReservaciones(Cliente cliente) throws DAOException {
-          EntityManager em = null;
-          try {
-              LocalDateTime horaActual = LocalDateTime.now();
-              em = conexion.getEntityManager();
+    @Override
+    public boolean verificarReservaciones(Cliente cliente) throws DAOException {
+        EntityManager em = null;
+        try {
+            LocalDateTime horaActual = LocalDateTime.now();
+            em = conexion.getEntityManager();
 
-              TypedQuery<Long> query = em.createQuery(
-                  "SELECT COUNT(r) FROM Reserva r " +
-                  "WHERE r.cliente = :cliente " +
-                  "AND r.estado = 'ACTIVA' " +
-                  "AND r.fechaHoraReserva >= :horaActual", Long.class); // Ajuste en el operador
-              query.setParameter("cliente", cliente);
-              query.setParameter("horaActual", horaActual);
+            TypedQuery<Long> query = em.createQuery(
+                    "SELECT COUNT(r) FROM Reserva r "
+                    + "WHERE r.cliente = :cliente "
+                    + "AND r.estado = 'ACTIVA' "
+                    + "AND r.fechaHoraReserva >= :horaActual", Long.class); // Ajuste en el operador
+            query.setParameter("cliente", cliente);
+            query.setParameter("horaActual", horaActual);
 
-              return query.getSingleResult() > 0;
+            return query.getSingleResult() > 0;
 
-          } catch (PersistenceException pe) {
-              LOG.log(Level.SEVERE, "Error al verificar las reservaciones "
+        } catch (PersistenceException pe) {
+            LOG.log(Level.SEVERE, "Error al verificar las reservaciones "
                     + "de cliente", pe);
-              throw new DAOException("Error al verificar las reservaciones "
+            throw new DAOException("Error al verificar las reservaciones "
                     + "del cliente.", pe);
-          } catch (ConexionException ex) {
-              Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, 
+        } catch (ConexionException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE,
                     null, ex);
-              throw new DAOException("Error al obtener el EntityManager para "
+            throw new DAOException("Error al obtener el EntityManager para "
                     + "verificar las reservaciones del cliente.", ex);
-          } finally {
-              if (em != null && em.isOpen()) {
-                  em.close();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
             }
         }
     }
-    
-      
+
     /**
      * Obtiene todas las reservas dentro de la base de datos.
-     * 
+     *
      * @return Lista de reservas registradas.
      */
     @Override
@@ -371,15 +371,15 @@ public class ReservaDAO implements IReservaDAO{
                 em.getTransaction().rollback(); // Revertir la transacción en caso de error
             }
             LOG.log(Level.SEVERE, "Error al obtener reservas: {0}", pe.getMessage());
-            
+
             throw new DAOException("Error al consultar las reservas");
-            
+
         } catch (ConexionException ex) {
-            
+
             LOG.log(Level.SEVERE, "Error al realizar la conexion", ex);
-            
+
             throw new DAOException("Error al consultar las reservas");
-            
+
         } finally {
             if (em != null) {
                 em.close(); // Cerrar el EntityManager
@@ -389,10 +389,10 @@ public class ReservaDAO implements IReservaDAO{
     }
 
     /**
-     * Buscar reservas por nombre y intervalo de fechas.
-     * Esta opción permite buscar únicamente por nombre, buscar por 
-     * intervalo de fechas o todos en conjunto.
-     * 
+     * Buscar reservas por nombre y intervalo de fechas. Esta opción permite
+     * buscar únicamente por nombre, buscar por intervalo de fechas o todos en
+     * conjunto.
+     *
      * @param nombre nombre del cliente.
      * @param inicio fecha de inicio para buscar.
      * @param fin fecha de fin para buscar.
@@ -400,7 +400,7 @@ public class ReservaDAO implements IReservaDAO{
      * @throws DAOException En caso de error
      */
     @Override
-    public List<Reserva> buscarReservas(String nombre, LocalDateTime inicio, 
+    public List<Reserva> buscarReservas(String nombre, LocalDateTime inicio,
             LocalDateTime fin) throws DAOException {
         EntityManager em = null;
         List<Reserva> reservas = new ArrayList<>();
@@ -457,7 +457,6 @@ public class ReservaDAO implements IReservaDAO{
         return reservas;
     }
 
-
     /**
      * Actualiza la reserva dada en el parámetro.
      *
@@ -494,17 +493,19 @@ public class ReservaDAO implements IReservaDAO{
 
             LOG.log(Level.INFO, "Reserva actualizada con éxito: {0}", reservaExistente);
 
-            } catch (PersistenceException pe) {
-                if (em != null && em.getTransaction().isActive()) {
-                    em.getTransaction().rollback();
-                }
-                throw new DAOException("Error al buscar reservas: " + pe.getMessage(), pe);
-            } catch (ConexionException ex) {
-                Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
+        } catch (PersistenceException pe) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
+            throw new DAOException("Error al buscar reservas: " + pe.getMessage(), pe);
+        } catch (ConexionException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
+
+    
 }
