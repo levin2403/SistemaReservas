@@ -19,150 +19,141 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Clase que representa la interfaz gráfica para cancelar reservaciones. Permite
+ * al usuario buscar, visualizar y eliminar reservaciones existentes.
  *
  * @author Sebastian Murrieta
  */
 public class CancelarReservacion extends javax.swing.JFrame {
 
     private IReservaBO reservaBO;
-
     private IReservaFCD reservaFCD;
-    
     private List<ReservaDTO> reservas;
-    
+
     /**
-     * Creates new form Principal
+     * Crea una nueva instancia de CancelarReservacion. Inicializa los
+     * componentes de la interfaz gráfica y carga los datos iniciales.
      */
     public CancelarReservacion() {
         initComponents();
         cargarDependencias();
         cargarDatosIniciales();
     }
-    
-    private void cargarDependencias(){
+
+    /**
+     * Carga las dependencias necesarias para el funcionamiento de la clase.
+     */
+    private void cargarDependencias() {
         this.reservaBO = new ReservaBO();
         this.reservaFCD = new ReservaFCD();
     }
-    
+
     /**
-     * 
+     * Carga los datos iniciales de las reservas y actualiza la tabla de
+     * visualización.
      */
-    public void cargarDatosIniciales(){
-        try{
+    public void cargarDatosIniciales() {
+        try {
             this.reservas = reservaBO.obtenerReservas();
-            //recargamos la tabla
             cargarTablaReservas();
-        }
-        catch(BOException be){
+        } catch (BOException be) {
             JOptionPane.showMessageDialog(this, be.getMessage());
         }
     }
-    
+
     /**
-     * Varificamos los camps
-     * 
-     * @return 
+     * Verifica que los campos de búsqueda sean válidos.
+     *
+     * @return true si los campos son válidos, false en caso contrario.
      */
-    private boolean verificarCampos(){
+    private boolean verificarCampos() {
         if (this.dcInicio.getDate() == null && this.dcFin.getDate() != null) {
-            JOptionPane.showMessageDialog(this, "Seleccione la fecha de inicio"
-                    + "para buscar");
+            JOptionPane.showMessageDialog(this, "Seleccione la fecha de inicio para buscar");
             return false;
-        }
-        else if (this.dcInicio.getDate() != null && this.dcFin.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione la fecha de fin "
-                    + "para buscar");
+        } else if (this.dcInicio.getDate() != null && this.dcFin.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione la fecha de fin para buscar");
             return false;
-        }
-        else if (this.dcInicio.getDate() == null && this.dcFin.getDate() 
-                != null && txfNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Seleccione al menos un filtro "
-                    + "para buscar");
+        } else if (this.dcInicio.getDate() == null && this.dcFin.getDate() != null && txfNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione al menos un filtro para buscar");
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
-    
+
     /**
-     * 
-     * @return 
+     * Obtiene la reserva seleccionada en la tabla.
+     *
+     * @return la reserva seleccionada, o null si no hay ninguna selección.
      */
-    private ReservaDTO reservaSeleccionada(){
-        
+    private ReservaDTO reservaSeleccionada() {
         int selectedRow = tblReservas.getSelectedRow();
-        
         if (selectedRow != -1) {
             ReservaDTO reserva = this.reservas.get(selectedRow);
             return reserva;
         }
         return null;
     }
-    
+
     /**
-     * 
-     * @param table 
+     * Carga las reservas en la tabla de visualización.
      */
     public void cargarTablaReservas() {
+        List<ReservaDTO> reservaciones = this.reservas;
+        String[] columnNames = {"Fecha", "Hora", "Personas", "Costo", "Estado", "Cliente", "Mesa"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        model.setRowCount(0);
 
-            // Obtener las mesas de algún servicio o repositorio
-            List<ReservaDTO> reservaciones = this.reservas;
-            
-            String[] columnNames = {"Fecha", "Hora", "Personas", "Costo", "Estado", "Cliente", "Mesa"};
-            
-            // Crear o obtener el modelo de la tabla
-            DefaultTableModel model = new DefaultTableModel(columnNames,0);
+        for (ReservaDTO reserva : reservaciones) {
+            Object[] rowData = {
+                reserva.getFechaHoraReserva().toLocalDate(),
+                reserva.getFechaHoraReserva().toLocalTime(),
+                reserva.getNumeroPersonas(),
+                reserva.getCosto(),
+                reserva.getEstado(),
+                reserva.getCliente().getNombre(),
+                reserva.getMesa().getCodigoMesa()
+            };
+            model.addRow(rowData);
+        }
 
-            // Limpiar el modelo de la tabla para evitar duplicados
-            model.setRowCount(0);
-
-            // Recorrer la lista de mesas y agregar los datos al modelo de la tabla
-            for (ReservaDTO reserva : reservaciones) {
-                Object[] rowData = {
-                    reserva.getFechaHoraReserva().toLocalDate(),
-                    reserva.getFechaHoraReserva().toLocalTime(),
-                    reserva.getNumeroPersonas(),
-                    reserva.getCosto(),
-                    reserva.getEstado(),
-                    reserva.getCliente().getNombre(),
-                    reserva.getMesa().getCodigoMesa()
-                };
-                model.addRow(rowData); // Agregar la fila al modelo
-            }
-
-            // Asignar el modelo a la tabla
-            tblReservas.setModel(model);
+        tblReservas.setModel(model);
     }
-    
-    private LocalDateTime formarFechainicio(){
-        // definimos la fecha de inicio
-            if (dcInicio.getDate() != null) {
-                LocalDateTime inicio = dcInicio.getDate().toInstant()
-                                  .atZone(ZoneId.systemDefault())
-                                  .toLocalDate().atTime(12, 00);
-                return inicio;
-            }
-            else{
-                LocalDateTime inicio = null;
-                return inicio;
-            }
+
+    /**
+     * Forma la fecha de inicio para la búsqueda a partir del componente de
+     * selección de fecha.
+     *
+     * @return la fecha de inicio como LocalDateTime, o null si no se ha
+     * seleccionado.
+     */
+    private LocalDateTime formarFechainicio() {
+        if (dcInicio.getDate() != null) {
+            return dcInicio.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate().atTime(12, 00);
+        } else {
+            return null;
+        }
     }
-    
-    private LocalDateTime formarFechaFin(){
+
+    /**
+     * Forma la fecha de fin para la búsqueda a partir del componente de
+     * selección de fecha.
+     *
+     * @return la fecha de fin como LocalDateTime, o null si no se ha
+     * seleccionado.
+     */
+    private LocalDateTime formarFechaFin() {
         if (dcFin.getDate() != null) {
-                //definimos la fecha de fin
-                LocalDateTime fin = dcFin.getDate().toInstant()
-                                  .atZone(ZoneId.systemDefault())
-                                  .toLocalDate().atTime(22, 00);
-                return fin;
-            }
-            else{
-                LocalDateTime fin = null;
-                return fin;
-            }
+            return dcFin.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate().atTime(22, 00);
+        } else {
+            return null;
+        }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -327,52 +318,74 @@ public class CancelarReservacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action handler for the "Regresar" button. This method creates a new
+     * instance of the Admistrador window and disposes of the current window.
+     *
+     * @param evt the event that triggered this action
+     */
     private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
         new Admistrador().setVisible(true);
         dispose();
     }//GEN-LAST:event_regresarBtnActionPerformed
 
+    /**
+     * Action handler for the "Buscar" button. This method checks if the input
+     * fields are valid, retrieves the client's name, start date, and end date,
+     * then searches for filtered reservations. The results are assigned to a
+     * local list and the reservation table is updated.
+     *
+     * @param evt the event that triggered this action
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try{
-        if (verificarCampos()) {
-            // definimos el nombre del cliente
-            String nombre = txfNombre.getText();
-            
-            //definimos la fecha de inicio
-            LocalDateTime inicio = formarFechainicio();
-                    
-            //definimos la fecha de fin;
-            LocalDateTime fin = formarFechaFin();
-                    
-            //buscamos los datos filtrados
-            List<ReservaDTO> reservasFiltradas = reservaBO.buscarReservas(nombre, 
-                    inicio, fin);
-            
-            // le asignamos los resultados a la lista local
-            this.reservas = reservasFiltradas;
-            
-            //cargamos de vuelta los datos de la tabla.
-            cargarTablaReservas();
-            
-        }
-        }catch(BOException be){
+        try {
+            if (verificarCampos()) {
+                // Define the client's name
+                String nombre = txfNombre.getText();
+
+                // Define the start date
+                LocalDateTime inicio = formarFechainicio();
+
+                // Define the end date
+                LocalDateTime fin = formarFechaFin();
+
+                // Search for filtered data
+                List<ReservaDTO> reservasFiltradas = reservaBO.buscarReservas(nombre,
+                        inicio, fin);
+
+                // Assign the results to the local list
+                this.reservas = reservasFiltradas;
+
+                // Load the reservation data back into the table
+                cargarTablaReservas();
+            }
+        } catch (BOException be) {
             JOptionPane.showMessageDialog(this, be.getMessage());
         }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+     * Action handler for the "Eliminar" button. This method retrieves the
+     * selected reservation, cancels it, retrieves the updated reservation data,
+     * and reloads the reservation table.
+     *
+     * @param evt the event that triggered this action
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try{
-            //obetemos la reserva
-            ReservaDTO reserva = reservaSeleccionada();    
-            // la enviamos a cancelar
+        try {
+            // Retrieve the selected reservation
+            ReservaDTO reserva = reservaSeleccionada();
+
+            // Cancel the reservation
             reservaFCD.cancelarReserva(reserva);
-            //obtenemos los datos de las reservaciones de nuevo.
+
+            // Retrieve the reservation data again
             this.reservas = reservaBO.obtenerReservas();
-            //recargamos la tabla
+
+            // Reload the table
             cargarTablaReservas();
-            
-        }
-        catch(FacadeException fe){
+        } catch (FacadeException fe) {
             JOptionPane.showMessageDialog(this, fe.getMessage());
         } catch (BOException be) {
             JOptionPane.showMessageDialog(this, be.getMessage());

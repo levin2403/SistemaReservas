@@ -1,17 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 /**
+ * Clase que representa la interfaz gráfica del administrador del restaurante.
+ * Extiende de JFrame y proporciona opciones para la gestión de reservas,
+ * reportes, consultas, cancelaciones y la adición de mesas.
  *
- * @author osval
+ * <p>
+ * Esta clase utiliza componentes gráficos personalizados, como PanelRound, para
+ * crear un diseño atractivo y funcional. Incluye paneles que permiten al
+ * administrador interactuar con diferentes secciones de la aplicación. </p>
+ *
+ * @author Sebastian Murrieta
  */
 public class Admistrador extends javax.swing.JFrame {
 
     /**
-     * Creates new form Admistrador
+     * Crea una nueva instancia de la clase Administrador e inicializa la
+     * interfaz gráfica.
      */
     public Admistrador() {
         initComponents();
@@ -305,40 +310,81 @@ public class Admistrador extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Maneja el evento de clic del mouse en el panel de reservaciones. Este
+     * método abre la ventana de reservaciones y cierra la ventana actual.
+     *
+     * @param evt el evento del mouse que activó este método
+     */
     private void reservacionPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservacionPnMouseClicked
         new Reservaciones().setVisible(true);
         dispose();
     }//GEN-LAST:event_reservacionPnMouseClicked
 
+    /**
+     * Maneja el evento de clic del mouse en el panel de agregar mesa. Este
+     * método abre la ventana para agregar mesas y cierra la ventana actual.
+     *
+     * @param evt el evento del mouse que activó este método
+     */
     private void agregarMesaPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMesaPnMouseClicked
         new AgregarMesas().setVisible(true);
         dispose();
     }//GEN-LAST:event_agregarMesaPnMouseClicked
 
+    /**
+     * Maneja el evento de clic del mouse en el panel de reportes. Este método
+     * abre la ventana de reportes y cierra la ventana actual.
+     *
+     * @param evt el evento del mouse que activó este método
+     */
     private void reportePnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportePnMouseClicked
         new Reportes().setVisible(true);
         dispose();
     }//GEN-LAST:event_reportePnMouseClicked
 
+    /**
+     * Maneja el evento de clic del mouse en el panel de cancelar reserva. Este
+     * método abre la ventana para cancelar reservaciones y cierra la ventana
+     * actual.
+     *
+     * @param evt el evento del mouse que activó este método
+     */
     private void cancelarReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarReservaMouseClicked
         new CancelarReservacion().setVisible(true);
         dispose();
     }//GEN-LAST:event_cancelarReservaMouseClicked
 
+    /**
+     * Maneja el evento de clic del mouse en el panel de consultas. Este método
+     * abre la ventana de consulta de reservaciones y cierra la ventana actual.
+     *
+     * @param evt el evento del mouse que activó este método
+     */
     private void consultasPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultasPnMouseClicked
         new ConsultaReservacion().setVisible(true);
         dispose();
     }//GEN-LAST:event_consultasPnMouseClicked
 
+    /**
+     * Maneja el evento de clic del mouse en el panel de salir. Este método
+     * cierra la ventana actual, finalizando así la aplicación.
+     *
+     * @param evt el evento del mouse que activó este método
+     */
     private void salirPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirPnMouseClicked
         dispose();
     }//GEN-LAST:event_salirPnMouseClicked
 
     /**
-     * @param args the command line arguments
+     * El método principal que sirve como punto de entrada para la aplicación.
+     * Establece la apariencia de la aplicación y muestra la ventana principal
+     * del administrador.
+     *
+     * @param args los argumentos de línea de comandos
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Establecer la apariencia Nimbus */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -361,7 +407,7 @@ public class Admistrador extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Crear y mostrar la ventana */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Admistrador().setVisible(true);

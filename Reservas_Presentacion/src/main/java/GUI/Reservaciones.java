@@ -1,6 +1,5 @@
 package GUI;
 
-
 import DTOs.ClienteDTO;
 import DTOs.MesaDTO;
 import Excepciones.FacadeException;
@@ -19,99 +18,111 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
 /**
- * Clase para la ventana principal
+ * Clase para la ventana principal del sistema de reservas.
+ *
+ * Esta clase se encarga de gestionar la interfaz gráfica y las interacciones
+ * relacionadas con las reservaciones de mesas en el sistema. Permite a los
+ * usuarios seleccionar un cliente, una mesa, una fecha y una hora para realizar
+ * la reserva. También maneja la carga de datos iniciales y la validación de
+ * entrada.
  */
 public class Reservaciones extends javax.swing.JFrame {
 
-    IClienteFCD clienteFCD; //
-    IMesaFCD mesaFCD; //
-    IReservaFCD reservaFCD; //
-    
+    private IClienteFCD clienteFCD; // Fachada para gestionar clientes
+    private IMesaFCD mesaFCD; // Fachada para gestionar mesas
+    private IReservaFCD reservaFCD; // Fachada para gestionar reservaciones
+
     /**
-     * 
+     * Constructor de la clase Reservaciones. Inicializa los componentes de la
+     * ventana y carga los datos iniciales de clientes y mesas.
      */
     public Reservaciones() {
         initComponents();
-        
+
         this.clienteFCD = new ClienteFCD();
         this.mesaFCD = new MesaFCD();
         this.reservaFCD = new ReservaFCD();
-        
+
         cargarDatosIniciales();
     }
 
     /**
-     * 
+     * Carga los datos iniciales en los componentes de la interfaz. Se cargan
+     * los clientes en el combo box y las mesas en la tabla.
      */
-    private void cargarDatosIniciales(){
-        try{
+    private void cargarDatosIniciales() {
+        try {
             clienteFCD.cargarComboBoxClientes(cbxClientes);
             mesaFCD.cargarTablaMesas(tblMesas);
-        }
-        catch(FacadeException fe){
-            JOptionPane.showMessageDialog(this, "Error al cargar las los "
+        } catch (FacadeException fe) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los "
                     + "datos de inicio", "Error", JOptionPane.ERROR);
         }
     }
-    
+
     /**
-     * Verifica que ningun Dato sea nulo.
-     * 
-     * @return true en caso de que no haya nulos, false en caso contrario.
+     * Verifica que no haya datos nulos en los campos de entrada.
+     *
+     * @return true si todos los datos son válidos; false en caso contrario.
      */
-    private boolean VerificarDatos(){
+    private boolean VerificarDatos() {
         if (dcFecha.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Porfavor seleccione una "
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una "
                     + "fecha");
             return false;
-        }
-        else if (tblMesas.getSelectedRow() == -1) {
+        } else if (tblMesas.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona una mesa antes "
                     + "de continuar");
+            return false; // Añadido retorno false en caso de no seleccionar mesa
         }
         return true;
     }
-    
-    private MesaDTO formarMesa(){
+
+    /**
+     * Forma un objeto MesaDTO a partir de la mesa seleccionada en la tabla.
+     *
+     * @return un objeto MesaDTO con la información de la mesa seleccionada.
+     */
+    private MesaDTO formarMesa() {
         int selectedRow = tblMesas.getSelectedRow();
-        
+
         String codigoMesa = tblMesas.getValueAt(selectedRow, 0).toString(); // Cambia el índice según tu tabla
         String tipoMesa = tblMesas.getValueAt(selectedRow, 1).toString();   // Cambia el índice según tu tabla
         int capacidadMinima = Integer.parseInt(tblMesas.getValueAt(selectedRow, 2).toString()); // Cambia el índice según tu tabla
         int capacidadMaxima = Integer.parseInt(tblMesas.getValueAt(selectedRow, 3).toString()); // Cambia el índice según tu tabla
         String ubicacion = tblMesas.getValueAt(selectedRow, 4).toString();   // Cambia el índice según tu tabla
-        
-        MesaDTO mesa = new MesaDTO(codigoMesa, tipoMesa, capacidadMinima, 
+
+        MesaDTO mesa = new MesaDTO(codigoMesa, tipoMesa, capacidadMinima,
                 capacidadMaxima, ubicacion);
-        
+
         // retornamos la mesa.
         return mesa;
     }
-    
+
     /**
-     * 
-     * 
-     * @return 
+     * Forma un objeto LocalDateTime a partir de la fecha y hora seleccionadas.
+     *
+     * @return un objeto LocalDateTime que representa la fecha y hora
+     * seleccionadas por el usuario.
      */
-    private LocalDateTime formarFechaHora(){
-        //convertimos la fecha del selector de fechas a instant
+    private LocalDateTime formarFechaHora() {
+        // convertimos la fecha del selector de fechas a instant
         Instant instant = dcFecha.getDate().toInstant();
 
-        //convertir Instant a LocalDate en la zona horaria del sistema
+        // convertir Instant a LocalDate en la zona horaria del sistema
         LocalDate fecha = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-        System.out.println("Fecha obtenida" + fecha.toString());
-        
-        ///////
-        LocalTime time = LocalTime.parse((String)cbxHoras.getSelectedItem());
-        
-        //formamos el LocalDateTime
+        System.out.println("Fecha obtenida: " + fecha.toString());
+
+        LocalTime time = LocalTime.parse((String) cbxHoras.getSelectedItem());
+
+        // formamos el LocalDateTime
         LocalDateTime horaFecha = fecha.atTime(time);
-        System.out.println(horaFecha.toString());
-        
-        //devolvemos el LocalDateTime formado;
+        System.out.println("Hora y Fecha obtenidas: " + horaFecha.toString());
+
+        // devolvemos el LocalDateTime formado
         return horaFecha;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -298,40 +309,54 @@ public class Reservaciones extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Maneja la acción del botón de confirmar reserva. Este método verifica que
+     * los datos ingresados sean válidos y, si es así, recolecta los datos
+     * necesarios para realizar una reserva. Luego, utiliza el objeto de fachada
+     * {@code reservaFCD} para agregar la reserva.
+     *
+     * @param evt El evento de acción generado por el botón de confirmar.
+     */
     private void confirmarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBtnActionPerformed
-        try{
+        try {
             if (VerificarDatos()) {
-           
-                //recolectamos los datos
+                // Recolectamos los datos
                 ClienteDTO cliente = (ClienteDTO) cbxClientes.getSelectedItem();
-                //obtiene la mesa seleccionada en la tabla.
+                // Obtiene la mesa seleccionada en la tabla.
                 MesaDTO mesa = formarMesa();
-                // obtenemos la fecha y la hora.
+                // Obtenemos la fecha y la hora.
                 LocalDateTime fechaHora = formarFechaHora();
-                //obtenemos el numero de personas
+                // Obtenemos el número de personas
                 String num = (String) cbxNumPersonas.getSelectedItem();
                 int numPersonas = Integer.parseInt(num);
-                //obtenemos el costo
+                // Obtenemos el costo
                 double costo = Double.parseDouble(txtCosto.getText());
-                
-                //guardamos reserva
-                reservaFCD.agregarReserva(cliente, mesa, fechaHora, 
-                        numPersonas, costo);
 
+                // Guardamos la reserva
+                reservaFCD.agregarReserva(cliente, mesa, fechaHora, numPersonas, costo);
             }
-        
-        }catch(FacadeException fe){
-            JOptionPane.showMessageDialog(this, fe.getMessage(), 
-                    "Error padrino", JOptionPane.ERROR_MESSAGE);
+        } catch (FacadeException fe) {
+            JOptionPane.showMessageDialog(this, fe.getMessage(), "Error padrino", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_confirmarBtnActionPerformed
-
+    /**
+     * Maneja la acción del botón de cancelar reserva. Este método cierra la
+     * ventana actual y muestra la ventana del administrador.
+     *
+     * @param evt El evento de acción generado por el botón de cancelar.
+     */
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
         new Admistrador().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
+    /**
+     * Maneja el evento de clic en la tabla de mesas. Este método obtiene la
+     * fila seleccionada por el usuario en la tabla, determina el tipo de mesa y
+     * calcula su precio, luego muestra el costo calculado en el campo de costo.
+     *
+     * @param evt El evento de clic del mouse en la tabla de mesas.
+     */
     private void tblMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMesasMouseClicked
         // Obtener la fila seleccionada por el usuario en la tabla
         int selectedRow = tblMesas.getSelectedRow();
@@ -348,12 +373,13 @@ public class Reservaciones extends javax.swing.JFrame {
 
         String tipo = cellValue.toString();
 
+        // Calcular el precio de la mesa seleccionada
         String resultado = mesaFCD.calcularPrecio(tipo);
-        
+
+        // Mostrar el costo calculado en el campo de texto
         txtCosto.setText(resultado);
         txtCosto.repaint();
 
-        
     }//GEN-LAST:event_tblMesasMouseClicked
 
 
