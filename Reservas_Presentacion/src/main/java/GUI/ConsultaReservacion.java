@@ -22,6 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * La clase <code>ConsultaReservacion</code> representa una ventana que permite
+ * consultar las reservaciones realizadas. Esta ventana permite a los usuarios
+ * ver la información de las reservaciones, así como buscar reservas por cliente
+ * y fecha.
  *
  * @author Sebastian Murrieta
  */
@@ -33,7 +37,9 @@ public class ConsultaReservacion extends javax.swing.JFrame {
     private IReservaBO reservaBO;
 
     /**
-     * Creates new form Principal
+     * Crea una nueva instancia de <code>ConsultaReservacion</code>. Inicializa
+     * los componentes de la interfaz gráfica y carga los clientes y datos
+     * iniciales.
      */
     public ConsultaReservacion() {
 
@@ -45,6 +51,10 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         cargarDatosIniciales();
     }
 
+    /**
+     * Carga las reservas iniciales desde la capa de negocio y actualiza la
+     * tabla con la información de las reservas.
+     */
     public void cargarDatosIniciales() {
         try {
             // Obtener las reservas iniciales desde la capa de negocio
@@ -58,6 +68,9 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Carga los datos de las reservas en la tabla de la interfaz gráfica.
+     */
     private void cargarTabla() {
         // Usamos el DefaultTableModel con nombres de columnas definidos en el constructor
         DefaultTableModel model = new DefaultTableModel(new Object[]{
@@ -79,6 +92,10 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         reservacionesTabla.setModel(model);
     }
 
+    /**
+     * Carga los clientes en el JComboBox de la interfaz gráfica y establece un
+     * ActionListener para manejar la selección de clientes.
+     */
     private void cargarClientes() {
         DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
         combo.addElement("Seleccione un cliente"); // Valor nulo principal para filtrado
@@ -286,12 +303,27 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+ /**
+     * Maneja el evento de acción del botón de cancelar. Este método crea una
+     * nueva instancia de la ventana de administrador y cierra la ventana
+     * actual.
+     *
+     * @param evt El evento de acción que se produce al hacer clic en el botón
+     * de cancelar.
+     */
     private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
         new Admistrador().setVisible(true);
         dispose();
     }//GEN-LAST:event_cancelarBtnActionPerformed
-
+    /**
+     * Maneja el evento de acción del botón de buscar. Este método aplica
+     * filtros a las reservas basados en el cliente seleccionado, el número de
+     * teléfono ingresado y la fecha seleccionada. Luego, actualiza la tabla con
+     * las reservas filtradas.
+     *
+     * @param evt El evento de acción que se produce al hacer clic en el botón
+     * de buscar.
+     */
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
 // Aplicación de filtros
         String clienteSeleccionado = nombreClienteCB.getSelectedItem() != null ? nombreClienteCB.getSelectedItem().toString() : null;

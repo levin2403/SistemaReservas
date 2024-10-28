@@ -1,4 +1,3 @@
-
 package GUI;
 
 import BO.MesaBO;
@@ -11,64 +10,76 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
+ * Clase AgregarMesas que representa una ventana para agregar mesas en el
+ * sistema. Esta clase extiende de javax.swing.JFrame y utiliza la interfaz
+ * gráfica de Java Swing.
  *
  * @author Sebastian Murrieta Verduzco - 233463
  */
 public class AgregarMesas extends javax.swing.JFrame {
 
+    // Dependencias de negocio y fachada
     IMesaBO mesaBO;
     IMesaFCD mesaFCD;
-    
+
     /**
-     * Creates new form NewJFrame
+     * Constructor de la clase AgregarMesas. Inicializa los componentes de la
+     * interfaz y configura la ventana.
      */
     public AgregarMesas() {
-        initComponents();
-        iniciarDependencias();
-        cargarCantidadTipos();
-        configuracionInicial();
+        initComponents(); // Inicializa los componentes de la interfaz
+        iniciarDependencias(); // Crea las instancias necesarias
+        cargarCantidadTipos(); // Carga la cantidad de mesas por tipo desde la base de datos
+        configuracionInicial(); // Configura la ventana inicialmente
     }
 
     /**
-     * 
+     * Configura propiedades iniciales de la ventana. Se centra la ventana y se
+     * establece su tamaño y color de fondo.
      */
-    private void configuracionInicial(){
-        this.setLocationRelativeTo(this);
-        this.setSize(1200, 720);
-        this.setBackground(Color.BLACK);
+    private void configuracionInicial() {
+        this.setLocationRelativeTo(this); // Centra la ventana en la pantalla
+        this.setSize(1200, 720); // Establece el tamaño de la ventana
+        this.setBackground(Color.BLACK); // Establece el color de fondo
     }
-    
-    private void iniciarDependencias(){
-        this.mesaBO = new MesaBO();
-        this.mesaFCD = new MesaFCD();
-    }
-    
+
     /**
-     * 
+     * Inicializa las dependencias necesarias para la clase. Crea instancias de
+     * MesaBO y MesaFCD.
      */
-    private void cargarCantidadTipos(){
-        try{
-           //recuperamos el numero de la base de datos. 
-           int terraza = mesaBO.cantidadMesasPorUbicacion("TERRAZA");
-           int ventana = mesaBO.cantidadMesasPorUbicacion("VENTANA");
-           int general = mesaBO.cantidadMesasPorUbicacion("GENERAL");
-           
-           // se los asignamos a sus respectivos TextFields
-           this.txfTerraza.setText(String.valueOf(terraza));
-           this.txfVentana.setText(String.valueOf(ventana));
-           this.txfGeneral.setText(String.valueOf(general));
-           
-        }
-        catch(BOException be){
+    private void iniciarDependencias() {
+        this.mesaBO = new MesaBO(); // Inicializa el objeto de negocio
+        this.mesaFCD = new MesaFCD(); // Inicializa el objeto de fachada
+    }
+
+    /**
+     * Carga la cantidad de mesas disponibles por ubicación desde la base de
+     * datos y las muestra en los campos de texto correspondientes.
+     */
+    private void cargarCantidadTipos() {
+        try {
+            // Recupera el número de mesas por ubicación
+            int terraza = mesaBO.cantidadMesasPorUbicacion("TERRAZA");
+            int ventana = mesaBO.cantidadMesasPorUbicacion("VENTANA");
+            int general = mesaBO.cantidadMesasPorUbicacion("GENERAL");
+
+            // Asigna los valores a sus respectivos campos de texto
+            this.txfTerraza.setText(String.valueOf(terraza));
+            this.txfVentana.setText(String.valueOf(ventana));
+            this.txfGeneral.setText(String.valueOf(general));
+        } catch (BOException be) {
+            // Muestra un mensaje de error si ocurre una excepción
             JOptionPane.showMessageDialog(this, be.getMessage());
         }
     }
-    
-    private void limpiarEntradas(){
-        this.txfNumMesas.setText("");
+
+    /**
+     * Limpia los campos de entrada para la creación de nuevas mesas.
+     */
+    private void limpiarEntradas() {
+        this.txfNumMesas.setText(""); // Limpia el campo de número de mesas
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -250,20 +261,38 @@ public class AgregarMesas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Este método se ejecuta cuando se hace clic en un panel de la interfaz
+     * gráfica para agregar una nueva mesa.
+     *
+     * @param evt El evento de mouse que contiene información sobre el clic
+     * realizado.
+     */
     private void agregarMesaPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMesaPnMouseClicked
         new AgregarMesas().setVisible(true);
         dispose();
     }//GEN-LAST:event_agregarMesaPnMouseClicked
-
+    /**
+     * Este método se ejecuta cuando se hace clic en el botón "Regresar".
+     *
+     * @param evt El evento de acción que contiene información sobre el clic
+     * realizado.
+     */
     private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
         new Admistrador().setVisible(true);
         dispose();
     }//GEN-LAST:event_regresarBtnActionPerformed
-
+    /**
+     * Este método se ejecuta cuando se hace clic en el botón "Agregar". Su
+     * función principal es recolectar los datos ingresados por el usuario y
+     * agregar una nueva mesa mediante la fachada correspondiente.
+     *
+     * @param evt El evento de acción que contiene información sobre el clic
+     * realizado.
+     */
     private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
-        try{
-            
+        try {
+
             //recolectamos datos
             int numero = Integer.parseInt(this.txfNumMesas.getText());
             String tamaño = String.valueOf(this.cbxTamaño.getSelectedItem());
@@ -282,12 +311,10 @@ public class AgregarMesas extends javax.swing.JFrame {
 
             //limpio las entradas
             limpiarEntradas();
-        
-        }
-        catch(FacadeException fe){
+
+        } catch (FacadeException fe) {
             JOptionPane.showMessageDialog(this, fe.getMessage());
-        }
-        catch(NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Introduzca numeros validos");
         }
     }//GEN-LAST:event_agregarBtnActionPerformed

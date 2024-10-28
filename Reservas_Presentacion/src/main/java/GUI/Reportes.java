@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
 import BO.ReservaBO;
@@ -19,9 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * This class represents a GUI window for generating reports based on
- * reservations. It extends JFrame and provides functionalities to display,
- * filter, and generate reports in PDF format.
+ * Esta clase representa una ventana GUI para generar reportes basados en
+ * reservas. Extiende JFrame y proporciona funcionalidades para mostrar, filtrar
+ * y generar reportes en formato PDF.
  *
  * @author Sebastian Murrieta
  */
@@ -33,42 +29,42 @@ public class Reportes extends javax.swing.JFrame {
     private IReservaBO reservaBO;
 
     /**
-     * Creates a new instance of the Reportes class, initializing components and
-     * fetching reservation data.
+     * Crea una nueva instancia de la clase Reportes, inicializando componentes
+     * y obteniendo datos de reservas.
      */
     public Reportes() {
         initComponents();
-        filtros = new FiltrosFCD(); // Initialize the filters facade
-        clienteFCD = new ClienteFCD(); // Initialize the client facade
-        this.reservaBO = new ReservaBO(); // Initialize the reservation business object
+        filtros = new FiltrosFCD(); // Inicializa la fachada de filtros
+        clienteFCD = new ClienteFCD(); // Inicializa la fachada de cliente
+        this.reservaBO = new ReservaBO(); // Inicializa el objeto de negocio de reservas
 
-        // Fetch and initialize the reservas before updating the table
-        obtenerReservas(); // This method fetches the reservations
-        actualizarTablaReservas(); // Now you can update the table with the fetched data
+        // Obtiene e inicializa las reservas antes de actualizar la tabla
+        obtenerReservas(); // Este método obtiene las reservas
+        actualizarTablaReservas(); // Ahora puedes actualizar la tabla con los datos obtenidos
     }
 
     /**
-     * Displays an error message dialog with the given message.
+     * Muestra un cuadro de diálogo de error con el mensaje dado.
      *
-     * @param mensaje The error message to display.
+     * @param mensaje El mensaje de error a mostrar.
      */
     private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
-     * Displays a success message dialog with the given message.
+     * Muestra un cuadro de diálogo de éxito con el mensaje dado.
      *
-     * @param mensaje The success message to display.
+     * @param mensaje El mensaje de éxito a mostrar.
      */
     private void mostrarExito(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
-     * Validates the start and end dates for the reservation report.
+     * Valida las fechas de inicio y fin para el reporte de reservas.
      *
-     * @return true if the dates are valid, false otherwise.
+     * @return true si las fechas son válidas, false de lo contrario.
      */
     private boolean validarFechas() {
         if (fechaInicioDC.getDate().after(fechaFinDC.getDate())) {
@@ -79,10 +75,11 @@ public class Reportes extends javax.swing.JFrame {
     }
 
     /**
-     * Fetches the list of reservations from the database using the business
-     * object.
+     * Obtiene la lista de reservas de la base de datos usando el objeto de
+     * negocio.
      *
-     * @return A list of Reservation Data Transfer Objects (ReservaDTO).
+     * @return Una lista de Objetos de Transferencia de Datos de Reserva
+     * (ReservaDTO).
      */
     private List<ReservaDTO> obtenerReservas() {
         try {
@@ -95,7 +92,7 @@ public class Reportes extends javax.swing.JFrame {
     }
 
     /**
-     * Updates the table displaying the reservations with the current data.
+     * Actualiza la tabla que muestra las reservas con los datos actuales.
      */
     private void actualizarTablaReservas() {
         String[] columnas = {"No.Mesa", "Fecha y hora", "Tamaño de mesa", "Lugar", "Cliente"};
@@ -313,10 +310,10 @@ public class Reportes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_atrasBtnActionPerformed
     /**
-     * Handles the action of generating the PDF report when the button is
-     * clicked. It validates the dates and generates the report if valid.
+     * Maneja la acción de generar el informe en PDF cuando se hace clic en el
+     * botón. Valida las fechas y genera el informe si son válidas.
      *
-     * @param evt The action event triggered by clicking the button.
+     * @param evt El evento de acción desencadenado al hacer clic en el botón.
      */
     private void generarPDFBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFBtnActionPerformed
         try {
@@ -352,7 +349,14 @@ public class Reportes extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_generarPDFBtnActionPerformed
-
+    /**
+     * Maneja la acción de buscar reservas filtradas según los criterios
+     * especificados en el formulario. Obtiene los filtros y actualiza la tabla
+     * con las reservas que coinciden.
+     *
+     * @param evt El evento de acción desencadenado al hacer clic en el botón de
+     * búsqueda.
+     */
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
         try {
             // Obtener los filtros del formulario

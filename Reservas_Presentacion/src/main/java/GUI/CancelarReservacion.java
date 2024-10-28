@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author osval
+ * @author Sebastian Murrieta
  */
 public class CancelarReservacion extends javax.swing.JFrame {
 
@@ -246,7 +246,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
                 regresarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, 140, 50));
+        Fondo.add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 630, 140, 50));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
@@ -280,7 +280,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        Fondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 630, 140, 50));
+        Fondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 630, 140, 50));
 
         mesasPanel.setBackground(new java.awt.Color(51, 51, 51));
         mesasPanel.setForeground(new java.awt.Color(102, 102, 102));
