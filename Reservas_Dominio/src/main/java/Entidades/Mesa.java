@@ -61,6 +61,7 @@ public class Mesa implements Serializable {
     }
 
     /**
+     * Constructor dedicado a las inserciones de nuevas mesas.
      * 
      * @param codigoMesa  codigo de la mesa.
      * @param tipoMesa tipo de mesa
@@ -80,6 +81,7 @@ public class Mesa implements Serializable {
     }
 
     /**
+     * Constructor completo para obtener todos los atributos de la clase.
      * 
      * @param id id de la mesa.
      * @param codigoMesa  codigo de la mesa.

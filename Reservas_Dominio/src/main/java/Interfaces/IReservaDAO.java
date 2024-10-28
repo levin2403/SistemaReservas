@@ -92,9 +92,10 @@ public interface IReservaDAO {
     public boolean verificarReservaciones(Cliente cliente)throws DAOException;
     
     /**
+     * Metodo de modelo para obtener todas las reservas de la base de datos.
      * 
-     * @return
-     * @throws DAOException 
+     * @return Lista de todas las reservas.
+     * @throws DAOException En caso de error en la base de datos.
      */
     public List<Reserva> obtenerReservas() throws DAOException;
     
@@ -113,9 +114,11 @@ public interface IReservaDAO {
             LocalDateTime fin) throws DAOException;
     
     /**
+     * Actualiza la reserva dada en el parametro con sus nuevos atributos.
      * 
-     * @param reserva
-     * @throws DAOException 
+     * @param reserva Reserva a actualizar.
+     * @throws DAOException En caso de error en la actualizacion en la 
+     *         base de datos.
      */
     public void actualizarReserva(Reserva reserva) throws DAOException;
 }

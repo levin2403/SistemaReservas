@@ -103,9 +103,11 @@ public class ReservaDAO implements IReservaDAO {
     }
 
     /**
-     *
-     * @param inicio
-     * @param fin
+     * Metodo qye consulta las reservas realizadas en un intervalo de tiempo 
+     * que estan dados por el parametro.
+     * 
+     * @param inicio fecha en la que se quiere empezar a buscar.
+     * @param fin fecha de termino para la busqueda.
      * @return
      */
     @Override
