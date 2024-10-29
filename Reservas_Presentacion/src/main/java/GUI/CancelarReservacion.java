@@ -86,10 +86,9 @@ public class CancelarReservacion extends javax.swing.JFrame {
      * @return la reserva seleccionada, o null si no hay ninguna selección.
      */
     private ReservaDTO reservaSeleccionada() {
-        
         int selectedRow = tblReservas.getSelectedRow();
-        
-        if (selectedRow != -1) {
+
+        if (selectedRow != -1) { // Cambié == a !=
             ReservaDTO reserva = this.reservas.get(selectedRow);
             return reserva;
         }
@@ -180,6 +179,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReservas = new javax.swing.JTable();
         btnLimpiar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -239,7 +239,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
                 regresarBtnActionPerformed(evt);
             }
         });
-        Fondo.add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 630, 140, 50));
+        Fondo.add(regresarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, 140, 50));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
@@ -267,13 +267,13 @@ public class CancelarReservacion extends javax.swing.JFrame {
         btnEliminar.setBackground(new java.awt.Color(102, 102, 102));
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setText("Cancelar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        Fondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 630, 140, 50));
+        Fondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 640, 140, 50));
 
         mesasPanel.setBackground(new java.awt.Color(51, 51, 51));
         mesasPanel.setForeground(new java.awt.Color(102, 102, 102));
@@ -324,6 +324,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
             }
         });
         Fondo.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 140, 50));
+        Fondo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, 550, 20));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 720));
 
@@ -432,6 +433,7 @@ public class CancelarReservacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private Control.PanelRound mesasPanel;
     private javax.swing.JButton regresarBtn;
     private javax.swing.JTable tblReservas;

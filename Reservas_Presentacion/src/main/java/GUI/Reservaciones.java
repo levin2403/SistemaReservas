@@ -70,7 +70,7 @@ public class Reservaciones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una "
                     + "fecha");
             return false;
-        } else if (tblMesas.getSelectedRow() != -1) {
+        } else if (tblMesas.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona una mesa antes "
                     + "de continuar");
             return false; // Añadido retorno false en caso de no seleccionar mesa
