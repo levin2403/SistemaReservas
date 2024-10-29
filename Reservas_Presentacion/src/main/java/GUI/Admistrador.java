@@ -46,6 +46,8 @@ public class Admistrador extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         salirPn = new Control.PanelRound();
         jLabel6 = new javax.swing.JLabel();
+        panelRound2 = new Control.PanelRound();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -304,6 +306,40 @@ public class Admistrador extends javax.swing.JFrame {
 
         jPanel1.add(salirPn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 580, 340, -1));
 
+        panelRound2.setBackground(new java.awt.Color(51, 51, 51));
+        panelRound2.setToolTipText("");
+        panelRound2.setCursorHandEnabled(true);
+        panelRound2.setRoundBottomLeft(100);
+        panelRound2.setRoundBottomRight(100);
+        panelRound2.setRoundTopLeft(100);
+        panelRound2.setRoundTopRight(100);
+        panelRound2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelRound2MouseClicked(evt);
+            }
+        });
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/ajustes2.gif"))); // NOI18N
+
+        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
+        panelRound2.setLayout(panelRound2Layout);
+        panelRound2Layout.setHorizontalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel9)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        panelRound2Layout.setVerticalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel9)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 20, 100, 100));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -376,6 +412,11 @@ public class Admistrador extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_salirPnMouseClicked
 
+    private void panelRound2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelRound2MouseClicked
+        new Ajustes().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_panelRound2MouseClicked
+
     /**
      * El método principal que sirve como punto de entrada para la aplicación.
      * Establece la apariencia de la aplicación y muestra la ventana principal
@@ -426,8 +467,10 @@ public class Admistrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private Control.PanelRound panelRound1;
+    private Control.PanelRound panelRound2;
     private Control.PanelRound reportePn;
     private Control.PanelRound reservacionPn;
     private Control.PanelRound salirPn;

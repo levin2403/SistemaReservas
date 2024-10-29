@@ -71,4 +71,22 @@ public class RestauranteDAO implements IRestauranteDAO{
         }
         return restaurante;
     }
+    @Override
+public void actualizar(Restaurante restaurante) throws DAOException {
+    EntityManager em = null;
+    try {
+        em = conexion.getEntityManager(); // Obtener el EntityManager
+        em.getTransaction().begin(); // Iniciar la transacción
+        em.merge(restaurante); // Actualizar el restaurante
+        em.getTransaction().commit(); // Confirmar la transacción
+        LOG.log(Level.INFO, "Restaurante actualizado con éxito: {0}", restaurante);
+    } catch (ConexionException ex) {
+        LOG.log(Level.SEVERE, "Error al actualizar el restaurante: {0}", ex.getMessage());
+        throw new DAOException("Error al actualizar el restaurante");
+    } finally {
+        if (em != null) {
+            em.close(); // Cerrar el EntityManager
+        }
+    }
+}
 }

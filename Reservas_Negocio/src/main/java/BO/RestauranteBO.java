@@ -9,6 +9,7 @@ import Excepciones.ConversionException;
 import Excepciones.DAOException;
 import Interfaces.IRestauranteBO;
 import Interfaces.IRestauranteDAO;
+import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +29,7 @@ import java.util.logging.Logger;
 public class RestauranteBO implements IRestauranteBO {
 
     // Instancia del logger para registrar eventos y errores durante la ejecución.
-    private static final Logger LOG = Logger.
-            getLogger(RestauranteBO.class.getName());
+    private static final Logger LOG = Logger.getLogger(RestauranteBO.class.getName());
     
     // Interfaz de acceso a datos para Restaurante, permite realizar operaciones de persistencia.
     private final IRestauranteDAO restauranteDAO;
@@ -58,7 +58,7 @@ public class RestauranteBO implements IRestauranteBO {
      */
     @Override
     public RestauranteDTO consultar() throws BOException {
-        try{
+        try {
             // Recupera la entidad Restaurante desde la capa de acceso a datos.
             Restaurante restaurante = restauranteDAO.consultar();
             
@@ -66,21 +66,53 @@ public class RestauranteBO implements IRestauranteBO {
             RestauranteDTO restauranteDTO = restauranteCVR.toDTO(restaurante);
             
             // Registro de información sobre la consulta exitosa.
-            LOG.log(Level.INFO, "Exito al obtener el restaurante en BO");
+            LOG.log(Level.INFO, "Éxito al obtener el restaurante en BO");
             
             return restauranteDTO;
-        }
-        // Captura cualquier error en la capa de acceso a datos y lo registra.
-        catch(DAOException de){
+        } catch (DAOException de) {
             LOG.log(Level.SEVERE, "Error al obtener el restaurante en BO", de);
             throw new BOException(de.getMessage());
-        }
-        // Captura cualquier error en la conversión de entidad a DTO y lo registra.
-        catch(ConversionException ce){
+        } catch (ConversionException ce) {
             LOG.log(Level.SEVERE, "Error al obtener el restaurante en BO", ce);
             throw new BOException("Error al obtener el restaurante");
         }
     }
 
-}
+    /**
+     * Cambia la hora de apertura y/o cierre del restaurante.
+     *
+     * @param horaApertura Nueva hora de apertura en formato LocalTime.
+     * @param horaCierre Nueva hora de cierre en formato LocalTime.
+     * @throws BOException Si ocurre un error en la capa de acceso a datos 
+     *         o en la conversión de los datos.
+     */
+    public void cambiarHoraRestaurante(LocalTime horaApertura, LocalTime horaCierre) throws BOException {
+        try {
+            // Recupera el restaurante actual
+            Restaurante restaurante = restauranteDAO.consultar();
 
+            // Establece la nueva hora de apertura si no es nula
+            if (horaApertura != null) {
+                restaurante.setHoraApertura(horaApertura);
+                LOG.log(Level.INFO, "Hora de apertura actualizada a: {0}", horaApertura);
+            }
+
+            // Establece la nueva hora de cierre si no es nula
+            if (horaCierre != null) {
+                // Valida que la hora de cierre sea posterior a la de apertura
+                if (restaurante.getHoraApertura() != null && horaCierre.isBefore(restaurante.getHoraApertura())) {
+                    throw new BOException("La hora de cierre debe ser posterior a la de apertura.");
+                }
+                restaurante.setHoraCierre(horaCierre);
+                LOG.log(Level.INFO, "Hora de cierre actualizada a: {0}", horaCierre);
+            }
+
+            // Guarda los cambios en la base de datos
+            restauranteDAO.actualizar(restaurante);
+
+        } catch (DAOException de) {
+            LOG.log(Level.SEVERE, "Error al actualizar las horas del restaurante", de);
+            throw new BOException(de.getMessage());
+        }
+    }
+}

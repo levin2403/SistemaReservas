@@ -25,5 +25,6 @@ public interface IRestauranteDAO {
      * @throws Excepciones.DAOException En caso de error en la base de datos.
      */
     public Restaurante consultar() throws DAOException;
+    public void actualizar(Restaurante restaurante) throws DAOException ;
 }
 
