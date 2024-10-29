@@ -15,6 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Clase intermediaria entre la capa de DAO para la entidad Mesa que 
+ * convierte los métodos de la clase DAO a DTO o a Entidad dependiendo del 
+ * flujo. Sirve como puente para la lógica de negocio en la gestión de 
+ * clientes, coordinando interacciones entre la capa de acceso a datos (DAO) 
+ * y la de presentación.
  * 
  * @author skevi
  */
@@ -36,9 +41,12 @@ public class MesaBO implements IMesaBO {
     }
 
     /**
+     * Metodo intermediario que convierte una mesa de DTO a Entidad para 
+     * poder ser agregada en la capa de dominio.
      * 
-     * @param mesas
-     * @throws BOException 
+     * @param mesas Mesa a agregar.
+     * @throws BOException En caso de Excepcion en la capa de dominio o en 
+     * la conversion.
      */
     @Override
     public void agregarMesas(List<MesaDTO> mesas) throws BOException {
@@ -65,9 +73,12 @@ public class MesaBO implements IMesaBO {
     }
 
     /**
+     * Metodo intermediario que consulta las mesas de la capa de dominio y 
+     * Las convierte a DTO para usarse en capaz superiores.
      * 
-     * @return
-     * @throws BOException 
+     * @return Lista de mesas en DTO.
+     * @throws BOException En caso de Excepcion en la capa de dominio o en 
+     * la conversion.
      */
     @Override
     public List<MesaDTO> consultarMesas() throws BOException {
@@ -94,10 +105,13 @@ public class MesaBO implements IMesaBO {
     }
 
     /**
+     * Metodo intermediario que consulta las mesas por ubicacion y las convierte
+     * a DTO.
      * 
-     * @param tipo
-     * @return
-     * @throws BOException 
+     * @param ubicacion Zona del restaurante.
+     * @return Lista de mesas en DTO filtradas por ubicacion.
+     * @throws BOException En caso de Excepcion en la capa de dominio o en 
+     * la conversion.
      */
     @Override
     public int cantidadMesasPorUbicacion(String ubicacion) throws BOException {
@@ -112,10 +126,13 @@ public class MesaBO implements IMesaBO {
     }
 
     /**
+     * Metodo intermediario que consulta las mesas por ubicacion y las convierte
+     * a DTO.
      * 
-     * @param tipo
-     * @return
-     * @throws BOException 
+     * @param tipo Tipo de mesa.
+     * @return Lista de mesas en DTO filtradas por ubicacion.
+     * @throws BOException  En caso de Excepcion en la capa de dominio o en 
+     * la conversion.
      */
     @Override
     public List<MesaDTO> obtenerMesasPorTipo(String tipo) throws BOException {

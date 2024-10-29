@@ -10,9 +10,14 @@ import Excepciones.ConversionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Clase que contiene los metodos de conversion para La entidad de Reserva.
+ * 
+ * @author skevi
+ */
 public class ReservaCVR {
 
+    //metodo logger para la registrar cambios.
     private static final Logger LOG = Logger.
             getLogger(ReservaCVR.class.getName());
     
@@ -21,7 +26,7 @@ public class ReservaCVR {
     private final RestauranteCVR restauranteCVR; // convertidor de restaurante
 
     /**
-     * 
+     * Constructor que inicializa los atributos de la clase.
      */
     public ReservaCVR() {
         this.clienteCVR = new ClienteCVR();

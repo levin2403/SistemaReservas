@@ -19,40 +19,48 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Clase de fachada para la gestión de mesas en el sistema de un restaurante.
+ * 
+ * Esta clase implementa la interfaz `IMesaFCD` y actúa como una capa de fachada 
+ * que abstrae las interacciones entre la interfaz de usuario y la lógica de negocio 
+ * relacionada con las mesas, proporcionando métodos para cargar mesas en una tabla, 
+ * calcular el precio según el tamaño de la mesa, agregar mesas y generar códigos de mesa.
+ * 
  * @author skevi
  */
-public class MesaFCD implements IMesaFCD{
+public class MesaFCD implements IMesaFCD {
 
-    private IMesaBO mesaBO;
-    private IRestauranteBO restauranteBO;
+    private IMesaBO mesaBO;             // Lógica de negocio para las mesas
+    private IRestauranteBO restauranteBO; // Lógica de negocio para el restaurante
 
+    /**
+     * Constructor que inicializa las dependencias de negocio.
+     */
     public MesaFCD() {
         this.mesaBO = new MesaBO();
         this.restauranteBO = new RestauranteBO();
     }
-    
+
     /**
-     * Carga los datos de las mesas a una tabla.
+     * Carga los datos de las mesas en una tabla de la interfaz de usuario.
      * 
-     * @param table tabla en la que se agregaran los datos.
-     * @throws FacadeException Excepcion de capas inferiores.
+     * Obtiene una lista de mesas, limpia el modelo de la tabla para evitar 
+     * duplicados y luego agrega las mesas obtenidas en la tabla.
+     * 
+     * @param table JTable en el que se cargarán los datos de las mesas.
+     * @throws FacadeException si ocurre un error en la capa de negocio al 
+     *                         consultar las mesas.
      */
     @Override
     public void cargarTablaMesas(JTable table) throws FacadeException {
         try {
-            // Obtener las mesas de algún servicio o repositorio
             List<MesaDTO> mesas = mesaBO.consultarMesas();
             
-            String[] columnNames = {"Codigo", "Tipo", "Min Personas", "Max Personas", "Ubicacion"};
-            
-            // Crear o obtener el modelo de la tabla
-            DefaultTableModel model = new DefaultTableModel(columnNames,0);
-
-            // Limpiar el modelo de la tabla para evitar duplicados
+            String[] columnNames = {"Codigo", "Tipo", "Min Personas", 
+                "Max Personas", "Ubicacion"};
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
             model.setRowCount(0);
 
-            // Recorrer la lista de mesas y agregar los datos al modelo de la tabla
             for (MesaDTO mesa : mesas) {
                 Object[] rowData = {
                     mesa.getCodigoMesa(),
@@ -61,148 +69,130 @@ public class MesaFCD implements IMesaFCD{
                     mesa.getCapacidadMaxima(),
                     mesa.getUbicacion()
                 };
-                model.addRow(rowData); // Agregar la fila al modelo
+                model.addRow(rowData);
             }
-
-            // Asignar el modelo a la tabla
             table.setModel(model);
             
         } catch (BOException be) {
-            // Lanzar una excepción en caso de error en las capas inferiores
             throw new FacadeException(be.getMessage());
         }
     }
-    
+
     /**
+     * Calcula el precio de una mesa basado en su tamaño.
      * 
-     * @param tamaño
-     * @return 
+     * @param tamaño Tamaño de la mesa (PEQUEÑA, MEDIANA o GRANDE).
+     * @return String que representa el precio de la mesa.
      */
     @Override
-    public String calcularPrecio(String tamaño){
-        
-        if (tamaño.equalsIgnoreCase("PEQUEÑA")) {
-            return "300.0";
+    public String calcularPrecio(String tamaño) {
+        switch (tamaño.toUpperCase()) {
+            case "PEQUEÑA": return "300.0";
+            case "MEDIANA": return "500.0";
+            case "GRANDE": return "700.0";
+            default: return null;
         }
-        if (tamaño.equalsIgnoreCase("MEDIANA")) {
-            return "500.0";
-        }
-        if (tamaño.equalsIgnoreCase("GRANDE")) {
-            return "700.0";
-        }
-        return null;
-        
     }
-    
+
     /**
+     * Agrega una cantidad especificada de mesas con un tamaño y ubicación.
      * 
-     * @param numero
-     * @param tamaño
-     * @param ubicacion
-     * @throws FacadeException 
+     * Genera las mesas según los parámetros proporcionados, asigna las 
+     * capacidades mínima y máxima según el tamaño, y las agrega al sistema.
+     * 
+     * @param numero Cantidad de mesas a agregar.
+     * @param tamaño Tamaño de las mesas a agregar.
+     * @param ubicacion Ubicación de las mesas.
+     * @throws FacadeException si ocurre un error en la generación o adición 
+     *                         de las mesas.
      */
     @Override
     public void agregarMesas(int numero, String tamaño, String ubicacion) 
             throws FacadeException {
-        try{
-             //definimos la lista de mesas
-             List<MesaDTO> mesas = new ArrayList<>();
-            
-             //definimos el restaurante.
-             RestauranteDTO restaurante = restauranteBO.consultar();
-             
-             //definimos la capacidad maxima y minima
-             int capacidadMinima;
-             int capacidadMaxima;
-             
-             if (tamaño.equalsIgnoreCase("PEQUEÑA")) {
+        try {
+            List<MesaDTO> mesas = new ArrayList<>();
+            RestauranteDTO restaurante = restauranteBO.consultar();
+
+            int capacidadMinima;
+            int capacidadMaxima;
+            if (tamaño.equalsIgnoreCase("PEQUEÑA")) {
                 capacidadMinima = 1;
                 capacidadMaxima = 2;    
-             }
-             else if(tamaño.equalsIgnoreCase("MEDIANA")){
-                 capacidadMinima = 3;
-                 capacidadMaxima = 4;    
-             }
-             else{
-                 capacidadMinima = 5;
-                 capacidadMaxima = 8;    
-             }
-             
-             List<String> codigos = generarCodigos(tamaño, ubicacion, numero);
-             
-             
-             //definimos el loop para generar las mesas
-             for (int i = 0; i < numero; i++) {
-                 mesas.add(new MesaDTO(
+            } else if (tamaño.equalsIgnoreCase("MEDIANA")) {
+                capacidadMinima = 3;
+                capacidadMaxima = 4;    
+            } else {
+                capacidadMinima = 5;
+                capacidadMaxima = 8;    
+            }
+
+            List<String> codigos = generarCodigos(tamaño, ubicacion, numero);
+
+            for (int i = 0; i < numero; i++) {
+                mesas.add(new MesaDTO(
                    codigos.get(i),
                    tamaño,
                    capacidadMinima,
                    capacidadMaxima,
-                   ubicacion,      
-                   restaurante      
-                 ));
-             }
-             
-             //guardamos las mesas generadas
-             mesaBO.agregarMesas(mesas);
-             
-        }catch(BOException be){
+                   ubicacion,
+                   restaurante
+                ));
+            }
+            mesaBO.agregarMesas(mesas);
+            
+        } catch (BOException be) {
             throw new FacadeException(be.getMessage());
         }
-        
     }
-    
+
     /**
+     * Genera una lista de códigos únicos para cada mesa basada en el tamaño y 
+     * la ubicación, asegurándose de que no se supere un límite.
      * 
-     * @param numero
-     * @param tamaño
-     * @param ubicacion
-     * @return 
+     * @param tamaño Tamaño de las mesas.
+     * @param ubicacion Ubicación de las mesas.
+     * @param cantidad Cantidad de códigos a generar.
+     * @return Lista de códigos únicos generados para las mesas.
+     * @throws FacadeException si ocurre un error durante la generación de 
+     *                         códigos.
      */
-    private List<String> generarCodigos(String tamaño, String ubicacion, int cantidad) 
+    private List<String> generarCodigos(String tamaño, String ubicacion, 
+            int cantidad) 
             throws FacadeException {
         List<String> codigos = new ArrayList<>();
 
         try {
-            // Obtener la cantidad actual de mesas en la ubicación para definir el punto de inicio
             int cantidadActual = mesaBO.cantidadMesasPorUbicacion(ubicacion);
             System.out.println("Cantidad actual: " + cantidadActual);
 
-            // Validar que la cantidad solicitada no supere el límite de 1000
             if (cantidadActual + cantidad > 1000) {
-                throw new FacadeException("No se pueden generar más de 1000 mesas en esta ubicación.");
+                throw new FacadeException("No se pueden generar más de 1000 "
+                        + "mesas en esta ubicación.");
             }
 
-            // Asignar las abreviaturas correspondientes a cada ubicación
             String codigoUbicacion;
             switch (ubicacion.toUpperCase()) {
-                case "VENTANA":
-                    codigoUbicacion = "VEN";
-                    break;
-                case "TERRAZA":
-                    codigoUbicacion = "TER";
-                    break;
-                case "GENERAL":
-                    codigoUbicacion = "GEN";
-                    break;
-                default:
-                    throw new FacadeException("Ubicación desconocida: " + ubicacion);
+                case "VENTANA": codigoUbicacion = "VEN"; break;
+                case "TERRAZA": codigoUbicacion = "TER"; break;
+                case "GENERAL": codigoUbicacion = "GEN"; break;
+                default: throw new FacadeException("Ubicación desconocida: " + 
+                        ubicacion);
             }
 
-            // Generar los códigos desde `cantidadActual + 1` y en adelante hasta cumplir con `cantidad`
             for (int i = 1; i <= cantidad; i++) {
                 int numeroActual = cantidadActual + i;
-                String numeroFormateado = String.format("%03d", numeroActual); // Asegura 3 dígitos
-
-                // Construir el código completo con el tamaño y el número formateado
-                String codigo = codigoUbicacion + "-" + tamaño + "-" + numeroFormateado;
+                String numeroFormateado = String.format("%03d", numeroActual);
+                String codigo = codigoUbicacion + "-" + tamaño + "-" + 
+                        numeroFormateado;
                 codigos.add(codigo);
             }
 
         } catch (BOException be) {
-            throw new FacadeException("Error generando códigos de mesa: " + be.getMessage(), be);
+            throw new FacadeException("Error generando códigos de mesa: " + 
+                    be.getMessage(), be);
         }
 
         return codigos;
     }
 }
+

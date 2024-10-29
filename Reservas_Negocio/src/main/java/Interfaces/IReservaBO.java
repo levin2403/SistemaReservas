@@ -114,9 +114,11 @@ public interface IReservaBO {
             LocalDateTime fin) throws BOException;
     
     /**
+     * Actualiza la reserva dada en el parametro.
      * 
-     * @param reserva
-     * @throws BOException 
+     * @param reservaDTO Reserva a actualizar.
+     * @throws BOException En caso de error en conversiones o en la capa de 
+     *                     datos.
      */
     public void actualizarReserva(ReservaDTO reservaDTO) throws BOException;
     

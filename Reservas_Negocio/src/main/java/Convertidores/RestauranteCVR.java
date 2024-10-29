@@ -13,16 +13,16 @@ import java.util.logging.Logger;
 
 public class RestauranteCVR {
 
+    //metodo logger para la registrar cambios.
     private static final Logger LOG = Logger.
             getLogger(RestauranteCVR.class.getName());
     
-//    private final MesaCVR mesaCVR; // convertidor de mesa
 
     /**
      * Constructor por defecto.
      */
     public RestauranteCVR() {
-//        this.mesaCVR =new MesaCVR();
+       
     }
     
     /**
@@ -48,15 +48,6 @@ public class RestauranteCVR {
         restaurante.setTelefono(restauranteDTO.getTelefono());
         restaurante.setHoraApertura(restauranteDTO.getHoraApertura());
         restaurante.setHoraCierre(restauranteDTO.getHoraCierre());
-
-//        // Convertir la lista de mesas
-//        if (restauranteDTO.getMesas() != null) {
-//            List<Mesa> mesas = new ArrayList<>();
-//            for (MesaDTO mesaDTO : restauranteDTO.getMesas()) {
-//                mesas.add(mesaCVR.toEntity(mesaDTO));
-//            }
-//            restaurante.setMesas(mesas);
-//        }
         
         LOG.log(Level.INFO, "Exito en la conversion de DTO a Entidad "
                 + "Restaurante");
@@ -93,15 +84,6 @@ public class RestauranteCVR {
         restauranteDTO.setTelefono(restaurante.getTelefono());
         restauranteDTO.setHoraApertura(restaurante.getHoraApertura());
         restauranteDTO.setHoraCierre(restaurante.getHoraCierre());
-
-//        // Convertir la lista de mesas
-//        if (restaurante.getMesas() != null) {
-//            List<MesaDTO> mesasDTO = new ArrayList<>();
-//            for (Mesa mesa : restaurante.getMesas()) {
-//                mesasDTO.add(mesaCVR.toDTO(mesa));
-//            }
-//            restauranteDTO.setMesas(mesasDTO);
-//        }
         
         LOG.log(Level.INFO, "Exito en la conversion de Entidad Restaurante "
                 + "a DTO");

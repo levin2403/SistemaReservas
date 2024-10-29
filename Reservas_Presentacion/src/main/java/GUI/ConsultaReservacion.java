@@ -4,12 +4,14 @@
  */
 package GUI;
 
+import BO.ClienteBO;
 import BO.ReservaBO;
 import DTOs.ReservaDTO;
 import Excepciones.BOException;
 import Excepciones.FacadeException;
 import Fachada.ClienteFCD;
 import Fachada.FiltrosFCD;
+import Interfaces.IClienteBO;
 import Interfaces.IReservaBO;
 import interfacesFachada.IClienteFCD;
 import interfacesFachada.IFiltrosFCD;
@@ -33,6 +35,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
 
     private IFiltrosFCD filtros;
     private IClienteFCD clienteFCD;
+    private IClienteBO clienteBO;
     private List<ReservaDTO> reservas;
     private IReservaBO reservaBO;
 
@@ -59,7 +62,7 @@ public class ConsultaReservacion extends javax.swing.JFrame {
         try {
             // Obtener las reservas iniciales desde la capa de negocio
             this.reservas = reservaBO.obtenerReservas();
-
+            this.clienteBO = new ClienteBO();
             // Cargar los datos en la tabla
             cargarTabla();
         } catch (BOException be) {
@@ -97,8 +100,9 @@ public class ConsultaReservacion extends javax.swing.JFrame {
      * ActionListener para manejar la selección de clientes.
      */
     private void cargarClientes() {
+        try{
         DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
-        combo.addElement("Seleccione un cliente"); // Valor nulo principal para filtrado
+        clienteFCD.cargarComboBoxClientes(nombreClienteCB);
         nombreClienteCB.setModel(combo);
 
         // Agregar ActionListener al JComboBox
@@ -131,8 +135,12 @@ public class ConsultaReservacion extends javax.swing.JFrame {
             }
         });
 
-        // Establecer el estado por defecto en "Seleccione un cliente"
+//         Establecer el estado por defecto en "Seleccione un cliente"
         nombreClienteCB.setSelectedItem("Seleccione un cliente");
+        }
+        catch(FacadeException fe){
+            JOptionPane.showMessageDialog(this, fe.getMessage());
+        }
     }
 
     /**

@@ -5,17 +5,19 @@
 package Convertidores;
 
 import DTOs.MesaDTO;
-import DTOs.ReservaDTO;
 import Entidades.Mesa;
-import Entidades.Reserva;
 import Excepciones.ConversionException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
+/**
+ * Clase que contiene los metodos de conversion para La entidad de Mesa.
+ * 
+ * @author skevi
+ */
 public class MesaCVR {
 
+    //metodo logger para la registrar cambios.
     private static final Logger LOG = Logger.
             getLogger(MesaCVR.class.getName());
    

@@ -4,16 +4,25 @@
  */
 package interfacesFachada;
 
-import Entidades.Cliente;
 import Excepciones.FacadeException;
 import javax.swing.JComboBox;
 
 /**
- *
+ * Interfaz `IClienteFCD` que define los métodos necesarios para gestionar
+ * operaciones relacionadas con clientes en la capa de fachada.
+ * Sirve como punto de interacción para cargar y manipular datos de clientes.
+ * 
  * @author skevi
  */
 public interface IClienteFCD {
-    
+
+    /**
+     * Carga un ComboBox con la lista de clientes.
+     *
+     * @param combo El ComboBox que se llenará con los clientes.
+     * @throws FacadeException Excepción lanzada en caso de error al cargar los datos.
+     */
     public void cargarComboBoxClientes(JComboBox combo) throws FacadeException;
     
 }
+

@@ -15,10 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Clase intermediaria entre la capa de DAO que convierte los métodos de la 
- * clase DAO a DTO o a Entidad dependiendo del flujo. Sirve como puente 
- * para la lógica de negocio en la gestión de clientes, coordinando 
- * interacciones entre la capa de acceso a datos (DAO) y la de presentación.
+ * Clase intermediaria entre la capa de DAO para la entidad Cliente que 
+ * convierte los métodos de la clase DAO a DTO o a Entidad dependiendo del 
+ * flujo. Sirve como puente para la lógica de negocio en la gestión de 
+ * clientes, coordinando interacciones entre la capa de acceso a datos (DAO) 
+ * y la de presentación.
  *
  * @author skevi
  * @author sebastian
@@ -51,7 +52,8 @@ public class ClienteBO implements IClienteBO {
      * 
      * @param id Identificador único del cliente que se busca.
      * @return Retorna un ClienteDTO que representa al cliente.
-     * @throws BOException Si ocurre algún error en la capa DAO o durante la conversión.
+     * @throws BOException Si ocurre algún error en la capa DAO o durante 
+     *         la conversión.
      */
     @Override
     public ClienteDTO obtenerCliente(Long id) throws BOException {

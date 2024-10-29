@@ -13,7 +13,8 @@ import java.util.logging.Logger;
 
 
 /**
- *
+ * Clase que contiene los metodos de conversion para La entidad de Cliente.
+ * 
  * @author skevi
  * @author sebastian
  */
@@ -21,9 +22,6 @@ public class ClienteCVR {
 
     private static final Logger LOG = Logger.
             getLogger(ClienteCVR.class.getName());
-    
-    // No necesitas esta variable de instancia, ya que estás usando un Singleton
-    // private ReservaST reservaST; 
     
     /**
      * Constructor por defecto.

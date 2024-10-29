@@ -9,7 +9,6 @@ import Interfaces.IReservaBO;
 import interfacesFachada.IClienteFCD;
 import interfacesFachada.IFiltrosFCD;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

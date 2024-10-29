@@ -5,7 +5,6 @@
 package GUI;
 
 import BO.ReservaBO;
-import DTOs.MesaDTO;
 import DTOs.ReservaDTO;
 import Excepciones.BOException;
 import Excepciones.FacadeException;
