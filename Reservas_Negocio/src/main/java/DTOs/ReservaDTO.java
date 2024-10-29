@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * personas, costo, estado de la reserva, multa, y referencias a los 
  * objetos Cliente, Mesa y Restaurante asociados.
  * 
- * @autor skevi
+ * @author skevi
  */
 public class ReservaDTO {
 

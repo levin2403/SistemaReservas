@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * clientes, coordinando interacciones entre la capa de acceso a datos (DAO) 
  * y la de presentación.
  * 
- * @autor skevi
+ * @author skevi
  */
 public class ReservaBO implements IReservaBO {
 

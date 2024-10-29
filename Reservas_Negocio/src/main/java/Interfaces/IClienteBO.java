@@ -30,7 +30,7 @@ public interface IClienteBO {
     /**
      * Recupera una lista de todos los clientes almacenados en la base de datos.
      * 
-     * @return Una lista de objetos {@link Cliente} que representa todos los 
+     * @return Una lista de objetos que representa todos los 
      * clientes.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */

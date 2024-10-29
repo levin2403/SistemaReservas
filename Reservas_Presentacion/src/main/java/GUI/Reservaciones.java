@@ -70,11 +70,12 @@ public class Reservaciones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una "
                     + "fecha");
             return false;
-        } else if (tblMesas.getSelectedRow() == -1) {
+        } else if (tblMesas.getSelectedRow() != -1) {
             JOptionPane.showMessageDialog(this, "Selecciona una mesa antes "
                     + "de continuar");
             return false; // Añadido retorno false en caso de no seleccionar mesa
         }
+        
         return true;
     }
 
@@ -111,13 +112,11 @@ public class Reservaciones extends javax.swing.JFrame {
 
         // convertir Instant a LocalDate en la zona horaria del sistema
         LocalDate fecha = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-        System.out.println("Fecha obtenida: " + fecha.toString());
 
         LocalTime time = LocalTime.parse((String) cbxHoras.getSelectedItem());
 
         // formamos el LocalDateTime
         LocalDateTime horaFecha = fecha.atTime(time);
-        System.out.println("Hora y Fecha obtenidas: " + horaFecha.toString());
 
         // devolvemos el LocalDateTime formado
         return horaFecha;
@@ -334,9 +333,10 @@ public class Reservaciones extends javax.swing.JFrame {
 
                 // Guardamos la reserva
                 reservaFCD.agregarReserva(cliente, mesa, fechaHora, numPersonas, costo);
+                
             }
         } catch (FacadeException fe) {
-            JOptionPane.showMessageDialog(this, fe.getMessage(), "Error padrino", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, fe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_confirmarBtnActionPerformed
     /**

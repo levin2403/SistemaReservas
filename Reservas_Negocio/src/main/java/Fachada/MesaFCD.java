@@ -15,6 +15,7 @@ import Interfaces.IRestauranteBO;
 import interfacesFachada.IMesaFCD;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,8 +31,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MesaFCD implements IMesaFCD {
 
-    private IMesaBO mesaBO;             // Lógica de negocio para las mesas
-    private IRestauranteBO restauranteBO; // Lógica de negocio para el restaurante
+    private final IMesaBO mesaBO;             // Lógica de negocio para las mesas
+    private final IRestauranteBO restauranteBO; // Lógica de negocio para el restaurante
 
     /**
      * Constructor que inicializa las dependencias de negocio.
@@ -126,19 +127,29 @@ public class MesaFCD implements IMesaFCD {
                 capacidadMaxima = 8;    
             }
 
-            List<String> codigos = generarCodigos(tamaño, ubicacion, numero);
+            int respuesta = JOptionPane.showConfirmDialog(null, 
+                    "¿Está seguro de que desea cancelar la reservación?", 
+                    "Cancelar reservación", JOptionPane.YES_NO_OPTION);
 
-            for (int i = 0; i < numero; i++) {
-                mesas.add(new MesaDTO(
-                   codigos.get(i),
-                   tamaño,
-                   capacidadMinima,
-                   capacidadMaxima,
-                   ubicacion,
-                   restaurante
-                ));
-            }
-            mesaBO.agregarMesas(mesas);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                
+                 List<String> codigos = generarCodigos(tamaño, ubicacion, numero);
+                
+                 for (int i = 0; i < numero; i++) {
+                 mesas.add(new MesaDTO(
+                    codigos.get(i),
+                    tamaño,
+                    capacidadMinima,
+                    capacidadMaxima,
+                    ubicacion,
+                    restaurante
+                 ));
+                }
+               
+                //agregamos las mesas que que ya han sido generadas
+                mesaBO.agregarMesas(mesas);
+               
+            }        
             
         } catch (BOException be) {
             throw new FacadeException(be.getMessage());

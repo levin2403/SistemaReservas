@@ -120,9 +120,11 @@ public class ReservaFCD implements IReservaFCD {
      */
     private void verificarHoraReservacion(LocalDateTime horaFecha) 
             throws FacadeException {
+        try{
+        RestauranteDTO restaurante = restauranteBO.consultar();
         LocalTime horaElegida = horaFecha.toLocalTime();
-        LocalTime horaCierre = LocalTime.of(21, 0);
-        LocalTime horaApertura = LocalTime.of(12, 0);
+        LocalTime horaCierre = restaurante.getHoraCierre();
+        LocalTime horaApertura = restaurante.getHoraApertura();
 
         if (horaElegida.isAfter(horaCierre)) {
             throw new FacadeException("La hora de la reservación no puede ser "
@@ -130,6 +132,9 @@ public class ReservaFCD implements IReservaFCD {
         } else if (horaElegida.isBefore(horaApertura)) {
             throw new FacadeException("La hora de la reservación no puede ser "
                     + "antes de la apertura del restaurante");
+        }
+        }catch(BOException be){
+            JOptionPane.showMessageDialog(null, be.getMessage());
         }
     }
 
@@ -197,7 +202,8 @@ public class ReservaFCD implements IReservaFCD {
                 ReservaDTO reserva = new ReservaDTO(horaFecha, numPersonas, costo, 
                         "ACTIVA", 0, cliente, mesa, restaurante);
                 reservaBO.agregarReserva(reserva);
-                JOptionPane.showMessageDialog(null, "Reservación agregada con éxito");
+                JOptionPane.showMessageDialog(null, "Reservación agregada "
+                        + "con éxito");
             }
         } catch (BOException be) {
             throw new FacadeException(be.getMessage());
@@ -215,22 +221,29 @@ public class ReservaFCD implements IReservaFCD {
     public void cancelarReserva(ReservaDTO reserva) throws FacadeException {
         try {
             if (reserva.getEstado().equalsIgnoreCase("CANCELADA")) {
-                throw new FacadeException("La reserva ya se encuentra cancelada");
+                throw new FacadeException("La reserva ya se encuentra "
+                        + "cancelada");
             }
 
             LocalDateTime hoy = LocalDateTime.now();
             if (reserva.getFechaHoraReserva().isBefore(hoy)) {
-                throw new FacadeException("La reserva ya ha pasado, no puede ser cancelada");
+                throw new FacadeException("La reserva ya ha pasado, no puede "
+                        + "ser cancelada");
             }
 
+            //calculamos la multa
+            double multa = calcularMulta(reserva);
+            
             int respuesta = JOptionPane.showConfirmDialog(null, 
-                    "¿Está seguro de que desea cancelar la reservación?", 
+                    "¿Está seguro de que desea cancelar la reservación?, la "
+                            + "multa seria: " + multa, 
                     "Cancelar reservación", JOptionPane.YES_NO_OPTION);
 
             if (respuesta == JOptionPane.YES_OPTION) {
                 reserva.setEstado("CANCELADA");
-                reserva.setMulta(calcularMulta(reserva));
-                JOptionPane.showMessageDialog(null, "Reservación cancelada con éxito");
+                reserva.setMulta(multa);
+                JOptionPane.showMessageDialog(null, "Reservación cancelada"
+                        + " con éxito");
                 reservaBO.actualizarReserva(reserva);
             }
         } catch (BOException be) {

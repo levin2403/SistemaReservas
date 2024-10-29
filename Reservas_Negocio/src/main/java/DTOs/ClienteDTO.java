@@ -13,8 +13,8 @@ import java.util.List;
  * Este DTO se utiliza en escenarios donde se necesita encapsular y transportar 
  * los datos del cliente sin exponer la entidad de la base de datos directamente.
  *
- * @autor skevi
- * @autor sebastian
+ * @author skevi
+ * @author sebastian
  */
 public class ClienteDTO {
 

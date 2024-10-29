@@ -25,7 +25,7 @@ public interface IReservaBO {
     /**
      * Agrega una nueva reserva a la base de datos.
      * 
-     * @param reserva El objeto {@link Reserva} que se desea agregar.
+     * @param reserva El objeto que se desea agregar.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
     public void agregarReserva(ReservaDTO reserva) throws BOException;
@@ -36,7 +36,7 @@ public interface IReservaBO {
      * 
      * @param inicio La fecha de inicio del rango de búsqueda.
      * @param fin La fecha de fin del rango de búsqueda.
-     * @return Una lista de objetos {@link Reserva} que representan las 
+     * @return Una lista de objetos que representan las 
      * reservas dentro del rango de fechas especificado.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
@@ -48,7 +48,7 @@ public interface IReservaBO {
      * 
      * @param dia La fecha del día para el cual se desean consultar las 
      *            reservas.
-     * @return Una lista de objetos {@link Reserva} que representan las 
+     * @return Una lista de objetos que representan las 
      *         reservas del día especificado.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */

@@ -21,7 +21,7 @@ public interface IRestauranteBO {
     /**
      * Consulta y recupera la información del restaurante.
      * 
-     * @return El objeto {@link Restaurante} que representa el restaurante 
+     * @return El objeto que representa el restaurante 
      *         consultado.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */

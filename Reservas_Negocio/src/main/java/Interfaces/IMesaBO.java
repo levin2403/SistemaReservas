@@ -22,7 +22,7 @@ public interface IMesaBO {
     /**
      * Agrega una lista de mesas a la base de datos.
      * 
-     * @param mesas La lista de objetos {@link Mesa} que se desea agregar.
+     * @param mesas La lista de objetos que se desea agregar.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
     public void agregarMesas(List<MesaDTO> mesas) throws BOException;
@@ -30,7 +30,7 @@ public interface IMesaBO {
     /**
      * Consulta y recupera una lista de todas las mesas almacenadas en la base de datos.
      * 
-     * @return Una lista de objetos {@link Mesa} que representa todas las mesas.
+     * @return Una lista de objetos que representa todas las mesas.
      * @throws Excepciones.BOException En caso de error uno nunca sabe.
      */
     public List<MesaDTO> consultarMesas() throws BOException;

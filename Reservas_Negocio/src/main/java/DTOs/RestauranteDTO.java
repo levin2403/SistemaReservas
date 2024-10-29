@@ -14,7 +14,7 @@ import java.time.LocalTime;
  * y cierre. Se utiliza para transferir datos entre las distintas capas
  * de la aplicación.
  * 
- * @autor skevi
+ * @author skevi
  */
 public class RestauranteDTO {
 
